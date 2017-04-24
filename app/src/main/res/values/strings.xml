@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CheapestPrice</string>
+    <string name="correo">Ingrese su correo</string>
+    <string name="password">Ingrese su contraseña</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="register_button">Registrar</string>
 </resources>
