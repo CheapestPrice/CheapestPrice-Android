@@ -68,7 +68,8 @@
             android:layout_height="wrap_content"
             android:text="@string/register_button"
             android:layout_centerInParent="true"
-            android:layout_below="@id/registro_text"/>
+            android:layout_below="@id/registro_text"
+            android:onClick="reg"/>
     </RelativeLayout>
 
 

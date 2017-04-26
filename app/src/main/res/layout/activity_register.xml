@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.eci.cosw.cheapestPrice.RegisterActivity">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/basicForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Información del usuario:\n"
+                android:textSize="@dimen/text_size_medium"/>
+            <EditText
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su usuario"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/userMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su correo"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/passwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su contraseña"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/passwdConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="confirme su contraseña"
+                android:inputType="textPassword" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/extraForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nInformación de la tienda:\n"
+                android:textSize="@dimen/text_size_medium"/>
+            <EditText
+                android:id="@+id/shopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese el nombre de la tienda"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/shopAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese la dirección de la tienda"
+                android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/shopPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese el teléfono de la tienda"
+                android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/shopNit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese el NIT de la tienda"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/tiendaReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Desea registrar su tienda?"
+            android:onClick="tend"/>
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Registrar"
+            android:onClick="reg"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
