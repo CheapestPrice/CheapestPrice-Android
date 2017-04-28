@@ -26,6 +26,14 @@
             android:text="Inicie sesión:"
             android:textSize="@dimen/text_size_large"
             android:layout_below="@+id/logo"/>
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/selectUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_alignParentRight="true"
+            android:text="Cliente"
+            android:layout_alignParentEnd="true" />
 
         <EditText
             android:id="@+id/email"
@@ -54,6 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:layout_centerInParent="true"
+            android:onClick="logIn"
             android:layout_below="@id/password"/>
         <TextView
             android:id="@+id/registro_text"
@@ -70,6 +79,8 @@
             android:layout_centerInParent="true"
             android:layout_below="@id/registro_text"
             android:onClick="reg"/>
+
+
     </RelativeLayout>
 
 
