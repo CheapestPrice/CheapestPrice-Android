@@ -34,8 +34,24 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
 
         public ViewHolder(View v) {
             super(v);
-            nombreProducto=(TextView) v.findViewById(R.id.nombreProducto);
-            precio=(TextView) v.findViewById(R.id.precio);
+            setNombreProducto((TextView) v.findViewById(R.id.nombreProducto));
+            setPrecio((TextView) v.findViewById(R.id.precio));
+        }
+
+        public TextView getNombreProducto() {
+            return nombreProducto;
+        }
+
+        public void setNombreProducto(TextView nombreProducto) {
+            this.nombreProducto = nombreProducto;
+        }
+
+        public TextView getPrecio() {
+            return precio;
+        }
+
+        public void setPrecio(TextView precio) {
+            this.precio = precio;
         }
     }
 
@@ -49,9 +65,9 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
     public void onBindViewHolder(ItemsListaAdapter.ViewHolder holder, int position) {
         ItemLista item=productos.get(position);
         //Nombre del producto
-        holder.nombreProducto.setText(item.getItem().getProducto().getNombre());
+        holder.getNombreProducto().setText(item.getItem().getProducto().getNombre());
         //Precio del producto
-        holder.precio.setText("$"+item.getItem().getPrecio());
+        holder.getPrecio().setText("$"+item.getItem().getPrecio());
     }
 
     @Override
