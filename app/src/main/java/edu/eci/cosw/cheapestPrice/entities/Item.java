@@ -69,6 +69,6 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return id.getTiendaNit()+ " "+ id.getTiendaX() + " " + id.getTiendaY() + " "+id.getProductoId() +" "+precio;
+        return "Item: "+id.getTiendaNit()+ " "+ id.getTiendaX() + " " + id.getTiendaY() + " "+id.getProductoId() +" "+precio;
     }
 }

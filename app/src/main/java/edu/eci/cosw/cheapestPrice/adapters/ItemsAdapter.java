@@ -29,6 +29,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public ItemsAdapter(List<Item> response,Context main) {
         items=response;
         context=main;
+        System.out.println("items: "+items);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -79,7 +80,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public void onBindViewHolder(ItemsAdapter.ViewHolder holder, int position) {
         Item item=items.get(position);
         //Image:
-        Picasso.with(context).load("https://cheapestprice.herokuapp.com/items/"+item.getProducto().getId()+"/imagen").into(holder.getImage());
+        Picasso.with(context).load("https://cheapestprice.herokuapp.com/items/"+item.getProducto().getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
         //Name:
         holder.getName().setText(item.getProducto().getNombre());
         //Price:
