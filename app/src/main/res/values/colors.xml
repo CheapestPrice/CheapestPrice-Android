@@ -3,4 +3,9 @@
     <color name="colorPrimary">#2385b7</color> <!-- Color azul cheapest price-->
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorVerde">#229954</color>
+    <color name="colorAzul">#3498DB</color>
+    <color name="colorMarron">#800000</color>
+    <color name="colorTeal">#008080</color>
+    <color name="colorGray">#808080</color>
 </resources>

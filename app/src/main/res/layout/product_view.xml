@@ -20,7 +20,7 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="100dp" />
 
         <RelativeLayout
@@ -31,29 +31,53 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/categoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/categoria"
+                android:textColor="@color/colorVerde"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/marca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:textColor="@color/colorAzul"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/price"
-                android:layout_below="@id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:layout_below="@id/marca"
+                android:textColor="@color/colorMarron"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/updateProduct"
-                android:layout_below="@id/price"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@mipmap/ic_edit"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_edit" />
 
-                android:layout_alignParentRight="true"/>
+            <Button
+                android:id="@+id/deleteProduct"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_toLeftOf="@id/updateProduct"
+                android:background="@mipmap/ic_delete" />
+
 
         </RelativeLayout>
     </LinearLayout>

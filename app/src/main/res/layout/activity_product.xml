@@ -18,11 +18,13 @@
             android:layout_height="510dp"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            tools:layout_editor_absoluteY="8dp"
+            android:weightSum="1">
 
             <SearchView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.09" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

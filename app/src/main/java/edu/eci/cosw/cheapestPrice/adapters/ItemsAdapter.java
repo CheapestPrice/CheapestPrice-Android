@@ -20,15 +20,19 @@ import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.entities.Item;
 
 /**
- * Created by amoto on 4/10/17.
+ * Created by Daniela on 4/10/17.
  */
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
     List<Item> items;
     Context context;
-    public ItemsAdapter(List<Item> response,Context main) {
+
+    View.OnClickListener clickListener;
+
+    public ItemsAdapter(List<Item> response,Context main, View.OnClickListener click) {
         items=response;
         context=main;
+        clickListener=click;
         System.out.println("items: "+items);
     }
 
@@ -37,12 +41,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         private TextView name;
         private TextView price;
         private ImageView image;
+        private TextView marca;
+        private TextView categoria;
 
         public ViewHolder(View itemView) {
             super(itemView);
             setName((TextView) itemView.findViewById(R.id.name));
             setPrice((TextView) itemView.findViewById(R.id.price));
             setImage((ImageView) itemView.findViewById(R.id.logo));
+            setMarca((TextView) itemView.findViewById(R.id.marca));
+            setCategoria((TextView) itemView.findViewById(R.id.categoria));
         }
 
         public TextView getName() {
@@ -68,11 +76,29 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         public void setImage(ImageView image) {
             this.image = image;
         }
+
+        public TextView getMarca() {
+            return marca;
+        }
+
+        public void setMarca(TextView marca) {
+            this.marca = marca;
+        }
+
+        public TextView getCategoria() {
+            return categoria;
+        }
+
+        public void setCategoria(TextView categoria) {
+            this.categoria = categoria;
+        }
     }
     @Override
     public ItemsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.product_view, parent, false);
+        v.findViewById(R.id.updateProduct).setOnClickListener(clickListener);
+        v.findViewById(R.id.deleteProduct).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }
 
@@ -84,12 +110,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         //Name:
         holder.getName().setText(item.getProducto().getNombre());
         //Price:
-        holder.getPrice().setText(Long.toString(item.getPrecio()));
+        holder.getPrice().setText("$"+Long.toString(item.getPrecio()));
+        //Marca
+        holder.getMarca().setText(item.getProducto().getMarca());
+        //categoria
+        holder.getCategoria().setText(item.getProducto().getCategoria());
 
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public Item getItem(int i){
+        return items.get(i);
     }
 }
