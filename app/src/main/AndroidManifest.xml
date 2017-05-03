@@ -39,6 +39,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ProductActivity" />
         <activity android:name=".SearchActivity" />
+        <activity android:name=".MenuTenderoActivity" />
+        <activity android:name=".DetalleProductActivity"></activity>
     </application>
 
 </manifest>
