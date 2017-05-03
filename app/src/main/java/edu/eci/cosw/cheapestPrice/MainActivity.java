@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent= new Intent(this,ProductActivity.class);
             startActivity(intent);
         }else{
-            Intent intent= new Intent(this,SearchActivity.class);
+            Intent intent= new Intent(this,ShoppingListActivity.class);
+            //Intent intent= new Intent(this,SearchActivity.class);
             startActivity(intent);
         }
         ExecutorService executorService = Executors.newFixedThreadPool(1);

@@ -14,6 +14,6 @@ import retrofit2.http.Path;
 
 public interface ShoppingListService {
 
-    @GET("/{correo:.+}")
+    @GET("/usuarios/{correo}")
     Call<Usuario> getUsuarioByCorreo(@Path("correo") String correo);
 }

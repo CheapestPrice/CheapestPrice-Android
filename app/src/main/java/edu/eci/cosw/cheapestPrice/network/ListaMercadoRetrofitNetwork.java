@@ -1,6 +1,13 @@
 package edu.eci.cosw.cheapestPrice.network;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
 import java.io.IOException;
+import java.util.Date;
 
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.services.ShoppingListService;
@@ -18,8 +25,40 @@ public class ListaMercadoRetrofitNetwork {
     private static final String BASE_URL = "https://cheapestprice.herokuapp.com/";
     private ShoppingListService userService;
 
+    final class UnixEpochDateTypeAdapter
+            extends TypeAdapter<Date> {
+
+
+        private UnixEpochDateTypeAdapter() {
+        }
+
+
+
+
+
+        @Override
+        public Date read(final JsonReader in)
+                throws IOException {
+            // this is where the conversion is performed
+            return new Date(in.nextLong());
+        }
+
+        @Override
+        @SuppressWarnings("resource")
+        public void write(final JsonWriter out, final Date value)
+                throws IOException {
+            // write back if necessary or throw UnsupportedOperationException
+            out.value(value.getTime());
+        }
+
+    }
+
     public ListaMercadoRetrofitNetwork(){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl(getBaseUrl()).addConverterFactory( GsonConverterFactory.create() ).build();
+        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create();
+
+        final Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new UnixEpochDateTypeAdapter()).create();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(getBaseUrl()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         setUserService(retrofit.create(ShoppingListService.class ));
     }
 
