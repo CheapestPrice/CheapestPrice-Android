@@ -23,13 +23,8 @@ import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdapter.ViewHolder> {
 
     private List<ListaDeMercado> listasDeMercado;
-
     private Context context;
-
-
     private final View.OnClickListener clickListener;
-
-
 
     public ListasMercadoAdapter(List<ListaDeMercado> listas,Context mainActivity,View.OnClickListener clickListener){
         listasDeMercado=listas;
@@ -41,12 +36,10 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
 
         private TextView nombreLista;
         private TextView fechaCreacion;
-        public View view;
         public ViewHolder(View v) {
             super(v);
             setNombreLista((TextView) v.findViewById(R.id.nombreLista));
             setFechaCreacion((TextView) v.findViewById(R.id.fecha));
-            view=v;
 
         }
 
@@ -70,9 +63,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
     @Override
     public ListasMercadoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shoppinglistview, parent, false);
-        v.findViewById(R.id.ver).
-                setOnClickListener(clickListener);
-
+        v.findViewById(R.id.ver).setOnClickListener(clickListener);
         v.findViewById(R.id.eliminar).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }

@@ -57,7 +57,8 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
 
     @Override
     public ItemsListaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_list_products, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_list_product_view, parent, false);
+
         return new ViewHolder(v);
     }
 
