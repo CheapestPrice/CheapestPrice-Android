@@ -11,10 +11,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.R;
+import edu.eci.cosw.cheapestPrice.ShoppingListActivity;
 import edu.eci.cosw.cheapestPrice.ShoppingListProductActivity;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
+import edu.eci.cosw.cheapestPrice.entities.Usuario;
+import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
+import edu.eci.cosw.cheapestPrice.network.NetworkException;
+import edu.eci.cosw.cheapestPrice.network.RequestCallback;
+import okhttp3.ResponseBody;
 
 /**
  * Created by 2105403 on 5/2/17.
@@ -22,12 +30,14 @@ import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 
 public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdapter.ViewHolder> {
 
-    private List<ListaDeMercado> listasDeMercado;
+    private Usuario usuario;
     private Context context;
+    public View.OnClickListener clickListener;
 
-    public ListasMercadoAdapter(List<ListaDeMercado> listas,Context mainActivity){
-        listasDeMercado=listas;
+    public ListasMercadoAdapter(Usuario usuario,Context mainActivity,View.OnClickListener clickListener){
+        this.usuario=usuario;
         context=mainActivity;
+        this.clickListener=clickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -40,6 +50,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
             setNombreLista((TextView) v.findViewById(R.id.nombreLista));
             setFechaCreacion((TextView) v.findViewById(R.id.fecha));
             setVer((Button) v.findViewById(R.id.ver));
+
         }
 
         public TextView getNombreLista() {
@@ -61,17 +72,19 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         public Button getVer() {return ver;}
 
         public void setVer(Button ver) {this.ver = ver;}
+
     }
 
     @Override
     public ListasMercadoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shoppinglistview, parent, false);
+        v.findViewById(R.id.eliminar).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ListasMercadoAdapter.ViewHolder holder, final int position) {
-        ListaDeMercado lista=listasDeMercado.get(position);
+        ListaDeMercado lista=usuario.getListas().get(position);
         //Nombre lista
         holder.getNombreLista().setText(lista.getListaid().getNombre());
         //Fecha de creacion
@@ -80,10 +93,9 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         holder.getVer().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos=position;
                 Intent intent=new Intent(v.getContext(),ShoppingListProductActivity.class);
                 Bundle b = new Bundle();
-                b.putSerializable("post",listasDeMercado.get(position));
+                b.putSerializable("post",usuario.getListas().get(position));
                 Intent start=intent.putExtra("bundle",b);
                 context.startActivity(start);
             }
@@ -92,6 +104,6 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
 
     @Override
     public int getItemCount() {
-        return listasDeMercado.size();
+        return usuario.getListas().size();
     }
 }

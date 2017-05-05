@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import edu.eci.cosw.cheapestPrice.adapters.ItemsListaAdapter;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
+import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 
 /**
  * Created by User on 02/05/17.
@@ -17,11 +19,13 @@ public class ShoppingListProductActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ListaDeMercado listaMercadoUsuario;
+    private TextView nombreLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_products);
+        nombreLista=(TextView) findViewById(R.id.nombreTitulo);
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         setListaMercadoUsuario((ListaDeMercado) b.getSerializable("post"));
@@ -37,7 +41,8 @@ public class ShoppingListProductActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        getRecyclerView().setAdapter(new ItemsListaAdapter(getListaMercadoUsuario().getItems(),this));
+        nombreLista.setText(listaMercadoUsuario.getListaid().getNombre());
+        getRecyclerView().setAdapter(new ItemsListaAdapter(getListaMercadoUsuario(),this));
     }
 
 

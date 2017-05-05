@@ -24,7 +24,6 @@ public class ShoppingListActivity extends AppCompatActivity {
     private String correoUsuario;
     private RecyclerView recyclerView;
     private ListaMercadoRetrofitNetwork network;
-    private Button eliminar;
     private FloatingActionButton agregarLista;
     private int position;
 
@@ -60,8 +59,6 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
 
         });
-        //Colocar acción para eliminar una lista
-        eliminar=(Button) findViewById(R.id.eliminar);
         //Agregar función para agregar una nueva lista
         agregarLista=(FloatingActionButton) findViewById(R.id.agregarLista);
     }
@@ -74,7 +71,16 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        getRecyclerView().setAdapter(new ListasMercadoAdapter(getUsuario().getListas(), this));
+        getRecyclerView().setAdapter(new ListasMercadoAdapter(getUsuario(), this, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.eliminar:
+                        //Hacer lo del retrofit
+                        //break;
+                }
+            }
+        }));
     }
 
     public Usuario getUsuario() {

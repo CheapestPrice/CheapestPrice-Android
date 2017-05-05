@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.entities.ItemLista;
+import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
+import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 
 /**
  * Created by 2105403 on 5/2/17.
@@ -18,10 +18,10 @@ import edu.eci.cosw.cheapestPrice.entities.ItemLista;
 
 public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.ViewHolder> {
 
-    private List<ItemLista> productos;
+    private ListaDeMercado productos;
     private Context context;
 
-    public ItemsListaAdapter(List<ItemLista> productos,Context mainActivity){
+    public ItemsListaAdapter(ListaDeMercado productos,Context mainActivity){
         this.productos=productos;
         context=mainActivity;
     }
@@ -53,6 +53,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         public void setPrecio(TextView precio) {
             this.precio = precio;
         }
+
     }
 
     @Override
@@ -64,7 +65,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
 
     @Override
     public void onBindViewHolder(ItemsListaAdapter.ViewHolder holder, int position) {
-        ItemLista item=productos.get(position);
+        ItemLista item=productos.getItems().get(position);
         //Nombre del producto
         holder.getNombreProducto().setText(item.getItem().getProducto().getNombre());
         //Precio del producto
@@ -73,6 +74,6 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return productos.size();
+        return productos.getItems().size();
     }
 }
