@@ -58,9 +58,6 @@ public class ProductActivity extends AppCompatActivity {
 
         });
 
-        /*
-        Bundle extras = getIntent().getExtras();
-        Item p= (Item) extras.get("item");*/
     }
 
     private void configureRecyclerView() {
@@ -74,20 +71,9 @@ public class ProductActivity extends AppCompatActivity {
         recyclerView.setAdapter(new ItemsAdapter(items, this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
                 switch (v.getId()){
-                    case R.id.updateProduct:
-                        int pos=recyclerView.getChildAdapterPosition(v.getRootView());
-                        Item p=items.get(pos);
-                         intent=new Intent(ProductActivity.this,DetalleProductActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("item",p);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
                     case R.id.deleteProduct:
-                        //Intente actividad eliminar product
-                        intent= new Intent(ProductActivity.this,RegisterActivity.class);
-                        startActivity(intent);
+
                 }
 
             }

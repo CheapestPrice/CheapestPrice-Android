@@ -38,4 +38,16 @@ public class ItemRetrofitNetwork {
         }
     }
 
+    /*public void deleteItem( RequestCallback<Item> requestCallback )
+    {
+        try
+        {
+
+        }
+        catch ( IOException e )
+        {
+            requestCallback.onFailed( new NetworkException( 0, null, e ) );
+        }
+    }*/
+
 }

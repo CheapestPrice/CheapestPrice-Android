@@ -21,5 +21,9 @@
     </string>
     <string name="google_maps_key">AIzaSyAUqP3aKJpf7pv4tgEsQju875KGoIam-O0</string>
     <string name="title_activity_register_map">Map</string>
+    <string name="nombre">Nombre:</string>
+    <string name="marca">Marca:</string>
+    <string name="categoria">Categoria:</string>
+    <string name="logo">Logo:</string>
 
 </resources>
