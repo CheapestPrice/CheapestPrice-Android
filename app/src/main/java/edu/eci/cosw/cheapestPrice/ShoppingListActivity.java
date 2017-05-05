@@ -74,23 +74,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        getRecyclerView().setAdapter(new ListasMercadoAdapter(getUsuario().getListas(), this, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.ver:
-                        position=recyclerView.getChildAdapterPosition(v.getRootView());
-                        Intent intent=new Intent(v.getContext(),ShoppingListProductActivity.class);
-                        Bundle b = new Bundle();
-                        b.putSerializable("post",usuario.getListas().get(position));
-                        Intent start=intent.putExtra("bundle",b);
-                        startActivity(start);
-                        //break;
-                    case R.id.eliminar:
-                        break;
-                }
-            }
-        }));
+        getRecyclerView().setAdapter(new ListasMercadoAdapter(getUsuario().getListas(), this));
     }
 
     public Usuario getUsuario() {

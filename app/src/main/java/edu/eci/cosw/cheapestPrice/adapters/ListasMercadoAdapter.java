@@ -24,23 +24,22 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
 
     private List<ListaDeMercado> listasDeMercado;
     private Context context;
-    private final View.OnClickListener clickListener;
 
-    public ListasMercadoAdapter(List<ListaDeMercado> listas,Context mainActivity,View.OnClickListener clickListener){
+    public ListasMercadoAdapter(List<ListaDeMercado> listas,Context mainActivity){
         listasDeMercado=listas;
         context=mainActivity;
-        this.clickListener=clickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView nombreLista;
         private TextView fechaCreacion;
+        private Button ver;
         public ViewHolder(View v) {
             super(v);
             setNombreLista((TextView) v.findViewById(R.id.nombreLista));
             setFechaCreacion((TextView) v.findViewById(R.id.fecha));
-
+            setVer((Button) v.findViewById(R.id.ver));
         }
 
         public TextView getNombreLista() {
@@ -58,23 +57,37 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         public void setFechaCreacion(TextView fechaCreacion) {
             this.fechaCreacion = fechaCreacion;
         }
+
+        public Button getVer() {return ver;}
+
+        public void setVer(Button ver) {this.ver = ver;}
     }
 
     @Override
     public ListasMercadoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shoppinglistview, parent, false);
-        v.findViewById(R.id.ver).setOnClickListener(clickListener);
-        v.findViewById(R.id.eliminar).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ListasMercadoAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ListasMercadoAdapter.ViewHolder holder, final int position) {
         ListaDeMercado lista=listasDeMercado.get(position);
         //Nombre lista
         holder.getNombreLista().setText(lista.getListaid().getNombre());
         //Fecha de creacion
         holder.getFechaCreacion().setText(lista.getFechaCreacion().toString());
+        //Ver
+        holder.getVer().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos=position;
+                Intent intent=new Intent(v.getContext(),ShoppingListProductActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("post",listasDeMercado.get(position));
+                Intent start=intent.putExtra("bundle",b);
+                context.startActivity(start);
+            }
+        });
     }
 
     @Override
