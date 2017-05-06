@@ -17,6 +17,7 @@ import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
+import okhttp3.ResponseBody;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
@@ -70,15 +71,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         getRecyclerView().setLayoutManager( layoutManager );
     }
 
-    private void refresh(){
+    public void refresh(){
         getRecyclerView().setAdapter(new ListasMercadoAdapter(getUsuario(), this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.eliminar:
-                        //Hacer lo del retrofit
-                        //break;
-                }
             }
         }));
     }

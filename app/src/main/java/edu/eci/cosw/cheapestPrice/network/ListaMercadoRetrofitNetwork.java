@@ -13,6 +13,7 @@ import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.services.ShoppingListService;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -78,15 +79,18 @@ public class ListaMercadoRetrofitNetwork {
         }
     }
 
-    public void eliminarListaMercado(RequestCallback<ResponseBody> requestCallback, String correo,String nombreLista){
-        try {
-            Call<ResponseBody> call=getUserService().deleteListaMercado(correo,nombreLista);
-            Response<ResponseBody> response=call.execute();
-            requestCallback.onSuccess(response.body());
-        } catch (IOException e) {
-            requestCallback.onFailed(new NetworkException(0,null,e));
-        }
+    public void eliminarListaMercado( String correo,String nombreLista){
+        getUserService().deleteListaMercado(correo,nombreLista).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println("Elimino la lista");
+            }
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
 
     public ShoppingListService getUserService() {

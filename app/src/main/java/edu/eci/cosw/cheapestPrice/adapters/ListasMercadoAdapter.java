@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,11 +32,13 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
     private Usuario usuario;
     private Context context;
     public View.OnClickListener clickListener;
+    private ListaMercadoRetrofitNetwork network;
 
-    public ListasMercadoAdapter(Usuario usuario,Context mainActivity,View.OnClickListener clickListener){
-        this.usuario=usuario;
-        context=mainActivity;
-        this.clickListener=clickListener;
+    public ListasMercadoAdapter(Usuario usuario,Context mainActivity,View.OnClickListener clickListener) {
+        this.usuario = usuario;
+        context = mainActivity;
+        this.clickListener = clickListener;
+        network = new ListaMercadoRetrofitNetwork();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -45,12 +46,13 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         private TextView nombreLista;
         private TextView fechaCreacion;
         private Button ver;
+        private Button eliminarLista;
         public ViewHolder(View v) {
             super(v);
             setNombreLista((TextView) v.findViewById(R.id.nombreLista));
             setFechaCreacion((TextView) v.findViewById(R.id.fecha));
             setVer((Button) v.findViewById(R.id.ver));
-
+            setEliminarLista((Button) v.findViewById(R.id.eliminar));
         }
 
         public TextView getNombreLista() {
@@ -73,12 +75,14 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
 
         public void setVer(Button ver) {this.ver = ver;}
 
+        public Button getEliminarLista() {return eliminarLista;}
+
+        public void setEliminarLista(Button eliminarLista) {this.eliminarLista = eliminarLista;}
     }
 
     @Override
     public ListasMercadoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shoppinglistview, parent, false);
-        v.findViewById(R.id.eliminar).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }
 
@@ -100,10 +104,23 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
                 context.startActivity(start);
             }
         });
+        //Eliminar lista de mercado
+        holder.getEliminarLista().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        network.eliminarListaMercado( usuario.getCorreo(), usuario.getListas().get(position).getListaid().getNombre());
+                    }
+                });
+            }});
     }
 
-    @Override
-    public int getItemCount() {
-        return usuario.getListas().size();
-    }
-}
+            @Override
+            public int getItemCount() {
+                return usuario.getListas().size();
+            }
+        }
+
