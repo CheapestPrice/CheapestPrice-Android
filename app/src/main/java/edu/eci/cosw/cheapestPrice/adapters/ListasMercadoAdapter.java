@@ -128,7 +128,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
                             public void onFailed(NetworkException e) {
                                 System.out.println(e);
                             }
-                        },usuario.getCorreo(), usuario.getListas().get(position).getNombre());
+                        },usuario.getId(), usuario.getListas().get(position).getId());
                     }
                 });
             }});

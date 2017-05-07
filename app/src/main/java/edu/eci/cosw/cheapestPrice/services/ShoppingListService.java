@@ -10,6 +10,7 @@ import retrofit2.Response;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -21,25 +22,22 @@ public interface ShoppingListService {
     @GET("/api/usuarios/me/{id}")
     Call<Usuario> getUsuarioById(@Path("id") int id);
 
-    @DELETE("/usuarios/{correo}/{listaNombre}")
-    Call<ResponseBody> deleteListaMercado(@Path("correo") String correo, @Path("listaNombre") String listaNombre);
+    @DELETE("/api/usuarios/{id}/lista/{listaId}")
+    Call<ResponseBody> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
 
 
     //Marcar item de la lista de mercado como favorito
-    @POST("/usuarios/favorito/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}/{fav}")
-    Call<ResponseBody> itemSeleccionadoFavorito(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
-                                            @Path("productoId") long productoId,@Path("nit") String nit,
-                                            @Path("x") double x,@Path("y") double y,@Path("fav") boolean fav);
+    @PUT("/api/usuarios/{id}/lista/{listaId}/item/{itemListaId}/favorite/{fav}")
+    Call<ResponseBody> itemSeleccionadoFavorito(@Path("id") int id,@Path("listaId") int listaId,
+                                            @Path("itemListaId") int itemListaId,@Path("fav") boolean fav);
 
     //Comprar item de la lista de mercado
-    @POST("/usuarios/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}/{comp}")
-    Call<ResponseBody> itemSeleccionadoComprado(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
-                                            @Path("productoId") long productoId,@Path("nit") String nit,
-                                            @Path("x") double x,@Path("y") double y,@Path("comp") boolean comp);
+    @PUT("api/usuarios/{id}/lista/{lId}/item/{ILId}/comprado/{comp}")
+    Call<ResponseBody> itemSeleccionadoComprado(@Path("id") int id,@Path("lId") int lId,
+                                            @Path("ILId") int ILId,@Path("comp") boolean comp);
 
     //Borra un item de la lista de mercado
-    @DELETE("/usuarios/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}")
-    Call<Void> borrarItemSeleccionado(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
-                                      @Path("productoId") long productoId,@Path("nit") String nit,
-                                      @Path("x") double x,@Path("y") double y);
+    @DELETE("/api/usuarios/{id}/lista/{listaId}/item/{idItem}")
+    Call<Void> borrarItemSeleccionado(@Path("id") int id,@Path("listaId") int listaId,
+                                      @Path("idItem") int idItem);
 }

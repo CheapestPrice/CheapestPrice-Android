@@ -83,11 +83,11 @@ public class ListaMercadoRetrofitNetwork {
 
     /**
      * Eliminar la lista de mercado seleccionada
-     * @param correo
-     * @param nombreLista
+     * @param id
+     * @param listaId
      */
-    public void eliminarListaMercado(RequestCallback<ResponseBody> requestCall, String correo,String nombreLista){
-        Call<ResponseBody> call= getUserService().deleteListaMercado(correo,nombreLista);
+    public void eliminarListaMercado(RequestCallback<ResponseBody> requestCall, int id,int listaId){
+        Call<ResponseBody> call= getUserService().deleteListaMercado(id,listaId);
         try {
             Response<ResponseBody> response=call.execute();
             requestCall.onSuccess(response.body());
@@ -99,16 +99,13 @@ public class ListaMercadoRetrofitNetwork {
     /**
      * Selecciona un item de la lista de mercado como favorito
      * @param requestCall
-     * @param correo
-     * @param nombreLista
-     * @param productoId
-     * @param nit
-     * @param x
-     * @param y
+     * @param id
+     * @param itemListaId
+     * @param listaId
      * @param fav
      */
-    public void itemSeleccionadoFavorito(RequestCallback<ResponseBody> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean fav) {
-        Call<ResponseBody> call=getUserService().itemSeleccionadoFavorito(correo,nombreLista,productoId,nit,x,y,fav);
+    public void itemSeleccionadoFavorito(RequestCallback<ResponseBody> requestCall,int id,int listaId,int itemListaId,boolean fav) {
+        Call<ResponseBody> call=getUserService().itemSeleccionadoFavorito(id,listaId,itemListaId,fav);
         try {
             Response<ResponseBody> response=call.execute();
             requestCall.onSuccess(response.body());
@@ -120,16 +117,13 @@ public class ListaMercadoRetrofitNetwork {
     /**
      * Selecciona un item de la lista de mercado como comprado
      * @param requestCall
-     * @param correo
-     * @param nombreLista
-     * @param productoId
-     * @param nit
-     * @param x
-     * @param y
+     * @param id
+     * @param listaId
+     * @param itemListaId
      * @param comp
      */
-    public void itemSeleccionadoComprado(RequestCallback<ResponseBody> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean comp) {
-        Call<ResponseBody> call=getUserService().itemSeleccionadoComprado(correo,nombreLista,productoId,nit,x,y,comp);
+    public void itemSeleccionadoComprado(RequestCallback<ResponseBody> requestCall,int id,int listaId,int itemListaId,boolean comp) {
+        Call<ResponseBody> call=getUserService().itemSeleccionadoComprado(id,listaId,itemListaId,comp);
         try {
             Response<ResponseBody> response=call.execute();
             requestCall.onSuccess(response.body());
@@ -141,15 +135,12 @@ public class ListaMercadoRetrofitNetwork {
     /**
      * Elimina un item seleccionado de la lista de mercado
      * @param requestCall
-     * @param correo
-     * @param nombreLista
-     * @param productoId
-     * @param nit
-     * @param x
-     * @param y
+     * @param id
+     * @param listaId
+     * @param itemListaId
      */
-    public void eliminarItemListaMercado(RequestCallback<Response> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y){
-        getUserService().borrarItemSeleccionado(correo,nombreLista,productoId,nit,x,y).enqueue(new Callback<Void>() {
+    public void eliminarItemListaMercado(RequestCallback<Response> requestCall,int id,int listaId,int itemListaId){
+        getUserService().borrarItemSeleccionado(id,listaId,itemListaId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 System.out.println("Elimino el item de la lista");

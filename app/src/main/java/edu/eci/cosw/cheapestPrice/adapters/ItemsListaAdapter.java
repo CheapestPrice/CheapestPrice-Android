@@ -126,12 +126,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             public void onFailed(NetworkException e) {
                                 System.out.println(e);
                             }
-                        }, productos.getUsuario().getCorreo(),
-                                productos.getNombre(),
-                                productos.getItems().get(position).getId(),
-                                productos.getItems().get(position).getItem().getTienda().getNit(),
-                                productos.getItems().get(position).getItem().getTienda().getX(),
-                                productos.getItems().get(position).getItem().getTienda().getY(),
+                        }, productos.getUsuario().getId(), productos.getId(), productos.getItems().get(position).getId(),
                                 !productos.getItems().get(position).getFavorito());
                     }
 
