@@ -8,36 +8,36 @@ import java.util.List;
  * Created by 2105403 on 2/20/17.
  */
 
-//@Inheritance(strategy=InheritanceType.JOINED)
-public class Usuario implements Persona,Serializable {
+public class Usuario implements Serializable {
 
-    protected String nombre;
-
-    protected String correo;
-
-    protected List<ListaDeMercado> listas;
-
-    protected List<Opinion> opiniones;
+    private String nombre;
+    private String correo;
+    private int id;
+    private List<ListaDeMercado> listas;
+    private List<Opinion> opiniones;
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String correo, List<ListaDeMercado> listas) {
+    public Usuario(String nombre, String correo, List<ListaDeMercado> listas,int id) {
         this.nombre = nombre;
         this.correo = correo;
         this.listas=new ArrayList<>();
+        this.setId(id);
     }
 
-    public Usuario(String nombre, String correo) {
+    public Usuario(String nombre, String correo,int id) {
         this.nombre = nombre;
         this.correo = correo;
+        this.setId(id);
     }
 
-    public Usuario(String nombre, String correo, List<ListaDeMercado> listas, List<Opinion> opiniones) {
+    public Usuario(String nombre, String correo, List<ListaDeMercado> listas, List<Opinion> opiniones,int id) {
         this.nombre = nombre;
         this.correo = correo;
         this.setListas(listas);
         this.setOpiniones(opiniones);
+        this.setId(id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class Usuario implements Persona,Serializable {
      **/
     public void agregarProducto(ItemLista iT, String nombreLista){
         for(ListaDeMercado lM: listas){
-            if(lM.getListaid().getNombre().equals(nombreLista)){
+            if(lM.getNombre().equals(nombreLista)){
                 lM.agregarProducto(iT);
             }
         }
@@ -84,4 +84,11 @@ public class Usuario implements Persona,Serializable {
         this.opiniones = opiniones;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

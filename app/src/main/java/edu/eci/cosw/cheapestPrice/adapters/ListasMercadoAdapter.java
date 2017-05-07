@@ -92,7 +92,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
     public void onBindViewHolder(ListasMercadoAdapter.ViewHolder holder, final int position) {
         ListaDeMercado lista=usuario.getListas().get(position);
         //Nombre lista
-        holder.getNombreLista().setText(lista.getListaid().getNombre());
+        holder.getNombreLista().setText(lista.getNombre());
         //Fecha de creacion
         holder.getFechaCreacion().setText(lista.getFechaCreacion().toString());
         //Ver
@@ -128,7 +128,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
                             public void onFailed(NetworkException e) {
                                 System.out.println(e);
                             }
-                        },usuario.getCorreo(), usuario.getListas().get(position).getListaid().getNombre());
+                        },usuario.getCorreo(), usuario.getListas().get(position).getNombre());
                     }
                 });
             }});

@@ -7,17 +7,12 @@ import java.sql.Blob;
  * Created by masterhugo on 2/16/17.
  */
 
-
 public class Producto implements Serializable {
 
     private String nombre;
-
     private String marca;
-
     private String categoria;
-
     private Blob imagen;
-
     private long id;
 
     public Producto(long id, String nombre,String marca, String categoria){

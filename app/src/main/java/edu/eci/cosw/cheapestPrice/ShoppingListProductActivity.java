@@ -41,7 +41,7 @@ public class ShoppingListProductActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        nombreLista.setText(listaMercadoUsuario.getListaid().getNombre());
+        nombreLista.setText(listaMercadoUsuario.getNombre());
         getRecyclerView().setAdapter(new ItemsListaAdapter(getListaMercadoUsuario(),this));
     }
 

@@ -6,13 +6,15 @@ import java.util.Date;
 /**
  * Created by ger9410 on 13/03/17.
  */
+
 public class Opinion implements Serializable {
+
+
     private int id;
     private String comentario;
     private boolean gusta;
     private Date fecha;
     private Usuario usuario;
-
     private Tienda tienda;
 
     public Opinion(){}

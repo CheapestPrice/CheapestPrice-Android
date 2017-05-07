@@ -7,29 +7,27 @@ import java.util.List;
 /**
  * Created by 2105403 on 2/20/17.
  */
+
 public class ListaDeMercado implements Serializable {
 
-
     private Date fechaCreacion;
-
     private boolean revisado;
-
     private List<ItemLista> items;
-
-    private ListaMercado_Item listaid;
-
+    private int id;
+    private String nombre;
     private Usuario usuario;
 
     public ListaDeMercado(){}
 
-    public ListaDeMercado(Date fechaCreacion, boolean revisado){
+    public ListaDeMercado(Date fechaCreacion, boolean revisado, int id){
         this.fechaCreacion=fechaCreacion;
         this.revisado=revisado;
+        this.id=id;
         //items=new ArrayList<ItemLista>();
     }
 
-    public ListaDeMercado(ListaMercado_Item lmi){
-        this.listaid=lmi;
+    public ListaDeMercado(int lmi){
+        this.setId(lmi);
         this.fechaCreacion=new Date();
         this.revisado=false;
     }
@@ -102,11 +100,19 @@ public class ListaDeMercado implements Serializable {
         this.usuario = usuario;
     }
 
-    public ListaMercado_Item getListaid() {
-        return listaid;
+    public int getId() {
+        return id;
     }
 
-    public void setListaid(ListaMercado_Item listaid) {
-        this.listaid = listaid;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

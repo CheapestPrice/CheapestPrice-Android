@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
 public class ShoppingListActivity extends AppCompatActivity {
 
     private Usuario usuario;
-    private String correoUsuario;
+    private int idUsuario;
     private RecyclerView recyclerView;
     private ListaMercadoRetrofitNetwork network;
     private FloatingActionButton agregarLista;
@@ -55,7 +55,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
                     }
-                }, getCorreoUsuario());
+                }, getIdUsuario());
 
             }
 
@@ -91,13 +91,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         this.usuario = usuario;
     }
 
-    public String getCorreoUsuario() {
-        return "admin@cheapestprice.com";
-        //return correoUsuario;
+    public int getIdUsuario() {
+        return 2;
+        //return idUsuario;
     }
 
-    public void setCorreoUsuario(String correoUsuario) {
-        this.correoUsuario = correoUsuario;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public RecyclerView getRecyclerView() {

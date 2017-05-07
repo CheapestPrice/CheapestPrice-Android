@@ -8,26 +8,21 @@ import java.io.Serializable;
 
 public class Horario implements Serializable{
 
-
     private int horaInicio;
-
     private int minutosInicio;
-
     private int horaFin;
-
     private int minutoFin;
-
-    private HorarioId horarioId;
-
+    private int id;
+    private String dia;
     private Tienda tienda;
 
-    public Horario(int horaInicio, int minutosInicio, int horaFin, int minutoFin,Tienda tienda,String dia) {
+    public Horario(int horaInicio, int minutosInicio, int horaFin, int minutoFin,Tienda tienda,String dia,int id) {
         this.setHoraInicio(horaInicio);
         this.setMinutosInicio(minutosInicio);
         this.setHoraFin(horaFin);
         this.setMinutoFin(minutoFin);
         setTienda(tienda);
-        setHorarioId(new HorarioId(dia,tienda.getId().getNit(),tienda.getId().getX(),tienda.getId().getY()));
+        this.id=id;
 
     }
 
@@ -69,19 +64,27 @@ public class Horario implements Serializable{
         this.minutoFin = minutoFin;
     }
 
-    public HorarioId getHorarioId() {
-        return horarioId;
-    }
-
-    public void setHorarioId(HorarioId horarioId) {
-        this.horarioId = horarioId;
-    }
-
     public Tienda getTienda() {
         return tienda;
     }
 
     public void setTienda(Tienda tienda) {
         this.tienda = tienda;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDia() {
+        return dia;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
     }
 }

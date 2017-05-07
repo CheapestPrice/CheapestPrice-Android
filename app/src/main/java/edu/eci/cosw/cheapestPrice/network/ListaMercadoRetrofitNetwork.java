@@ -69,11 +69,11 @@ public class ListaMercadoRetrofitNetwork {
     /**
      * Obtener el usuario por el correo
      * @param requestCallback
-     * @param correo
+     * @param id
      */
-    public void getUsuarioByCorreo(RequestCallback<Usuario> requestCallback, String correo){
+    public void getUsuarioByCorreo(RequestCallback<Usuario> requestCallback, int id){
         try{
-            Call<Usuario> call= getUserService().getUsuarioByCorreo(correo);
+            Call<Usuario> call= getUserService().getUsuarioById(id);
             Response<Usuario> response=call.execute();
             requestCallback.onSuccess( response.body() );
         } catch (IOException e) {

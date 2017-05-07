@@ -61,7 +61,7 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.ViewHold
     public void onBindViewHolder(HorarioAdapter.ViewHolder holder, int position) {
         Horario h=horarios.get(position);
         //Dia del horario
-        holder.getDiaHorario().setText(h.getHorarioId().getDia());
+        holder.getDiaHorario().setText(h.getDia());
         //Hora abrir
         holder.getHoraInicioHorario().setText(h.getHoraInicio()+":"+h.getMinutosInicio());
         //Hora de cierre

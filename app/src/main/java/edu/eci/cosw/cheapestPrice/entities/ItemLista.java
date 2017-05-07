@@ -1,4 +1,5 @@
 package edu.eci.cosw.cheapestPrice.entities;
+
 import java.io.Serializable;
 
 /**
@@ -7,20 +8,17 @@ import java.io.Serializable;
 public class ItemLista implements Serializable{
 
     private boolean comprado;
-
     private boolean favorito;
-
-    private ItemListaId id;
-
+    private int id;
     private Item item;
-
     private ListaDeMercado lista;
 
     public ItemLista(){
 
     }
 
-    public ItemLista(ItemListaId id, boolean comprado, boolean favorito){
+    public ItemLista(int id, boolean comprado, boolean favorito){
+        this.id=id;
         this.comprado=comprado;
         this.favorito=favorito;
     }
@@ -65,11 +63,11 @@ public class ItemLista implements Serializable{
         this.favorito = favorito;
     }
 
-    public ItemListaId getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(ItemListaId id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

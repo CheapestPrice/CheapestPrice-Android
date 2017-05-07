@@ -18,8 +18,8 @@ import retrofit2.http.Path;
 
 public interface ShoppingListService {
 
-    @GET("/usuarios/{correo}")
-    Call<Usuario> getUsuarioByCorreo(@Path("correo") String correo);
+    @GET("/api/usuarios/me/{id}")
+    Call<Usuario> getUsuarioById(@Path("id") int id);
 
     @DELETE("/usuarios/{correo}/{listaNombre}")
     Call<ResponseBody> deleteListaMercado(@Path("correo") String correo, @Path("listaNombre") String listaNombre);

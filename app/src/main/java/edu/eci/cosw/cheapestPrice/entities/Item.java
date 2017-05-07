@@ -5,41 +5,37 @@ import java.io.Serializable;
 /**
  * Created by Julian David Devia Serna on 2/19/17.
  */
-
 public class Item implements Serializable {
 
-    private ItemId id;
-
+    private int id;
     private long precio;
-
     private Tienda tienda;
-
     private Producto producto;
 
     public Item(){};
 
-    public Item(ItemId id){
+    public Item(int id){
         this.id=id;
     }
 
-    public Item(Producto producto,Tienda tienda,long precio){
+    public Item(Producto producto,Tienda tienda,long precio,int id){
         this.producto=producto;
         this.tienda=tienda;
         this.precio=precio;
-        this.id=new ItemId(producto.getId(),tienda.getId().getX(),tienda.getId().getY(),tienda.getId().getNit());
+        this.id=id;
     }
 
-    public Item(Producto producto,Tienda tienda){
+    public Item(Producto producto,Tienda tienda,int id){
         this.producto=producto;
         this.tienda=tienda;
-        this.id=new ItemId(producto.getId(),tienda.getId().getX(),tienda.getId().getY(),tienda.getId().getNit());
+        this.id=id;
     }
 
-    public ItemId getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(ItemId id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -69,6 +65,6 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Item: "+id.getTiendaNit()+ " "+ id.getTiendaX() + " " + id.getTiendaY() + " "+id.getProductoId() +" "+precio;
+        return "["+tienda.getNit()+ " "+ tienda.getX() + " " + tienda.getY() + " "+producto.getId() +" "+precio+"]";
     }
 }

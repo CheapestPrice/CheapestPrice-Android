@@ -1,5 +1,7 @@
 package edu.eci.cosw.cheapestPrice.entities;
 
+
+
 import java.sql.Blob;
 
 import java.sql.Timestamp;
@@ -9,31 +11,27 @@ import java.util.*;
  * Clase tienda
  *Created by Daniela.
  */
+
 public class Tienda implements java.io.Serializable {
 
-    private TiendaId id;
 
+    private int id;
+    private String nit;
+    private double x;
+    private double y;
     private String direccion;
-
     private String nombre;
-
     private String telefono;
-
     private boolean disponible;
-
     private Blob logo;
-
     private List<Horario> horarios;
-
     private Tendero tendero;
-
     private List<Opinion> opiniones;
-
     private List<Item> items;
 
     public Tienda(){}
 
-    public Tienda(String direccion,TiendaId id,String nombre,String telefono, boolean disponible) {
+    public Tienda(String direccion,int id,String nombre,String telefono, boolean disponible,double x,double y,String nit) {
         this.horarios=new ArrayList<Horario>();
         this.opiniones=new ArrayList<Opinion>();
         this.items=new ArrayList<>();
@@ -42,10 +40,13 @@ public class Tienda implements java.io.Serializable {
         this.nombre = nombre;
         this.telefono = telefono;
         this.disponible = disponible;
+        this.x = x;
+        this.y = y;
+        this.nit = nit;
 
     }
 
-    public Tienda(String direccion,TiendaId id, String nombre,String telefono, boolean disponible,Blob logo) {
+    public Tienda(String direccion,int id, String nombre,String telefono, boolean disponible,Blob logo,double x,double y,String nit) {
         this.horarios=new ArrayList<Horario>();
         this.opiniones=new ArrayList<Opinion>();
         this.items=new ArrayList<>();
@@ -55,10 +56,13 @@ public class Tienda implements java.io.Serializable {
         this.telefono = telefono;
         this.disponible = disponible;
         this.logo = logo;
+        this.x = x;
+        this.y = y;
+        this.nit = nit;
 
     }
 
-    public Tienda(String direccion,TiendaId id,String nombre,String telefono, Tendero tendero){
+    public Tienda(String direccion,int id,String nombre,String telefono, Tendero tendero,double x,double y,String nit){
         this.horarios=new ArrayList<Horario>();
         this.opiniones=new ArrayList<Opinion>();
         this.items=new ArrayList<>();
@@ -68,14 +72,17 @@ public class Tienda implements java.io.Serializable {
         this.telefono = telefono;
         this.tendero=tendero;
         this.disponible=true;
+        this.x = x;
+        this.y = y;
+        this.nit = nit;
 
     }
 
-    public TiendaId getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(TiendaId id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -122,12 +129,12 @@ public class Tienda implements java.io.Serializable {
     @Override
     public boolean equals(Object o){
         Tienda ot=(Tienda) o;
-        return getId().equals(ot.getId()) && direccion.equals(ot.getDireccion()) && nombre.equals(ot.getNombre()) && telefono.equals(ot.getTelefono());
+        return getId()==ot.getId() && direccion.equals(ot.getDireccion()) && nombre.equals(ot.getNombre()) && telefono.equals(ot.getTelefono()) && x==ot.getX() && y==ot.getY() && nit.equals(ot.getNit());
     }
 
     @Override
     public String toString(){
-        return "nombre: "+nombre+" direccion: "+direccion+" telefono: "+telefono+" NIT: "+id.getNit();
+        return "nombre: "+nombre+" direccion: "+direccion+" telefono: "+telefono+" NIT: "+nit;
     }
 
     public Tendero getTendero() {
@@ -189,7 +196,7 @@ public class Tienda implements java.io.Serializable {
         boolean ans=false;
         for (int i = 0; i < horarios.size() && !ans; i++) {
             Horario tmp=horarios.get(i);
-            if(tmp.getHorarioId().getDia().equals(dia)){
+            if(tmp.getDia().equals(dia)){
                 if(tmp.getHoraInicio()<cal.HOUR_OF_DAY && tmp.getHoraFin()>cal.HOUR_OF_DAY && tmp.getMinutosInicio()<cal.MINUTE && tmp.getMinutoFin()>cal.MINUTE){
                     ans=true;
                 }
@@ -205,11 +212,34 @@ public class Tienda implements java.io.Serializable {
      */
     public void modifyHorary(String dia, Horario horario){
         for (int j = 0; j < horarios.size(); j++) {
-            if(horarios.get(j).getHorarioId().getDia().equals(dia)){
+            if(horarios.get(j).getDia().equals(dia)){
                 horarios.remove(j);
                 horarios.add(j,horario);
             }
         }
     }
 
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 }
