@@ -61,4 +61,25 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/nombreTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:text="Horario" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewHorariosTienda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+        </LinearLayout>
+
 </LinearLayout>

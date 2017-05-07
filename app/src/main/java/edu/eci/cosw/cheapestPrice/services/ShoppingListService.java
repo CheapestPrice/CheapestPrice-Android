@@ -27,15 +27,15 @@ public interface ShoppingListService {
 
     //Marcar item de la lista de mercado como favorito
     @POST("/usuarios/favorito/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}/{fav}")
-    Call<Response> itemSeleccionadoComprado(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
+    Call<ResponseBody> itemSeleccionadoFavorito(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
                                             @Path("productoId") long productoId,@Path("nit") String nit,
                                             @Path("x") double x,@Path("y") double y,@Path("fav") boolean fav);
 
     //Comprar item de la lista de mercado
     @POST("/usuarios/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}/{comp}")
-    Call<Response> itemSeleccionadoFavorito(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
+    Call<ResponseBody> itemSeleccionadoComprado(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
                                             @Path("productoId") long productoId,@Path("nit") String nit,
-                                            @Path("x") double x,@Path("y") double y,@Path("fav") boolean fav);
+                                            @Path("x") double x,@Path("y") double y,@Path("comp") boolean comp);
 
     //Borra un item de la lista de mercado
     @DELETE("/usuarios/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}")

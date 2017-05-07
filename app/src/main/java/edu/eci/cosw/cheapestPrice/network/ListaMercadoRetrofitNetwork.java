@@ -107,11 +107,11 @@ public class ListaMercadoRetrofitNetwork {
      * @param y
      * @param fav
      */
-    public void itemSeleccionadoFavorito(RequestCallback<Response> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean fav) {
-        Call<Response> call=getUserService().itemSeleccionadoFavorito(correo,nombreLista,productoId,nit,x,y,fav);
+    public void itemSeleccionadoFavorito(RequestCallback<ResponseBody> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean fav) {
+        Call<ResponseBody> call=getUserService().itemSeleccionadoFavorito(correo,nombreLista,productoId,nit,x,y,fav);
         try {
-            Response response=call.execute();
-            requestCall.onSuccess(response);
+            Response<ResponseBody> response=call.execute();
+            requestCall.onSuccess(response.body());
         } catch (IOException e) {
             requestCall.onFailed( new NetworkException( 0, null, e ) );
         }
@@ -128,11 +128,11 @@ public class ListaMercadoRetrofitNetwork {
      * @param y
      * @param comp
      */
-    public void itemSeleccionadoComprado(RequestCallback<Response> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean comp) {
-        Call<Response> call=getUserService().itemSeleccionadoComprado(correo,nombreLista,productoId,nit,x,y,comp);
+    public void itemSeleccionadoComprado(RequestCallback<ResponseBody> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean comp) {
+        Call<ResponseBody> call=getUserService().itemSeleccionadoComprado(correo,nombreLista,productoId,nit,x,y,comp);
         try {
-            Response response=call.execute();
-            requestCall.onSuccess(response);
+            Response<ResponseBody> response=call.execute();
+            requestCall.onSuccess(response.body());
         } catch (IOException e) {
             requestCall.onFailed( new NetworkException( 0, null, e ) );
         }

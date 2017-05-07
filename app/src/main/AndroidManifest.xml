@@ -41,6 +41,7 @@
         <activity android:name=".SearchActivity" />
         <activity android:name=".MenuTenderoActivity" />
         <activity android:name=".ShoppingListProductActivity"/>
+        <activity android:name=".PopUpTiendaInfo"/>
         <activity android:name=".DetalleProductActivity"></activity>
     </application>
 

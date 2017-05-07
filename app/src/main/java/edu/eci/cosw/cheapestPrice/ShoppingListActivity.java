@@ -77,7 +77,7 @@ public class ShoppingListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.eliminar:
-                        refresh();
+                        //refresh();
                 }
             }
         }));
