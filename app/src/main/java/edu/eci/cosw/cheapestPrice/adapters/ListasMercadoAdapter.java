@@ -22,6 +22,7 @@ import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * Created by 2105403 on 5/2/17.
@@ -83,6 +84,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
     @Override
     public ListasMercadoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shoppinglistview, parent, false);
+        v.findViewById(R.id.eliminar).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }
 
@@ -112,7 +114,21 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.eliminarListaMercado( usuario.getCorreo(), usuario.getListas().get(position).getListaid().getNombre());
+                        network.eliminarListaMercado(new RequestCallback<ResponseBody>() {
+                            @Override
+                            public void onSuccess(ResponseBody response) {
+                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ((ShoppingListActivity) context).getRecyclerView().getAdapter().notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                            @Override
+                            public void onFailed(NetworkException e) {
+                                System.out.println(e);
+                            }
+                        },usuario.getCorreo(), usuario.getListas().get(position).getListaid().getNombre());
                     }
                 });
             }});

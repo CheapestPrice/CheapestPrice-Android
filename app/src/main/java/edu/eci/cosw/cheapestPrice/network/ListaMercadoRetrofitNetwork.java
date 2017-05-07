@@ -36,8 +36,6 @@ public class ListaMercadoRetrofitNetwork {
 
 
 
-
-
         @Override
         public Date read(final JsonReader in)
                 throws IOException {
@@ -68,7 +66,11 @@ public class ListaMercadoRetrofitNetwork {
         return BASE_URL;
     }
 
-
+    /**
+     * Obtener el usuario por el correo
+     * @param requestCallback
+     * @param correo
+     */
     public void getUsuarioByCorreo(RequestCallback<Usuario> requestCallback, String correo){
         try{
             Call<Usuario> call= getUserService().getUsuarioByCorreo(correo);
@@ -79,11 +81,78 @@ public class ListaMercadoRetrofitNetwork {
         }
     }
 
-    public void eliminarListaMercado( String correo,String nombreLista){
-        getUserService().deleteListaMercado(correo,nombreLista).enqueue(new Callback<Void>() {
+    /**
+     * Eliminar la lista de mercado seleccionada
+     * @param correo
+     * @param nombreLista
+     */
+    public void eliminarListaMercado(RequestCallback<ResponseBody> requestCall, String correo,String nombreLista){
+        Call<ResponseBody> call= getUserService().deleteListaMercado(correo,nombreLista);
+        try {
+            Response<ResponseBody> response=call.execute();
+            requestCall.onSuccess(response.body());
+        } catch (IOException e) {
+            requestCall.onFailed( new NetworkException( 0, null, e ) );
+        }
+    }
+
+    /**
+     * Selecciona un item de la lista de mercado como favorito
+     * @param requestCall
+     * @param correo
+     * @param nombreLista
+     * @param productoId
+     * @param nit
+     * @param x
+     * @param y
+     * @param fav
+     */
+    public void itemSeleccionadoFavorito(RequestCallback<Response> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean fav) {
+        Call<Response> call=getUserService().itemSeleccionadoFavorito(correo,nombreLista,productoId,nit,x,y,fav);
+        try {
+            Response response=call.execute();
+            requestCall.onSuccess(response);
+        } catch (IOException e) {
+            requestCall.onFailed( new NetworkException( 0, null, e ) );
+        }
+    }
+
+    /**
+     * Selecciona un item de la lista de mercado como comprado
+     * @param requestCall
+     * @param correo
+     * @param nombreLista
+     * @param productoId
+     * @param nit
+     * @param x
+     * @param y
+     * @param comp
+     */
+    public void itemSeleccionadoComprado(RequestCallback<Response> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y,boolean comp) {
+        Call<Response> call=getUserService().itemSeleccionadoComprado(correo,nombreLista,productoId,nit,x,y,comp);
+        try {
+            Response response=call.execute();
+            requestCall.onSuccess(response);
+        } catch (IOException e) {
+            requestCall.onFailed( new NetworkException( 0, null, e ) );
+        }
+    }
+
+    /**
+     * Elimina un item seleccionado de la lista de mercado
+     * @param requestCall
+     * @param correo
+     * @param nombreLista
+     * @param productoId
+     * @param nit
+     * @param x
+     * @param y
+     */
+    public void eliminarItemListaMercado(RequestCallback<Response> requestCall,String correo,String nombreLista,long productoId,String nit,double x,double y){
+        getUserService().borrarItemSeleccionado(correo,nombreLista,productoId,nit,x,y).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println("Elimino la lista");
+                System.out.println("Elimino el item de la lista");
             }
 
             @Override

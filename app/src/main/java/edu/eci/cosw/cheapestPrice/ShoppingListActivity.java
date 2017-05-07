@@ -75,6 +75,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         getRecyclerView().setAdapter(new ListasMercadoAdapter(getUsuario(), this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.eliminar:
+                        refresh();
+                }
             }
         }));
     }

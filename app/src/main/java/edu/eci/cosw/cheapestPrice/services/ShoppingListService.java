@@ -22,17 +22,24 @@ public interface ShoppingListService {
     Call<Usuario> getUsuarioByCorreo(@Path("correo") String correo);
 
     @DELETE("/usuarios/{correo}/{listaNombre}")
-    Call<Void> deleteListaMercado(@Path("correo") String correo, @Path("listaNombre") String listaNombre);
+    Call<ResponseBody> deleteListaMercado(@Path("correo") String correo, @Path("listaNombre") String listaNombre);
 
-    //Comprar item de la lista de mercado
-    @POST("/usuarios/favorito")
-    Call<Void> itemSeleccionadoComprado();
 
     //Marcar item de la lista de mercado como favorito
-    @POST("/usuarios/")
-    Call<Void> itemSeleccionadoFavorito();
+    @POST("/usuarios/favorito/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}/{fav}")
+    Call<Response> itemSeleccionadoComprado(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
+                                            @Path("productoId") long productoId,@Path("nit") String nit,
+                                            @Path("x") double x,@Path("y") double y,@Path("fav") boolean fav);
+
+    //Comprar item de la lista de mercado
+    @POST("/usuarios/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}/{comp}")
+    Call<Response> itemSeleccionadoFavorito(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
+                                            @Path("productoId") long productoId,@Path("nit") String nit,
+                                            @Path("x") double x,@Path("y") double y,@Path("fav") boolean fav);
 
     //Borra un item de la lista de mercado
-    @DELETE("/usuarios/{correo}")
-    Call<Void> borrarItemSeleccionado();
+    @DELETE("/usuarios/{correo}/{listaNombre}/{productoId}/{nit}/{x}/{y}")
+    Call<Void> borrarItemSeleccionado(@Path("correo") String correo,@Path("listaNombre") String listaNombre,
+                                      @Path("productoId") long productoId,@Path("nit") String nit,
+                                      @Path("x") double x,@Path("y") double y);
 }
