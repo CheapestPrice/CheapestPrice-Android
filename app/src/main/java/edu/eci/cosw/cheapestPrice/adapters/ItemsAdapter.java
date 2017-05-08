@@ -2,8 +2,10 @@ package edu.eci.cosw.cheapestPrice.adapters;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,7 +164,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         ///eliminar
         holder.getDeleteProduct().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -170,6 +172,24 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             @Override
                             public void onResponse(Call<Void> call1, Response<Void> reponse) {
                                 System.out.println("Success : "+call1+" r:"+reponse);
+                                ((ProductActivity) context).runOnUiThread(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                builder.setMessage("Actualizacion completa..")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                                Intent intent=new Intent(v.getContext(),ProductActivity.class);
+                                                                context.startActivity(intent);
+                                                            }
+                                                        });
+                                                AlertDialog alert = builder.create();
+                                                alert.show();
+                                            }
+                                        }
+                                );
                             }
 
                             @Override
@@ -177,7 +197,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                 System.out.println("Fail: "+t);
                             }
 
-                        },id,idshop,item.getId());
+                        },iduser,idshop,item.getId());
                     }
 
                 });
