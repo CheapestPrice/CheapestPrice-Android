@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }else{
                             System.out.println("cliente "+response.getId());
-                            Intent intent= new Intent(cont,ShoppingListActivity.class);
+                            Intent intent= new Intent(cont,SearchActivity.class);
                             Bundle b = new Bundle();
                             b.putSerializable("id",response.getId());
                             Intent start=intent.putExtra("bundle",b);

@@ -38,11 +38,11 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         context=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         initViews();
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
-        iduser=((Usuario) b.getSerializable("id"));
+        iduser=(Usuario) b.getSerializable("id");
         System.out.println("user "+iduser.toString());
         network = new ItemRetrofitNetwork();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
