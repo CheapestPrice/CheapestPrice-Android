@@ -29,6 +29,9 @@ import edu.eci.cosw.cheapestPrice.entities.Item;
 import edu.eci.cosw.cheapestPrice.network.ItemRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.R.attr.id;
 
@@ -163,17 +166,17 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.deleteItem(new RequestCallback<Item>() {
+                        network.deleteItem(new Callback<Void>() {
                             @Override
-                            public void onSuccess(Item response) {
-                                System.out.println("Success : "+response);
-                                startDetalle();
+                            public void onResponse(Call<Void> call1, Response<Void> reponse) {
+                                System.out.println("Success : "+call1+" r:"+reponse);
                             }
 
                             @Override
-                            public void onFailed(NetworkException e) {
-                                System.out.println("Fail: "+e);
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println("Fail: "+t);
                             }
+
                         },id,idshop,item.getId());
                     }
 
@@ -181,11 +184,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             }
         });
 
-    }
-
-    private void startDetalle() {
-        Intent intent=new Intent(context,ProductActivity.class);
-        context.startActivity(intent);
     }
 
     @Override

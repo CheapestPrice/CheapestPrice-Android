@@ -22,6 +22,10 @@ import edu.eci.cosw.cheapestPrice.entities.Item;
 import edu.eci.cosw.cheapestPrice.network.ItemRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class DetalleProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -46,7 +50,7 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
         setContentView(R.layout.activity_detalle_product);
         context=this;
         network=new ItemRetrofitNetwork();
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        final ExecutorService executorService = Executors.newFixedThreadPool(1);
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         item=(Item)  b.getSerializable("item");
@@ -99,7 +103,23 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateItem(v);
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        network.putItem(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call1, Response<Void> reponse) {
+                                System.out.println("Success : "+call1+" r:"+reponse);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println("Fail: "+t);
+                            }
+
+                        },id,idshop,item.getId());
+                    }
+                });
             }
         });
 
@@ -108,9 +128,6 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
     private void updateLogo(View v) {
     }
 
-    private void updateItem(View v) {
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -7,6 +7,7 @@ import edu.eci.cosw.cheapestPrice.entities.Item;
 import edu.eci.cosw.cheapestPrice.entities.Producto;
 import edu.eci.cosw.cheapestPrice.services.ItemService;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -117,42 +118,21 @@ public class ItemRetrofitNetwork {
         }
     }
 
-   public void deleteItem( RequestCallback<Item> requestCallback,int id, int shop,int idItem)
+   public void deleteItem(Callback<Void> callback, int id, int shop,int idItem)
     {
-        try {
-            Call<Item> call=itemService.deleteItem(id,shop,idItem);
-            Response<Item> execute = call.execute();
-            requestCallback.onSuccess(execute.body());
-        }
-        catch ( IOException e )
-        {
-            requestCallback.onFailed( new NetworkException( 0, null, e ) );
-        }
+            Call<Void> call=itemService.deleteItem(id,shop,idItem);
+            call.enqueue(callback);
     }
 
-    public void postItem( RequestCallback<Item> requestCallback,int id, int shop,int idItem)
+    public void postItem(Callback<Void> callback,int id, int shop,int idItem)
     {
-        try {
-            Call<Item> call=itemService.postItem(id,shop,idItem);
-            Response<Item> execute = call.execute();
-            requestCallback.onSuccess(execute.body());
-        }
-        catch ( IOException e )
-        {
-            requestCallback.onFailed( new NetworkException( 0, null, e ) );
-        }
+        Call<Void> call=itemService.postItem(id,shop,idItem);
+        call.enqueue(callback);
     }
 
-    public void putItem( RequestCallback<Item> requestCallback,int id, int shop,int idItem)
+    public void putItem(Callback<Void> callback,int id, int shop, int idItem)
     {
-        try {
-            Call<Item> call=itemService.putItem(id,shop,idItem);
-            Response<Item> execute = call.execute();
-            requestCallback.onSuccess(execute.body());
-        }
-        catch ( IOException e )
-        {
-            requestCallback.onFailed( new NetworkException( 0, null, e ) );
-        }
+        Call<Void> call=itemService.putItem(id,shop,idItem);
+        call.enqueue(callback);
     }
 }

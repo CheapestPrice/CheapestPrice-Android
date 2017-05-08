@@ -42,11 +42,11 @@ public interface ItemService {
     Call<Item> getItemByShop (@Path("id") int id ,@Path("shop") int shop,@Path("idItem") int idItem );
 
     @POST("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call<Item> postItem(@Path("id") int id , @Path("shop") int shop, @Path("idItem") int idItem);
+    Call<Void> postItem(@Path("id") int id , @Path("shop") int shop, @Path("idItem") int idItem);
 
     @DELETE("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call<Item> deleteItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
+    Call<Void> deleteItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
 
     @PUT("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call<Item> putItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
+    Call<Void> putItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
 }
