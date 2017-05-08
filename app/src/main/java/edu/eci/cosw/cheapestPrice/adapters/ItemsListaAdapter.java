@@ -111,6 +111,10 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
 
     @Override
     public void onBindViewHolder(ItemsListaAdapter.ViewHolder holder, final int position) {
+        //Setear valores de favorito y comprado
+        holder.getFavorito().setChecked(productos.getItems().get(position).getFavorito());
+        holder.getComprado().setChecked(productos.getItems().get(position).getComprado());
+
         ItemLista item=productos.getItems().get(position);
         //Nombre del producto
         holder.getNombreProducto().setText(item.getItem().getProducto().getNombre());
