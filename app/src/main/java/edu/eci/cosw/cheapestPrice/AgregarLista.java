@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
+import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
@@ -23,6 +24,7 @@ import okhttp3.ResponseBody;
 public class AgregarLista extends AppCompatActivity {
 
     private EditText nombreListaNueva;
+    private Usuario u;
     private String nombreLista;
     private ListaDeMercado listaDeMercado;
     private Button agregar;
@@ -33,6 +35,9 @@ public class AgregarLista extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        Bundle b=intent.getBundleExtra("bundleUsuario");
+        u=(Usuario) b.getSerializable("postUsuario");
         executorService= Executors.newFixedThreadPool(1);
         setContentView(R.layout.add_shopping_list);
         network=new ListaMercadoRetrofitNetwork();
@@ -52,18 +57,7 @@ public class AgregarLista extends AppCompatActivity {
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.agregarNuevaListaMercado(new RequestCallback<ResponseBody>() {
-                            @Override
-                            public void onSuccess(ResponseBody response) {
-                                Intent intent=new Intent(view.getContext(),ShoppingListActivity.class);
-                                startActivity(intent);
-                            }
-
-                            @Override
-                            public void onFailed(NetworkException e) {
-                                System.out.println(e);
-                            }
-                        },listaDeMercado.getId(),listaDeMercado);
+                        network.agregarNuevaListaMercado(u.getId(),listaDeMercado);
                     }
                 });
             }

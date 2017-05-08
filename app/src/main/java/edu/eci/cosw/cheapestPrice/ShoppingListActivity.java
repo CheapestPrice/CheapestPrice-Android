@@ -40,9 +40,11 @@ public class ShoppingListActivity extends AppCompatActivity {
         agregarLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("entró al mas");
                 Intent intent=new Intent(v.getContext(),AgregarLista.class);
-                startActivity(intent);
+                Bundle b=new Bundle();
+                b.putSerializable("postUsuario",usuario);
+                Intent start=intent.putExtra("bundleUsuario",b);
+                startActivity(start);
             }
         });
         configureRecyclerView();
@@ -54,7 +56,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                 getNetwork().getUsuarioById(new RequestCallback<Usuario>() {
                     @Override
                     public void onSuccess(Usuario response) {
-                        System.out.println("response: "+response);
+                        System.out.println("response: "+response.getId()+" "+response.getCorreo());
                         setUsuario(response);
                         runOnUiThread(new Runnable() {
                             @Override
@@ -110,8 +112,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     public int getIdUsuario() {
-        return 2;
-        //return idUsuario;
+        return idUsuario;
     }
 
     public void setIdUsuario(int idUsuario) {
