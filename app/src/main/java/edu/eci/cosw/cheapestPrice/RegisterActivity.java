@@ -360,7 +360,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
             System.out.println(geocoder.getFromLocationName(address+", Bogota", 1));
             if(geocoder.getFromLocationName(address+", Bogota", 1).size()>0) {
                 LatLng shop = new LatLng(geocoder.getFromLocationName(address+", Bogota", 1).get(0).getLatitude(), geocoder.getFromLocationName(address+", Bogota", 1).get(0).getLongitude());
-                mMap.addMarker(new MarkerOptions().position(shop).title("Marker in Sydney"));
+                mMap.addMarker(new MarkerOptions().position(shop).title("Marker in Shop"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,17));
             }else{
                 shopAddress.setError("La dirección no es valida");
