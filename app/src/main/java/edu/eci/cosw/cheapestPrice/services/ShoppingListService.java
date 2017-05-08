@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
+import okhttp3.Callback;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -23,8 +24,11 @@ public interface ShoppingListService {
     @GET("/api/usuarios/me/{id}")
     Call<Usuario> getUsuarioById(@Path("id") int id);
 
-    @DELETE("/api/usuarios/{id}/lista/{listaId}")
-    Call<ResponseBody> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
+    //@DELETE("/api/usuarios/{id}/lista/{listaId}")
+    //Call<ResponseBody> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
+
+    @DELETE("/api/usuarios/{id}/lista/{listaId}/")
+    Call<Void> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
 
     //Agregar lista de mercado nueva
     @POST("/api/usuarios/{id}/lista")
