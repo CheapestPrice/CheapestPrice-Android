@@ -30,6 +30,7 @@ public class ProductActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         setId(((int) b.getSerializable("id")));
