@@ -27,7 +27,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textShopName"
@@ -39,19 +39,18 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_alignParentTop="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/shopName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textSize="20dp"
-                android:text="nombre tienda"/>
+                android:layout_height="50dp"
+                android:textSize="15dp"
+                android:text=" "/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textShopNit"
@@ -63,19 +62,18 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_alignParentTop="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/shopNit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textSize="20dp"
-                android:text="NIT tienda"/>
+                android:layout_height="50dp"
+                android:textSize="15dp"
+                android:text=" "/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textShopAddress"
@@ -87,19 +85,42 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_alignParentTop="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/shopAddress"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:textSize="15dp"
+                android:text=" "/>
+
+            <Button
+                android:id="@+id/verMapa"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textSize="20dp"
-                android:text="direccion tienda"/>
+                android:layout_height="50dp"
+                android:text="Verificar dirección"
+                android:onClick="verMapa"/>
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/mapTienda"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:context="edu.eci.cosw.cheapestPrice.MenuTenderoActivity"
+                android:layout_weight="0.90"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textShopPhone"
@@ -111,34 +132,33 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_alignParentTop="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/shopPhone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textSize="20dp"
-                android:text="telefono tienda"/>
+                android:layout_height="50dp"
+                android:textSize="15dp"
+                android:text=" "/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content"
+            >
 
             <Button
                 android:id="@+id/editShop"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@mipmap/ic_edit"
-                android:layout_marginStart="150dp"
-                android:layout_marginLeft="150dp"
+                android:layout_centerInParent="true"
                 android:onClick="editShop"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/productos"
