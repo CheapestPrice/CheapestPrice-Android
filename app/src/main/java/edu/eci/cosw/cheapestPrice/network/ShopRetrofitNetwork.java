@@ -24,7 +24,6 @@ public class ShopRetrofitNetwork {
     }
 
     public void getShop(RequestCallback<Tienda> requestCallback, int id, int shopId){
-
         try
         {
             Call<Tienda> call = shopService.getShop(id,shopId);

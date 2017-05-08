@@ -14,7 +14,7 @@ public class MenuTenderoActivity extends AppCompatActivity {
     EditText shopAddress;
     EditText shopPhone;
     EditText shopNit;
-
+    Bundle bundle;
     private int id=3;
     private int shop=1;
 
@@ -23,13 +23,14 @@ public class MenuTenderoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_tendero);
         Intent intent=getIntent();
-        Bundle b = intent.getBundleExtra("bundle");
-        setId(((int) b.getSerializable("id")));
-        setShop((int)b.getSerializable("shopId"));
+        bundle = intent.getBundleExtra("bundle");
+        setId(((int) bundle.getSerializable("id")));
+        setShop((int)bundle.getSerializable("shopId"));
     }
 
     public void productos(View view){
         Intent intent= new Intent(this,ProductActivity.class);
+        intent.putExtra("bundle",bundle);
         startActivity(intent);
     }
 

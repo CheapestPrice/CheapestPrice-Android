@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/plus"
-        app:backgroundTint="#ff2fa0ff"
+        android:src="@mipmap/ic_add"
+        app:backgroundTint="@color/colorPrimary"
         android:layout_gravity="end|bottom"
         android:onClick="mas"/>
 
