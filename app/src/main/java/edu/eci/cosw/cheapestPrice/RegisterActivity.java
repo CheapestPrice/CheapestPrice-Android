@@ -26,14 +26,29 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import edu.eci.cosw.cheapestPrice.entities.Account;
+import edu.eci.cosw.cheapestPrice.entities.Cuenta;
+import edu.eci.cosw.cheapestPrice.entities.Tendero;
+import edu.eci.cosw.cheapestPrice.entities.Tienda;
+import edu.eci.cosw.cheapestPrice.entities.Usuario;
+import edu.eci.cosw.cheapestPrice.network.RetrofitNetwork;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class RegisterActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener  {
+    RetrofitNetwork network;
 
     LinearLayout basic;
     LinearLayout tendero;
@@ -66,6 +81,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        network = new RetrofitNetwork();
         userName= (EditText) findViewById(R.id.userName);
         email= (EditText) findViewById(R.id.userMail);
         passwd= (EditText) findViewById(R.id.passwd);
@@ -89,7 +105,6 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         googleApiClient.connect();
         geocoder = new Geocoder(this, Locale.getDefault());
-        System.out.println("re chupelo!!!");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -154,7 +169,13 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
             }
         }else{
             System.out.println("validoooooo");
-            alertDialog("Registro exitoso");
+            if(!isTendero){
+                registrarUsuario();
+            }
+            else{
+                registrarTendero();
+            }
+            //alertDialog("Registro exitoso");
         }
 
     }
@@ -199,6 +220,120 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
     public void tend(View view){
         isTendero=!isTendero;
         tendero.setVisibility(isTendero ? View.VISIBLE:View.GONE);
+    }
+    public void registrarUsuario(){
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                final Usuario u = new Usuario();
+                u.setCorreo(email.getText().toString());
+                u.setNombre(userName.getText().toString());
+                network.doCreateUser(u, new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        System.out.println("response: "+response+" call: "+call);
+                        Cuenta c = new Cuenta();
+                        c.setUsuario(u);
+                        c.setHash(Hashing.sha1().hashString(passwd.getText().toString(), Charsets.UTF_8).toString());
+                        c.setRol(Account.CLIENTE);
+                        network.doCreateCuenta(c, new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println("Cuenta: response: "+response+" call: "+call);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println("Cuenta: failure: "+t+" call: "+call);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("failure: "+t+" call: "+call);
+                    }
+                });
+            }
+        });
+    }
+    public void registrarTendero(){
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                final Usuario u = new Usuario();
+                u.setCorreo(email.getText().toString());
+                u.setNombre(userName.getText().toString());
+                network.doCreateUser(u, new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        System.out.println("response: "+response+" call: "+call);
+                        Cuenta c = new Cuenta();
+                        c.setUsuario(u);
+                        c.setHash(Hashing.sha1().hashString(passwd.getText().toString(), Charsets.UTF_8).toString());
+                        c.setRol(Account.TENDERO);
+                        network.doCreateCuenta(c, new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println("Cuenta: response: "+response+" call: "+call);
+                                final Tienda t = new Tienda();
+                                t.setNit(shopNit.getText().toString());
+                                t.setNombre(shopName.getText().toString());
+                                t.setDireccion(shopAddress.getText().toString());
+                                t.setDisponible(true);
+                                t.setTelefono(shopPhone.getText().toString());
+                                try {
+                                    t.setY(geocoder.getFromLocationName(address + ", Bogota", 1).get(0).getLatitude());
+                                    t.setX(geocoder.getFromLocationName(address + ", Bogota", 1).get(0).getLongitude());
+                                }catch (IOException e){
+                                    System.out.println(e);
+                                    t.setY(0);
+                                    t.setX(0);
+                                }
+                                network.doCreateTienda(t, new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        System.out.println("tienda: response: "+response+" call: "+call);
+                                        Tendero te = new Tendero();
+                                        te.setTienda(t);
+                                        te.setUsuario(u);
+                                        network.doCreateTendero(te, new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                                System.out.println("tendero: response: "+response+" call: "+call);
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Void> call, Throwable t) {
+                                                System.out.println("tendero: failure: "+t+" call: "+call);
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        System.out.println("tienda: failure: "+t+" call: "+call);
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println("Cuenta: failure: "+t+" call: "+call);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("failure: "+t+" call: "+call);
+                    }
+                });
+            }
+        });
     }
     public void verMapa(View view){
         address=((EditText) findViewById(R.id.shopAddress)).getText().toString();
