@@ -13,4 +13,6 @@ import retrofit2.http.Path;
 public interface UserService {
     @GET("/api/usuarios/{id}/tendero/{userId}")
     Call<Tendero> getTendero(@Path("id") int id,@Path("userId") int userId);
+    @GET("/api/usuarios/me/{id}")
+    Call<Usuario> getUsuario(@Path("id") int userId);
 }

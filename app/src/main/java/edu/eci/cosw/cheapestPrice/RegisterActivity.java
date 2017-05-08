@@ -382,6 +382,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
         return true;
     }
 
+    @SuppressWarnings("MissingPermission")
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (!hasPermissions(this,permissions)) {
