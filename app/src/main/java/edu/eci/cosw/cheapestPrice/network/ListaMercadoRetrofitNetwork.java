@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Date;
 
+import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.services.ShoppingListService;
 import okhttp3.ResponseBody;
@@ -71,7 +72,7 @@ public class ListaMercadoRetrofitNetwork {
      * @param requestCallback
      * @param id
      */
-    public void getUsuarioByCorreo(RequestCallback<Usuario> requestCallback, int id){
+    public void getUsuarioById(RequestCallback<Usuario> requestCallback, int id){
         try{
             Call<Usuario> call= getUserService().getUsuarioById(id);
             Response<Usuario> response=call.execute();
@@ -86,14 +87,26 @@ public class ListaMercadoRetrofitNetwork {
      * @param id
      * @param listaId
      */
-    public void eliminarListaMercado(RequestCallback<ResponseBody> requestCall, int id,int listaId){
-        Call<ResponseBody> call= getUserService().deleteListaMercado(id,listaId);
-        try {
+    public void eliminarListaMercado(int id,int listaId){
+        Call<Void> deleteShoppingList = getUserService().deleteListaMercado(id,listaId);
+        deleteShoppingList.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println(response);
+                System.out.println(call);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
+        /*try {
             Response<ResponseBody> response=call.execute();
             requestCall.onSuccess(response.body());
         } catch (IOException e) {
             requestCall.onFailed( new NetworkException( 0, null, e ) );
-        }
+        }*/
     }
 
     /**
@@ -151,6 +164,22 @@ public class ListaMercadoRetrofitNetwork {
                 System.out.println(t.getLocalizedMessage());
             }
         });
+    }
+
+    /**
+     * Agrega una nueva lista de mercado de un usuario
+     * @param callback
+     * @param id
+     * @param listaDeMercado
+     */
+    public void agregarNuevaListaMercado(RequestCallback<ResponseBody> callback, int id, ListaDeMercado listaDeMercado){
+        Call<ResponseBody> call=getUserService().agregarListaMercado(id,listaDeMercado);
+        try {
+            Response<ResponseBody> response=call.execute();
+            callback.onSuccess(response.body());
+        } catch (IOException e) {
+            callback.onFailed( new NetworkException( 0, null, e ) );
+        }
     }
 
     public ShoppingListService getUserService() {

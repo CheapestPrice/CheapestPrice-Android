@@ -32,7 +32,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
     private ListaDeMercado productos;
     private Context context;
     private ListaMercadoRetrofitNetwork network;
-    ExecutorService executorService;
+    private ExecutorService executorService;
 
     public ItemsListaAdapter(ListaDeMercado productos,Context mainActivity){
         this.productos=productos;
@@ -126,7 +126,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             public void onFailed(NetworkException e) {
                                 System.out.println(e);
                             }
-                        }, productos.getUsuario().getId(), productos.getId(), productos.getItems().get(position).getId(),
+                        }, 2, productos.getId(), productos.getItems().get(position).getId(),
                                 !productos.getItems().get(position).getFavorito());
                     }
 

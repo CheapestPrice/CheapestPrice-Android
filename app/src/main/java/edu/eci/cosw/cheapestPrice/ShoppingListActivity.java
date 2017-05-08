@@ -26,19 +26,32 @@ public class ShoppingListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ListaMercadoRetrofitNetwork network;
     private FloatingActionButton agregarLista;
-    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+        Intent intent=getIntent();
+        Bundle b = intent.getBundleExtra("bundle");
+        setIdUsuario(((int) b.getSerializable("id")));
+        System.out.println(idUsuario);
+        //Agregar función para agregar una nueva lista
+        agregarLista=(FloatingActionButton) findViewById(R.id.agregarLista);
+        agregarLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("entró al mas");
+                Intent intent=new Intent(v.getContext(),AgregarLista.class);
+                startActivity(intent);
+            }
+        });
         configureRecyclerView();
         setNetwork(new ListaMercadoRetrofitNetwork());
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                getNetwork().getUsuarioByCorreo(new RequestCallback<Usuario>() {
+                getNetwork().getUsuarioById(new RequestCallback<Usuario>() {
                     @Override
                     public void onSuccess(Usuario response) {
                         System.out.println("response: "+response);
@@ -60,8 +73,13 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
 
         });
-        //Agregar función para agregar una nueva lista
-        agregarLista=(FloatingActionButton) findViewById(R.id.agregarLista);
+
+    }
+
+    public void mas(View v){
+        System.out.println("entró al mas");
+        Intent intent=new Intent(v.getContext(),AgregarLista.class);
+        startActivity(intent);
     }
 
     private void configureRecyclerView() {

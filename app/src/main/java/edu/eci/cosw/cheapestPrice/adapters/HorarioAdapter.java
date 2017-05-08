@@ -20,6 +20,10 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.ViewHold
 
     private List<Horario> horarios;
     private Context context;
+    private String horaInicio;
+    private String minutoInicio;
+    private String horaFin;
+    private String minutoFin;
 
     public HorarioAdapter(List<Horario> horarios,Context context){
         this.horarios=horarios;
@@ -63,9 +67,25 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.ViewHold
         //Dia del horario
         holder.getDiaHorario().setText(h.getDia());
         //Hora abrir
-        holder.getHoraInicioHorario().setText(h.getHoraInicio()+":"+h.getMinutosInicio());
+        horaInicio=String.valueOf(h.getHoraInicio());minutoInicio=String.valueOf(h.getMinutosInicio());
+        if(h.getHoraInicio()<10){
+            horaInicio="0"+h.getHoraInicio();
+        }
+        if(h.getMinutosInicio()<10){
+            minutoInicio="0"+h.getMinutosInicio();
+        }
+
+        holder.getHoraInicioHorario().setText(horaInicio+":"+minutoInicio);
         //Hora de cierre
-        holder.getHoraFinHorario().setText(h.getHoraFin()+":"+h.getMinutoFin());
+
+        horaFin=String.valueOf(h.getHoraFin());minutoFin=String.valueOf(h.getMinutoFin());
+        if(h.getHoraFin()<10){
+            horaFin="0"+h.getHoraFin();
+        }
+        if(h.getMinutoFin()<10){
+            minutoFin="0"+h.getMinutoFin();
+        }
+        holder.getHoraFinHorario().setText(horaFin+":"+minutoFin);
     }
 
     @Override

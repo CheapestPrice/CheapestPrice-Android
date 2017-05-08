@@ -22,6 +22,8 @@ import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -114,21 +116,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.eliminarListaMercado(new RequestCallback<ResponseBody>() {
-                            @Override
-                            public void onSuccess(ResponseBody response) {
-                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ((ShoppingListActivity) context).getRecyclerView().getAdapter().notifyDataSetChanged();
-                                    }
-                                });
-                            }
-                            @Override
-                            public void onFailed(NetworkException e) {
-                                System.out.println(e);
-                            }
-                        },usuario.getId(), usuario.getListas().get(position).getId());
+                        network.eliminarListaMercado(usuario.getId(), usuario.getListas().get(position).getId());
                     }
                 });
             }});

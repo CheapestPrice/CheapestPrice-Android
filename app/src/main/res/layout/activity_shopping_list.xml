@@ -13,12 +13,20 @@
         android:clickable="true"
         android:src="@drawable/plus"
         app:backgroundTint="#ff2fa0ff"
-        android:layout_gravity="end|bottom"/>
+        android:layout_gravity="end|bottom"
+        android:onClick="mas"/>
+
+    <ScrollView
+        android:id="@+id/ScrollViewItems"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewShoppingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
+    </ScrollView>
+
 </android.support.design.widget.CoordinatorLayout>
 

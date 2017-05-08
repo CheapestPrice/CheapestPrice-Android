@@ -32,6 +32,12 @@ public class ListaDeMercado implements Serializable {
         this.revisado=false;
     }
 
+    public ListaDeMercado(String nombre){
+        this.nombre=nombre;
+        fechaCreacion=new Date();
+        revisado=false;
+    }
+
     /**
      * Agrega items a la lista de mercado
      * @param ite

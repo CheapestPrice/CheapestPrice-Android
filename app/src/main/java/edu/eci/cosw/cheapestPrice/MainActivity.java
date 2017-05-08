@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +14,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
+
 import java.security.Principal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import edu.eci.cosw.cheapestPrice.entities.Account;
+import edu.eci.cosw.cheapestPrice.entities.CuentaPass;
 import edu.eci.cosw.cheapestPrice.login.Headers;
 import edu.eci.cosw.cheapestPrice.login.User;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
@@ -29,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     Button register;
     RetrofitNetwork network;
-    SwitchCompat select;
 
 
     @Override
@@ -41,103 +46,51 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         network = new RetrofitNetwork();
-        select= (SwitchCompat) findViewById(R.id.selectUser);
-        select.setTextOff("Cliente");
-        select.setTextOn("Tendero");
-        select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                System.out.println(select.isActivated());
-                System.out.println(select.isChecked());
-                if(isChecked){
-                    select.setText(select.getTextOn());
-                }else{
-                    select.setText(select.getTextOff());
-                }
-            }
-        });
-        /*login.setOnClickListener(new View.OnClickListener() {
-            código de angular que se debe "traducir"(btoa encripta en base-64):
-            var headers = credentials ? {authorization: "Basic "
-                            + btoa(credentials.username + ":" + credentials.password)
-                } : {};
-
-                $http.get('user', {headers: headers}).then(successCallback, errorCallback);
-
-                function successCallback(data){
-                    if (data.data.name) {
-                        $rootScope.authenticated = true;
-                    }else {
-                        $rootScope.authenticated = false;
-                    }
-                        callback && callback();
-                }
-
-                function errorCallback(error){
-                    $rootScope.authenticated = false;
-                     callback && callback();
-                }
-            @Override
-            public void onClick(View v) {
-                ExecutorService executorService = Executors.newFixedThreadPool(1);
-                executorService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Se necesita una RetrofitNetwork, un RequestCallback, y un UserLoginService (creo) y buscar como convertir a base-64 para copiar el get que se hace en angular
-                        byte[] encodedBytes = Base64.encode((email.getText().toString() + ":" + password.getText().toString()).getBytes(), Base64.DEFAULT);
-                        String cred = new String(encodedBytes);
-                        System.out.println(email.getText().toString() + ":" + password.getText().toString());
-                        System.out.println(cred);
-                        network.getPrincipal(new RequestCallback<Principal>() {
-                            @Override
-                            public void onSuccess(Principal response) {
-                                System.out.println(response);
-                            }
-
-                            @Override
-                            public void onFailed(NetworkException e) {
-                                System.out.println("La tarea fallo exitosamente");
-                                System.out.println(e);
-                            }
-                        },new User(new Headers("Basic "+cred)));
-                    }
-                });
-            }
-        });*/
-
     }
     public void logIn(View view){
-        if(select.getText().equals(select.getTextOn())){
-            Intent intent= new Intent(this,ProductActivity.class);
-            startActivity(intent);
-        }else{
-            Intent intent= new Intent(this,ShoppingListActivity.class);
-            //Intent intent= new Intent(this,SearchActivity.class);
-            startActivity(intent);
-        }
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(new Runnable() {
+            Context cont;
             @Override
             public void run() {
                 //Se necesita una RetrofitNetwork, un RequestCallback, y un UserLoginService (creo) y buscar como convertir a base-64 para copiar el get que se hace en angular
-                byte[] encodedBytes = Base64.encode((email.getText().toString() + ":" + password.getText().toString()).getBytes(), Base64.DEFAULT);
-                String cred = new String(encodedBytes);
-                System.out.println(email.getText().toString() + ":" + password.getText().toString());
-                System.out.println(cred);
-                network.getPrincipal(new RequestCallback<Principal>() {
+                String pass=Hashing.sha1().hashString(password.getText().toString(), Charsets.UTF_8).toString();
+                String correo=email.getText().toString();
+                System.out.println(correo+" | "+pass+" | "+password.getText().toString());
+                CuentaPass acc= new CuentaPass(correo,pass);
+                network.doLogin(new RequestCallback<Account>() {
                     @Override
-                    public void onSuccess(Principal response) {
-                        System.out.println(response);
+                    public void onSuccess(Account response) {
+                        System.out.println("success: "+response);
+                        if(response.getRol().equals(Account.TENDERO)){
+                            System.out.println("tendero "+response.getId());
+                            Intent intent= new Intent(cont,ProductActivity.class);
+                            Bundle b = new Bundle();
+                            b.putSerializable("id",response.getId());
+                            Intent start=intent.putExtra("bundle",b);
+                            cont.startActivity(start);
+                        }else{
+                            System.out.println("cliente "+response.getId());
+                            Intent intent= new Intent(cont,ShoppingListActivity.class);
+                            Bundle b = new Bundle();
+                            b.putSerializable("id",response.getId());
+                            Intent start=intent.putExtra("bundle",b);
+                            cont.startActivity(start);
+                        }
                     }
 
                     @Override
                     public void onFailed(NetworkException e) {
-                        System.out.println("La tarea fallo exitosamente");
-                        System.out.println(e);
+
                     }
-                },new User(new Headers("Basic "+cred)));
+                },acc);
             }
-        });
+            public Runnable init(Context c){
+                cont=c;
+                return this;
+            }
+        }.init(this));
+
     }
 
     public void reg(View view){
