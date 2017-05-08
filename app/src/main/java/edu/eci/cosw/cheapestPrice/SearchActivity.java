@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +30,13 @@ public class SearchActivity extends AppCompatActivity {
     private SearchAdapter mAdapter;
     private ItemRetrofitNetwork network;
     private Usuario iduser;
+    public Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        context=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initViews();
@@ -42,7 +45,39 @@ public class SearchActivity extends AppCompatActivity {
         iduser=((Usuario) b.getSerializable("id"));
         System.out.println("user "+iduser.toString());
         network = new ItemRetrofitNetwork();
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
 
+        executorService.execute(new Runnable() {
+            Usuario id;
+
+            public Runnable init(Usuario iduser){
+                id=iduser;
+                return this;
+            }
+
+            @Override
+            public void run() {
+                network.getItemsByUser(new RequestCallback<List<Item>>(){
+                    @Override
+                    public void onSuccess(List<Item> response) {
+                        System.out.println("response: "+response);
+                        mArrayList=response;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAdapter=new SearchAdapter(mArrayList,context,id);
+                                mRecyclerView.setAdapter(mAdapter);
+                            }
+                        });
+                    }
+                    @Override
+                    public void onFailed(NetworkException e) {
+                        System.out.println(e);
+                    }
+                }, id.getId());
+
+            }
+        }.init(iduser));
 
     }
 
