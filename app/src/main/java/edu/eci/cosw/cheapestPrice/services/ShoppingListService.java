@@ -34,12 +34,12 @@ public interface ShoppingListService {
 
     //Marcar item de la lista de mercado como favorito
     @PUT("/api/usuarios/{id}/lista/{listaId}/item/{itemListaId}/favorite/{fav}")
-    Call<ResponseBody> itemSeleccionadoFavorito(@Path("id") int id,@Path("listaId") int listaId,
+    Call<Void> itemSeleccionadoFavorito(@Path("id") int id,@Path("listaId") int listaId,
                                             @Path("itemListaId") int itemListaId,@Path("fav") boolean fav);
 
     //Comprar item de la lista de mercado
     @PUT("api/usuarios/{id}/lista/{lId}/item/{ILId}/comprado/{comp}")
-    Call<ResponseBody> itemSeleccionadoComprado(@Path("id") int id,@Path("lId") int lId,
+    Call<Void> itemSeleccionadoComprado(@Path("id") int id,@Path("lId") int lId,
                                             @Path("ILId") int ILId,@Path("comp") boolean comp);
 
     //Borra un item de la lista de mercado

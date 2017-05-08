@@ -19,9 +19,9 @@ import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.entities.ItemLista;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
-import edu.eci.cosw.cheapestPrice.network.NetworkException;
-import edu.eci.cosw.cheapestPrice.network.RequestCallback;
-import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by 2105403 on 5/2/17.
@@ -47,6 +47,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         private TextView precio;
         private CheckBox favorito;
         private CheckBox comprado;
+        private Button eliminarProducto;
         private Button masInformacion;
         //Información de la tienda
 
@@ -56,6 +57,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
             setPrecio((TextView) v.findViewById(R.id.precio));
             setFavorito((CheckBox) v.findViewById(R.id.favorito));
             setComprado((CheckBox) v.findViewById(R.id.comprado));
+            setEliminarProducto((Button) v.findViewById(R.id.eliminarProducto));
             setMasInformacion((Button) v.findViewById(R.id.infoTienda));
         }
 
@@ -94,6 +96,10 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         public Button getMasInformacion() {return masInformacion;}
 
         public void setMasInformacion(Button masInformacion) {this.masInformacion = masInformacion;}
+
+        public Button getEliminarProducto() {return eliminarProducto;}
+
+        public void setEliminarProducto(Button eliminarProducto) {this.eliminarProducto = eliminarProducto;}
     }
 
     @Override
@@ -117,19 +123,49 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.itemSeleccionadoFavorito(new RequestCallback<ResponseBody>() {
+                        Callback<Void> callb=new Callback<Void>() {
                             @Override
-                            public void onSuccess(ResponseBody response) {
-                                System.out.println("Cambio el item favorito");
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println(response);
+                                System.out.println(call);
                             }
+
                             @Override
-                            public void onFailed(NetworkException e) {
-                                System.out.println(e);
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println(t.getLocalizedMessage());
                             }
-                        }, 2, productos.getId(), productos.getItems().get(position).getId(),
+                        };
+                        network.itemSeleccionadoFavorito(callb, productos.getIdUsuario(),
+                                productos.getId(), productos.getItems().get(position).getId(),
                                 !productos.getItems().get(position).getFavorito());
                     }
 
+                });
+            }
+        });
+        //Item comprado
+        holder.getComprado().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Callback<Void> callb=new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println(response);
+                                System.out.println(call);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println(t.getLocalizedMessage());
+                            }
+                        };
+                        network.itemSeleccionadoComprado(callb,productos.getIdUsuario(),
+                                productos.getId(),productos.getItems().get(position).getId(),
+                                !productos.getItems().get(position).getComprado());
+                    }
                 });
             }
         });
@@ -142,6 +178,30 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                 b.putSerializable("postTienda",productos.getItems().get(position).getItem().getTienda());
                 Intent start=intent.putExtra("bundleTienda",b);
                 context.startActivity(start);
+            }
+        });
+        //Eliminar producto de la lista de mercado
+        holder.getEliminarProducto().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Callback<Void> callb=new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println(response);
+                                System.out.println(call);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println(t.getLocalizedMessage());
+                            }
+                        };
+                        network.eliminarItemListaMercado(callb,productos.getIdUsuario(),productos.getId(),productos.getItems().get(position).getId());
+                    }
+                });
             }
         });
     }

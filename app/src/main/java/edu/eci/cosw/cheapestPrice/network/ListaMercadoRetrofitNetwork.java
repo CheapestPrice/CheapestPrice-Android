@@ -101,14 +101,9 @@ public class ListaMercadoRetrofitNetwork {
      * @param listaId
      * @param fav
      */
-    public void itemSeleccionadoFavorito(RequestCallback<ResponseBody> requestCall,int id,int listaId,int itemListaId,boolean fav) {
-        Call<ResponseBody> call=getUserService().itemSeleccionadoFavorito(id,listaId,itemListaId,fav);
-        try {
-            Response<ResponseBody> response=call.execute();
-            requestCall.onSuccess(response.body());
-        } catch (IOException e) {
-            requestCall.onFailed( new NetworkException( 0, null, e ) );
-        }
+    public void itemSeleccionadoFavorito(Callback<Void> requestCall,int id,int listaId,int itemListaId,boolean fav) {
+        Call<Void> call=getUserService().itemSeleccionadoFavorito(id,listaId,itemListaId,fav);
+        call.enqueue(requestCall);
     }
 
     /**
@@ -119,14 +114,9 @@ public class ListaMercadoRetrofitNetwork {
      * @param itemListaId
      * @param comp
      */
-    public void itemSeleccionadoComprado(RequestCallback<ResponseBody> requestCall,int id,int listaId,int itemListaId,boolean comp) {
-        Call<ResponseBody> call=getUserService().itemSeleccionadoComprado(id,listaId,itemListaId,comp);
-        try {
-            Response<ResponseBody> response=call.execute();
-            requestCall.onSuccess(response.body());
-        } catch (IOException e) {
-            requestCall.onFailed( new NetworkException( 0, null, e ) );
-        }
+    public void itemSeleccionadoComprado(Callback<Void> requestCall,int id,int listaId,int itemListaId,boolean comp) {
+        Call<Void> call=getUserService().itemSeleccionadoComprado(id,listaId,itemListaId,comp);
+        call.enqueue(requestCall);
     }
 
     /**
@@ -136,18 +126,9 @@ public class ListaMercadoRetrofitNetwork {
      * @param listaId
      * @param itemListaId
      */
-    public void eliminarItemListaMercado(RequestCallback<Response> requestCall,int id,int listaId,int itemListaId){
-        getUserService().borrarItemSeleccionado(id,listaId,itemListaId).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println("Elimino el item de la lista");
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                System.out.println(t.getLocalizedMessage());
-            }
-        });
+    public void eliminarItemListaMercado(Callback<Void> requestCall,int id,int listaId,int itemListaId){
+        Call<Void> call=getUserService().borrarItemSeleccionado(id,listaId,itemListaId);
+        call.enqueue(requestCall);
     }
 
     /**
