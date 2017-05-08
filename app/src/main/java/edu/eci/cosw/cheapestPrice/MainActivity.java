@@ -24,6 +24,7 @@ import java.util.concurrent.Executors;
 import edu.eci.cosw.cheapestPrice.entities.Account;
 import edu.eci.cosw.cheapestPrice.entities.CuentaPass;
 import edu.eci.cosw.cheapestPrice.entities.Tendero;
+import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.login.Headers;
 import edu.eci.cosw.cheapestPrice.login.User;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }.init(this));
 
     }
+
 
     public void reg(View view){
         Intent intent= new Intent(this,RegisterActivity.class);
