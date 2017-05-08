@@ -87,21 +87,10 @@ public class ListaMercadoRetrofitNetwork {
      * @param id
      * @param listaId
      */
-    public void eliminarListaMercado(int id,int listaId){
+    public void eliminarListaMercado(Callback<Void> callback,int id,int listaId){
 
         Call<Void> deleteShoppingList = getUserService().deleteListaMercado(id,listaId);
-        deleteShoppingList.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println(response);
-                System.out.println(call);
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                System.out.println(t.getLocalizedMessage());
-            }
-        });
+        deleteShoppingList.enqueue(callback);
     }
 
     /**
@@ -166,21 +155,9 @@ public class ListaMercadoRetrofitNetwork {
      * @param id
      * @param listaDeMercado
      */
-    public void agregarNuevaListaMercado(int id, ListaDeMercado listaDeMercado){
-        System.out.println("1111111111111111111111111111111111111111111111111"+" "+id);
+    public void agregarNuevaListaMercado(Callback<Void> callback,int id, ListaDeMercado listaDeMercado){
         Call<Void> call=getUserService().agregarListaMercado(id,listaDeMercado);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println(response);
-                System.out.println(call);
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                System.out.println(t.getLocalizedMessage());
-            }
-        });
+        call.enqueue(callback);
     }
 
     public ShoppingListService getUserService() {
