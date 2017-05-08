@@ -24,7 +24,7 @@ public interface ItemService {
     Call<List<Item>> getItemsByUser(@Path("id") int id);
 
     @GET("api/items/{id}/products")
-    Call<List<Producto>> getProducts ();
+    Call<List<Producto>> getProducts (@Path("id") int id);
 
     @GET("api/items/{id}/items/{idItem}")
     Call<Item> getItemById(@Path("id") int id, @Path("idItem") int idItem );
@@ -38,15 +38,12 @@ public interface ItemService {
     @GET("api/items/{id}/shop/{shop}/item/{idItem}")
     Call<Item> getItemByShop (@Path("id") int id ,@Path("shop") int shop,@Path("idItem") int idItem );
 
-    @GET("api/items/{id}/shop/{shop}/item/{idItem}/imagen")
-    Call getItemImage(@Path("id") int id, @Path("shop") int shop, @Path("idItem") int idItem);
-
     @POST("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call postItem(@Path("id") int id , @Path("shop") int shop, @Path("idItem") int idItem);
+    Call<Item> postItem(@Path("id") int id , @Path("shop") int shop, @Path("idItem") int idItem);
 
     @DELETE("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call deleteItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
+    Call<Item> deleteItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
 
     @PUT("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call putItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
+    Call<Item> putItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
 }

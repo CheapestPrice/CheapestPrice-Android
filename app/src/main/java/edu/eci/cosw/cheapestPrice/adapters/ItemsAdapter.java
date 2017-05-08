@@ -18,10 +18,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Blob;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import edu.eci.cosw.cheapestPrice.DetalleProductActivity;
+import edu.eci.cosw.cheapestPrice.ProductActivity;
 import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.ShoppingListProductActivity;
 import edu.eci.cosw.cheapestPrice.entities.Item;
+import edu.eci.cosw.cheapestPrice.network.ItemRetrofitNetwork;
+import edu.eci.cosw.cheapestPrice.network.NetworkException;
+import edu.eci.cosw.cheapestPrice.network.RequestCallback;
+
+import static android.R.attr.id;
 
 /**
  * Created by Daniela on 4/10/17.
@@ -30,13 +39,18 @@ import edu.eci.cosw.cheapestPrice.entities.Item;
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
     List<Item> items;
     Context context;
+    int iduser;
+    int idshop;
+    ItemRetrofitNetwork network;
+    ExecutorService executorService;
 
-    View.OnClickListener clickListener;
-
-    public ItemsAdapter(List<Item> response,Context main, View.OnClickListener click) {
+    public ItemsAdapter(List<Item> response,Context main, int id, int shop) {
         items=response;
         context=main;
-        clickListener=click;
+        iduser=id;
+        idshop=shop;
+        network=new ItemRetrofitNetwork();
+        executorService= Executors.newFixedThreadPool(1);
         System.out.println("items: "+items);
     }
 
@@ -113,8 +127,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public ItemsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.product_view, parent, false);
-        v.findViewById(R.id.updateProduct).setOnClickListener(clickListener);
-        v.findViewById(R.id.deleteProduct).setOnClickListener(clickListener);
         return new ViewHolder(v);
     }
 
@@ -122,7 +134,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public void onBindViewHolder(ItemsAdapter.ViewHolder holder, final int position) {
         final Item item=items.get(position);
         //Image:
-        Picasso.with(context).load("https://cheapestprice.herokuapp.com/api/items/3/shop/1/item/"+item.getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
+        Picasso.with(context).load("https://cheapestprice.herokuapp.com/api/items/"+iduser+"/shop/"+idshop+"/item/"+item.getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
         //Name:
         holder.getName().setText(item.getProducto().getNombre());
         //Price:
@@ -135,7 +147,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.getUpdateProduct().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),ShoppingListProductActivity.class);
+                Intent intent=new Intent(v.getContext(),DetalleProductActivity.class);
                 Bundle b = new Bundle();
                 b.putSerializable("item",item);
                 Intent start=intent.putExtra("bundle",b);
@@ -146,14 +158,32 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.getDeleteProduct().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),ShoppingListProductActivity.class);
-                Bundle b = new Bundle();
-                b.putSerializable("item",item);
-                Intent start=intent.putExtra("bundle",b);
-                context.startActivity(start);
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        network.deleteItem(new RequestCallback<Item>() {
+                            @Override
+                            public void onSuccess(Item response) {
+                                System.out.println("Success : "+response);
+                                startDetalle();
+                            }
+
+                            @Override
+                            public void onFailed(NetworkException e) {
+                                System.out.println("Fail: "+e);
+                            }
+                        },id,idshop,item.getId());
+                    }
+
+                });
             }
         });
 
+    }
+
+    private void startDetalle() {
+        Intent intent=new Intent(context,ProductActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
