@@ -24,15 +24,13 @@ public interface ShoppingListService {
     @GET("/api/usuarios/me/{id}")
     Call<Usuario> getUsuarioById(@Path("id") int id);
 
-    //@DELETE("/api/usuarios/{id}/lista/{listaId}")
-    //Call<ResponseBody> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
 
     @DELETE("/api/usuarios/{id}/lista/{listaId}/")
     Call<Void> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
 
     //Agregar lista de mercado nueva
-    @POST("/api/usuarios/{id}/lista")
-    Call<ResponseBody> agregarListaMercado(@Path("id") int id,@Body ListaDeMercado listaDeMercado);
+    @POST("/api/usuarios/{id}/lista/")
+    Call<Void> agregarListaMercado(@Path("id") int id,@Body ListaDeMercado listaDeMercado);
 
     //Marcar item de la lista de mercado como favorito
     @PUT("/api/usuarios/{id}/lista/{listaId}/item/{itemListaId}/favorite/{fav}")

@@ -16,6 +16,7 @@ public class ListaDeMercado implements Serializable {
     private int id;
     private String nombre;
     private Usuario usuario;
+    private int idUsuario;
 
     public ListaDeMercado(){}
 
@@ -120,5 +121,13 @@ public class ListaDeMercado implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }

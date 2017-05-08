@@ -88,6 +88,7 @@ public class ListaMercadoRetrofitNetwork {
      * @param listaId
      */
     public void eliminarListaMercado(int id,int listaId){
+
         Call<Void> deleteShoppingList = getUserService().deleteListaMercado(id,listaId);
         deleteShoppingList.enqueue(new Callback<Void>() {
             @Override
@@ -101,12 +102,6 @@ public class ListaMercadoRetrofitNetwork {
                 System.out.println(t.getLocalizedMessage());
             }
         });
-        /*try {
-            Response<ResponseBody> response=call.execute();
-            requestCall.onSuccess(response.body());
-        } catch (IOException e) {
-            requestCall.onFailed( new NetworkException( 0, null, e ) );
-        }*/
     }
 
     /**
@@ -168,18 +163,24 @@ public class ListaMercadoRetrofitNetwork {
 
     /**
      * Agrega una nueva lista de mercado de un usuario
-     * @param callback
      * @param id
      * @param listaDeMercado
      */
-    public void agregarNuevaListaMercado(RequestCallback<ResponseBody> callback, int id, ListaDeMercado listaDeMercado){
-        Call<ResponseBody> call=getUserService().agregarListaMercado(id,listaDeMercado);
-        try {
-            Response<ResponseBody> response=call.execute();
-            callback.onSuccess(response.body());
-        } catch (IOException e) {
-            callback.onFailed( new NetworkException( 0, null, e ) );
-        }
+    public void agregarNuevaListaMercado(int id, ListaDeMercado listaDeMercado){
+        System.out.println("1111111111111111111111111111111111111111111111111"+" "+id);
+        Call<Void> call=getUserService().agregarListaMercado(id,listaDeMercado);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println(response);
+                System.out.println(call);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
 
     public ShoppingListService getUserService() {

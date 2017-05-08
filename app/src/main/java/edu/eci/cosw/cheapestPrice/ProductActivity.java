@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,7 +33,8 @@ public class ProductActivity extends AppCompatActivity {
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         setId(((int) b.getSerializable("id")));
-        System.out.println(id);
+        setShop((int)b.getSerializable("shopId"));
+        System.out.println(id+" "+shop);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         configureRecyclerView();
         network = new ItemRetrofitNetwork();
@@ -71,7 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                 }, id, shop);
 
             }
-        }.init(getId(), shop));
+        }.init(getId(), getShop()));
 
     }
 
@@ -83,7 +83,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        recyclerView.setAdapter(new ItemsAdapter(items, this,id,shop));
+        recyclerView.setAdapter(new ItemsAdapter(items, this,id, getShop()));
     }
 
     public int getId() {
@@ -92,5 +92,13 @@ public class ProductActivity extends AppCompatActivity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getShop() {
+        return shop;
+    }
+
+    public void setShop(int shop) {
+        this.shop = shop;
     }
 }
