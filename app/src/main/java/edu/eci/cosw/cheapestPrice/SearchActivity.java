@@ -9,8 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -25,6 +28,8 @@ import edu.eci.cosw.cheapestPrice.network.RequestCallback;
 
 public class SearchActivity extends AppCompatActivity {
 
+    private GestureDetector gesture;
+
     private RecyclerView mRecyclerView;
     private List<Item> mArrayList;
     private SearchAdapter mAdapter;
@@ -37,6 +42,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         context=this;
+        gesture = new GestureDetector(new SwipeGestureDetector());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initViews();
@@ -120,4 +126,63 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        this.overridePendingTransition(R.anim.anim_slide_left_to_right,R.anim.anim_slide_right_to_left);
+        if (gesture.onTouchEvent(event))
+        {
+            return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void onLeft()
+    {
+        Intent myIntent = new Intent(SearchActivity.this, ShoppingListActivity.class);
+        startActivity(myIntent);
+    }
+
+    /*private void onRight()
+    {
+        Intent myIntent = new Intent(MainActivity.this, RightActivity.class);
+        startActivity(myIntent);
+    }*/
+
+    private class SwipeGestureDetector  extends GestureDetector.SimpleOnGestureListener
+    {
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY)
+        {
+            try
+            {
+                float diffAbs = Math.abs(e1.getY() - e2.getY());
+                float diff = e1.getX() - e2.getX();
+
+                if (diffAbs > SWIPE_MAX_OFF_PATH)
+                    return false;
+
+                // Left swipe
+                if (diff > SWIPE_MIN_DISTANCE&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
+                    SearchActivity.this.onLeft();
+                }
+                // Right swipe
+
+                /*else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
+                    SearchActivity.this.onRight();
+                }*/
+            }
+            catch (Exception e)
+            {
+                Log.e("MainActivity", "Error on gestures");
+            }
+            return false;
+        }
+    }
 }

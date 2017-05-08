@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +24,8 @@ import okhttp3.ResponseBody;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
+    private GestureDetector gesture;
+
     private Usuario usuario;
     private int idUsuario;
     private RecyclerView recyclerView;
@@ -32,6 +37,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         Intent intent=getIntent();
+        gesture = new GestureDetector(new ShoppingListActivity.SwipeGestureDetector());
         Bundle b = intent.getBundleExtra("bundle");
         setIdUsuario(((int) b.getSerializable("id")));
         System.out.println(idUsuario);
@@ -133,5 +139,64 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     public void setNetwork(ListaMercadoRetrofitNetwork network) {
         this.network = network;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        this.overridePendingTransition(R.anim.anim_slide_left_to_right,R.anim.anim_slide_right_to_left);
+        if (gesture.onTouchEvent(event))
+        {
+            return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    /*private void onLeft()
+    {
+        Intent myIntent = new Intent(SearchActivity.this, ShoppingListActivity.class);
+        startActivity(myIntent);
+    }*/
+
+    private void onRight()
+    {
+        Intent myIntent = new Intent(ShoppingListActivity.this, SearchActivity.class);
+        startActivity(myIntent);
+    }
+    private class SwipeGestureDetector  extends GestureDetector.SimpleOnGestureListener
+    {
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY)
+        {
+            try
+            {
+                float diffAbs = Math.abs(e1.getY() - e2.getY());
+                float diff = e1.getX() - e2.getX();
+
+                if (diffAbs > SWIPE_MAX_OFF_PATH)
+                    return false;
+
+                // Left swipe
+                /*if (diff > SWIPE_MIN_DISTANCE&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
+                    ShoppingListActivity.this.onLeft();
+                }*/
+                // Right swipe
+
+                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
+                    ShoppingListActivity.this.onRight();
+                }
+            }
+            catch (Exception e)
+            {
+                Log.e("MainActivity", "Error on gestures");
+            }
+            return false;
+        }
     }
 }
