@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
         context=this;
         gesture = new GestureDetector(new SwipeGestureDetector());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         initViews();
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
@@ -58,6 +58,7 @@ public class SearchActivity extends AppCompatActivity {
 
             public Runnable init(Usuario iduser){
                 id=iduser;
+                System.out.println("1212121212121212121212121211212212121212121212121212121 "+id.getCorreo());
                 return this;
             }
 

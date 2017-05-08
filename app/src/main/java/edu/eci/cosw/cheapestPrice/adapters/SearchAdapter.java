@@ -1,6 +1,8 @@
 package edu.eci.cosw.cheapestPrice.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import java.util.List;
 import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.entities.Item;
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
+import edu.eci.cosw.cheapestPrice.AddItemToShoppingList;
 
 /**
  * Created by daniela on 8/05/17.
@@ -36,6 +39,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         itemsFiltred=listItem;
         this.context=context;
         iduser=id;
+        System.out.println("22222222222222222222222222222222222222222222222222222222222222222222 "+iduser.getCorreo());
     }
 
     @Override
@@ -56,13 +60,11 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         holder.getAddList().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent=new Intent(v.getContext(),.class);
+                Intent intent=new Intent(v.getContext(), AddItemToShoppingList.class);
                 Bundle b = new Bundle();
-                b.putSerializable("item",item);
                 b.putSerializable("id",iduser);
-                b.putSerializable("shop",idshop);
                 Intent start=intent.putExtra("bundle",b);
-                context.startActivity(start);*/
+                context.startActivity(start);
             }
         });
 
