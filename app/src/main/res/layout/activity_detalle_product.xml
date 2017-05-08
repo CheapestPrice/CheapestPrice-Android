@@ -53,11 +53,24 @@
             android:textSize="22sp" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/categoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/labelprecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Precio:" />
+
+        <EditText
+            android:id="@+id/precioItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
         <TextView
             android:id="@+id/labelogo"

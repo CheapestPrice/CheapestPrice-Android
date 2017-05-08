@@ -28,7 +28,7 @@ public class ProductActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         Intent intent=getIntent();
@@ -64,7 +64,6 @@ public class ProductActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
@@ -84,17 +83,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void refresh(){
-        recyclerView.setAdapter(new ItemsAdapter(items, this, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*switch (v.getId()){
-                    case R.id.deleteProduct:
-                        break
-
-                }*/
-
-            }
-        }));
+        recyclerView.setAdapter(new ItemsAdapter(items, this,id,shop));
     }
 
     public int getId() {
