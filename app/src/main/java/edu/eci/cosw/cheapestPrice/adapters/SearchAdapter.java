@@ -21,7 +21,7 @@ import java.util.List;
 import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.entities.Item;
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
-import edu.eci.cosw.cheapestPrice.services.AddItemToShoppingList;
+import edu.eci.cosw.cheapestPrice.AddItemToShoppingList;
 
 /**
  * Created by daniela on 8/05/17.
@@ -39,6 +39,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         itemsFiltred=listItem;
         this.context=context;
         iduser=id;
+        System.out.println("22222222222222222222222222222222222222222222222222222222222222222222 "+iduser.getCorreo());
     }
 
     @Override

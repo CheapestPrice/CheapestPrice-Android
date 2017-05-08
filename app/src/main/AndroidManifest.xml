@@ -43,6 +43,7 @@
         <activity android:name=".ShoppingListProductActivity"/>
         <activity android:name=".PopUpTiendaInfo"/>
         <activity android:name=".AgregarLista"/>
+        <activity android:name=".AddItemToShoppingList"/>
         <activity android:name=".DetalleProductActivity"></activity>
     </application>
 

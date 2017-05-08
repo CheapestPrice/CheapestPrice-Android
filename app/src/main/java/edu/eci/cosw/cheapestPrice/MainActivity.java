@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                                 network.getUsuario(new RequestCallback<Usuario>() {
                                     @Override
                                     public void onSuccess(Usuario response) {
+                                        System.out.println("Que me llego: "+response);
                                         Intent intent = new Intent(cont, SearchActivity.class);
                                         Bundle b = new Bundle();
                                         b.putSerializable("id",uId);

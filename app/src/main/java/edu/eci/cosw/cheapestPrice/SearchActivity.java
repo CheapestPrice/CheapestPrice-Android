@@ -52,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
 
             public Runnable init(Usuario iduser){
                 id=iduser;
+                System.out.println("1212121212121212121212121211212212121212121212121212121 "+id.getCorreo());
                 return this;
             }
 
