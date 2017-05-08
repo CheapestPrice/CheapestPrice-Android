@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                             network.getTendero(new RequestCallback<Tendero>() {
                                 @Override
                                 public void onSuccess(Tendero respuesta) {
-                                    Intent intent= new Intent(cont,MenuTenderoActivity.class);
+                                    Intent intent= new Intent(cont,ProductActivity.class);
                                     Bundle b = new Bundle();
                                     b.putSerializable("id",uId);
                                     b.putSerializable("shopId",respuesta.getTienda().getId());
