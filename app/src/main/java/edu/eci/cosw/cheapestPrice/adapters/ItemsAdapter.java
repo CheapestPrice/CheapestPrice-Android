@@ -182,7 +182,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                             public void onClick(DialogInterface dialog, int id) {
                                                                 Intent intent=new Intent(v.getContext(),ProductActivity.class);
-                                                                context.startActivity(intent);
+                                                                Bundle b = new Bundle();
+                                                                b.putSerializable("id",iduser);
+                                                                b.putSerializable("shopId",idshop);
+                                                                Intent start=intent.putExtra("bundle",b);
+                                                                context.startActivity(start);
                                                             }
                                                         });
                                                 AlertDialog alert = builder.create();
