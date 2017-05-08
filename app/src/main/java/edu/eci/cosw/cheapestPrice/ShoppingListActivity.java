@@ -26,7 +26,6 @@ public class ShoppingListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ListaMercadoRetrofitNetwork network;
     private FloatingActionButton agregarLista;
-    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                getNetwork().getUsuarioByCorreo(new RequestCallback<Usuario>() {
+                getNetwork().getUsuarioById(new RequestCallback<Usuario>() {
                     @Override
                     public void onSuccess(Usuario response) {
                         System.out.println("response: "+response);
@@ -62,6 +61,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         });
         //Agregar función para agregar una nueva lista
         agregarLista=(FloatingActionButton) findViewById(R.id.agregarLista);
+        agregarLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),AgregarLista.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configureRecyclerView() {

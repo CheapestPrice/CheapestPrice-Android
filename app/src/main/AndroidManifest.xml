@@ -42,6 +42,7 @@
         <activity android:name=".MenuTenderoActivity" />
         <activity android:name=".ShoppingListProductActivity"/>
         <activity android:name=".PopUpTiendaInfo"/>
+        <activity android:name=".AgregarLista"/>
         <activity android:name=".DetalleProductActivity"></activity>
     </application>
 

@@ -7,6 +7,7 @@ import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -25,6 +26,9 @@ public interface ShoppingListService {
     @DELETE("/api/usuarios/{id}/lista/{listaId}")
     Call<ResponseBody> deleteListaMercado(@Path("id") int id, @Path("listaId") int listaId);
 
+    //Agregar lista de mercado nueva
+    @POST("/api/usuarios/{id}/lista")
+    Call<ResponseBody> agregarListaMercado(@Path("id") int id,@Body ListaDeMercado listaDeMercado);
 
     //Marcar item de la lista de mercado como favorito
     @PUT("/api/usuarios/{id}/lista/{listaId}/item/{itemListaId}/favorite/{fav}")
