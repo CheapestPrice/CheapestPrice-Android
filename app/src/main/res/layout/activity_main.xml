@@ -26,14 +26,6 @@
             android:text="Inicie sesión:"
             android:textSize="@dimen/text_size_large"
             android:layout_below="@+id/logo"/>
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/selectUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/logo"
-            android:layout_alignParentRight="true"
-            android:text="Cliente"
-            android:layout_alignParentEnd="true" />
 
         <EditText
             android:id="@+id/email"

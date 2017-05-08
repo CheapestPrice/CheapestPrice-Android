@@ -13,7 +13,8 @@
         android:clickable="true"
         android:src="@drawable/plus"
         app:backgroundTint="#ff2fa0ff"
-        android:layout_gravity="end|bottom"/>
+        android:layout_gravity="end|bottom"
+        android:onClick="mas"/>
 
     <ScrollView
         android:id="@+id/ScrollViewItems"

@@ -31,6 +31,20 @@ public class ShoppingListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+        Intent intent=getIntent();
+        Bundle b = intent.getBundleExtra("bundle");
+        setIdUsuario(((int) b.getSerializable("id")));
+        System.out.println(idUsuario);
+        //Agregar función para agregar una nueva lista
+        agregarLista=(FloatingActionButton) findViewById(R.id.agregarLista);
+        agregarLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("entró al mas");
+                Intent intent=new Intent(v.getContext(),AgregarLista.class);
+                startActivity(intent);
+            }
+        });
         configureRecyclerView();
         setNetwork(new ListaMercadoRetrofitNetwork());
         ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -59,15 +73,13 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
 
         });
-        //Agregar función para agregar una nueva lista
-        agregarLista=(FloatingActionButton) findViewById(R.id.agregarLista);
-        agregarLista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),AgregarLista.class);
-                startActivity(intent);
-            }
-        });
+
+    }
+
+    public void mas(View v){
+        System.out.println("entró al mas");
+        Intent intent=new Intent(v.getContext(),AgregarLista.class);
+        startActivity(intent);
     }
 
     private void configureRecyclerView() {

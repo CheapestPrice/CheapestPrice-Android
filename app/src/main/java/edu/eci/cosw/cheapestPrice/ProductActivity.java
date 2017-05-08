@@ -23,13 +23,18 @@ public class ProductActivity extends AppCompatActivity {
     private List<Item> items;
     private RecyclerView recyclerView;
     private ItemRetrofitNetwork network;
+    private int id=3;
+    int shop=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int id=3;
-        int shop=1;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        Intent intent=getIntent();
+        Bundle b = intent.getBundleExtra("bundle");
+        setId(((int) b.getSerializable("id")));
+        System.out.println(id);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         configureRecyclerView();
         network = new ItemRetrofitNetwork();
@@ -67,7 +72,7 @@ public class ProductActivity extends AppCompatActivity {
                 }, id, shop);
 
             }
-        }.init(id, shop));
+        }.init(getId(), shop));
 
     }
 
@@ -90,5 +95,13 @@ public class ProductActivity extends AppCompatActivity {
 
             }
         }));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
