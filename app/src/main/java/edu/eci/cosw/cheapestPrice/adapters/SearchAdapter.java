@@ -15,12 +15,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.R;
 import edu.eci.cosw.cheapestPrice.entities.Item;
-import edu.eci.cosw.cheapestPrice.network.ItemRetrofitNetwork;
+import edu.eci.cosw.cheapestPrice.entities.Usuario;
 
 /**
  * Created by daniela on 8/05/17.
@@ -31,9 +29,9 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
     private List<Item> items;
     private List<Item> itemsFiltred;
     private Context context;
-    private int iduser;
+    private Usuario iduser;
 
-    public SearchAdapter(List<Item> listItem,Context context,int id){
+    public SearchAdapter(List<Item> listItem,Context context,Usuario id){
         items=listItem;
         itemsFiltred=listItem;
         this.context=context;
@@ -72,12 +70,46 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
 
     @Override
     public int getItemCount() {
-        return 0;
+        return itemsFiltred.size();
     }
 
     @Override
     public Filter getFilter() {
-        return null;
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+
+                if (charString.isEmpty()) {
+
+                    itemsFiltred = items;
+                } else {
+
+                    ArrayList<Item> filteredList = new ArrayList<>();
+
+                    for (Item item : filteredList) {
+
+                        if (item.getProducto().getNombre().toLowerCase().contains(charString) || item.getProducto().getMarca().toLowerCase().contains(charString) || item.getProducto().getCategoria().toLowerCase().contains(charString)) {
+
+                            filteredList.add(item);
+                        }
+                    }
+
+                    itemsFiltred = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemsFiltred;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                itemsFiltred = (ArrayList<Item>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
