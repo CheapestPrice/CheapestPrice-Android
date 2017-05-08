@@ -1,6 +1,7 @@
 package edu.eci.cosw.cheapestPrice.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         holder.getAddList().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent=new Intent(v.getContext(),.class);
+                Intent intent=new Intent(v.getContext(),);
                 Bundle b = new Bundle();
                 b.putSerializable("item",item);
                 b.putSerializable("id",iduser);

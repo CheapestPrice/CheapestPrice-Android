@@ -3,13 +3,27 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="1">
+
     <TextView
         android:id="@+id/nombreTitulo"
-        android:layout_width="match_parent"
+        android:layout_width="245dp"
         android:layout_height="wrap_content"
         android:textSize="32sp"
         android:text="Lista 1" />
 
+        <Button
+            android:id="@+id/verRuta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver ruta" />
+
+    </LinearLayout>
     <ScrollView
         android:id="@+id/ScrollViewProductos"
         android:layout_width="fill_parent"
