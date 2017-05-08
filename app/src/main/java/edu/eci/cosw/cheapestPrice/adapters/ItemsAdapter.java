@@ -58,7 +58,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             setMarca((TextView) itemView.findViewById(R.id.marca));
             setCategoria((TextView) itemView.findViewById(R.id.categoria));
             setDeleteProduct((Button) itemView.findViewById(R.id.deleteProduct));
-            setDeleteProduct((Button) itemView.findViewById(R.id.updateProduct));
+            setUpdateProduct((Button) itemView.findViewById(R.id.updateProduct));
         }
 
         public TextView getName() {
@@ -122,7 +122,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public void onBindViewHolder(ItemsAdapter.ViewHolder holder, final int position) {
         final Item item=items.get(position);
         //Image:
-        Picasso.with(context).load("https://cheapestprice.herokuapp.com/items/"+item.getProducto().getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
+        Picasso.with(context).load("https://cheapestprice.herokuapp.com/api/items/3/shop/1/item/"+item.getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
         //Name:
         holder.getName().setText(item.getProducto().getNombre());
         //Price:
@@ -158,6 +158,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
+        if (items==null){
+            return 0;
+        }
         return items.size();
     }
 

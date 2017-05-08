@@ -23,8 +23,11 @@ public class ProductActivity extends AppCompatActivity {
     private List<Item> items;
     private RecyclerView recyclerView;
     private ItemRetrofitNetwork network;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int id=3;
+        int shop=1;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -33,9 +36,18 @@ public class ProductActivity extends AppCompatActivity {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
 
         executorService.execute(new Runnable() {
+            int shop;
+            int id;
+
+            public Runnable init(int iduser, int idshop){
+                shop=idshop;
+                id=iduser;
+                return this;
+            }
+
             @Override
             public void run() {
-                network.getItems(new RequestCallback<List<Item>>() {
+                network.getItemsByShop(new RequestCallback<List<Item>>(){
                     @Override
                     public void onSuccess(List<Item> response) {
                         System.out.println("response: "+response);
@@ -52,11 +64,10 @@ public class ProductActivity extends AppCompatActivity {
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
                     }
-                });
+                }, id, shop);
 
             }
-
-        });
+        }.init(id, shop));
 
     }
 
@@ -71,10 +82,11 @@ public class ProductActivity extends AppCompatActivity {
         recyclerView.setAdapter(new ItemsAdapter(items, this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                /*switch (v.getId()){
                     case R.id.deleteProduct:
+                        break
 
-                }
+                }*/
 
             }
         }));

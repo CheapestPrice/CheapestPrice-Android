@@ -5,6 +5,7 @@ package edu.eci.cosw.cheapestPrice.network;
  */
 
 public interface RequestCallback<T> {
+
     void onSuccess( T response );
 
     void onFailed( NetworkException e );

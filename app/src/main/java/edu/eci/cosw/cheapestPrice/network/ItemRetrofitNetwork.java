@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by daniela on 1/05/17.
+ * Created by Daniela on 1/05/17.
  */
 
 public class ItemRetrofitNetwork {
@@ -19,16 +19,16 @@ public class ItemRetrofitNetwork {
     private static final String BASE_URL = "https://cheapestprice.herokuapp.com/";
     private ItemService itemService;
 
+
     public ItemRetrofitNetwork(){
-        Retrofit retrofit =
-                new Retrofit.Builder().baseUrl( BASE_URL ).addConverterFactory( GsonConverterFactory.create() ).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl( BASE_URL ).addConverterFactory( GsonConverterFactory.create() ).build();
         itemService= retrofit.create(ItemService.class );
     }
-    public void getItems( RequestCallback<List<Item>> requestCallback )
+
+    public void getItemsByShop( RequestCallback<List<Item>> requestCallback, int id, int shop)
     {
-        try
-        {
-            Call<List<Item>> call = itemService.getItems( );
+        try {
+            Call<List<Item>> call = itemService.getItemsByShop(id,shop);
             Response<List<Item>> execute = call.execute();
             requestCallback.onSuccess( execute.body() );
         }
@@ -38,11 +38,12 @@ public class ItemRetrofitNetwork {
         }
     }
 
-    /*public void deleteItem( RequestCallback<Item> requestCallback )
+   /* public void deleteItem( RequestCallback<Item> requestCallback)
     {
-        try
-        {
-
+        try {
+            Call<Response> call=itemService.deleteItem(id,shop,idItem);
+            Response execute = call.execute();
+            requestCallback.onSuccess(execute.body());
         }
         catch ( IOException e )
         {
