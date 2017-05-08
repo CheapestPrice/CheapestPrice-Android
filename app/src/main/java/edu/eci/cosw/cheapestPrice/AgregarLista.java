@@ -33,19 +33,21 @@ public class AgregarLista extends AppCompatActivity {
     private ListaMercadoRetrofitNetwork network;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent=getIntent();
-        Bundle b=intent.getBundleExtra("bundleUsuario");
-        u=(Usuario) b.getSerializable("postUsuario");
-        executorService= Executors.newFixedThreadPool(1);
+        Intent intent = getIntent();
+        Bundle b = intent.getBundleExtra("bundleUsuario");
+        u = (Usuario) b.getSerializable("postUsuario");
+        executorService = Executors.newFixedThreadPool(1);
         setContentView(R.layout.add_shopping_list);
-        network=new ListaMercadoRetrofitNetwork();
-        nombreListaNueva=(EditText) findViewById(R.id.nombreListaNueva);
-        nombreLista=nombreListaNueva.getText().toString();
-        agregar=(Button) findViewById(R.id.agregarListaNueva);
-        volver=(Button) findViewById(R.id.volverNueva);
-        listaDeMercado=new ListaDeMercado(nombreLista);
+        network = new ListaMercadoRetrofitNetwork();
+        nombreListaNueva = (EditText) findViewById(R.id.nombreListaNueva);
+        nombreLista = nombreListaNueva.getText().toString();
+        agregar = (Button) findViewById(R.id.agregarListaNueva);
+        volver = (Button) findViewById(R.id.volverNueva);
+        listaDeMercado = new ListaDeMercado(nombreLista);
+        listaDeMercado.setUsuario(u);
+        listaDeMercado.setIdUsuario(u.getId());
         mostrar();
     }
 

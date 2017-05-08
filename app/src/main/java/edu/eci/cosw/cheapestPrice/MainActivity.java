@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.entities.Account;
 import edu.eci.cosw.cheapestPrice.entities.CuentaPass;
+import edu.eci.cosw.cheapestPrice.entities.Tendero;
 import edu.eci.cosw.cheapestPrice.login.Headers;
 import edu.eci.cosw.cheapestPrice.login.User;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
@@ -61,14 +62,27 @@ public class MainActivity extends AppCompatActivity {
                 network.doLogin(new RequestCallback<Account>() {
                     @Override
                     public void onSuccess(Account response) {
+                        final int uId=response.getId();
                         System.out.println("success: "+response);
                         if(response.getRol().equals(Account.TENDERO)){
                             System.out.println("tendero "+response.getId());
-                            Intent intent= new Intent(cont,ProductActivity.class);
-                            Bundle b = new Bundle();
-                            b.putSerializable("id",response.getId());
-                            Intent start=intent.putExtra("bundle",b);
-                            cont.startActivity(start);
+                            network.getTendero(new RequestCallback<Tendero>() {
+                                @Override
+                                public void onSuccess(Tendero respuesta) {
+                                    Intent intent= new Intent(cont,ProductActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putSerializable("id",uId);
+                                    b.putSerializable("shopId",respuesta.getTienda().getId());
+                                    Intent start=intent.putExtra("bundle",b);
+                                    cont.startActivity(start);
+                                }
+
+                                @Override
+                                public void onFailed(NetworkException e) {
+
+                                }
+                            },response.getId());
+
                         }else{
                             System.out.println("cliente "+response.getId());
                             Intent intent= new Intent(cont,ShoppingListActivity.class);
