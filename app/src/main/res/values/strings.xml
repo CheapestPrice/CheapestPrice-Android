@@ -25,5 +25,6 @@
     <string name="marca">Marca:</string>
     <string name="categoria">Categoria:</string>
     <string name="logo">Logo:</string>
+    <string name="precio">Precio:</string>
 
 </resources>

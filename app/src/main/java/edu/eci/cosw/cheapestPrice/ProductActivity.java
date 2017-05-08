@@ -24,11 +24,11 @@ public class ProductActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ItemRetrofitNetwork network;
     private int id=3;
-    int shop=1;
+    private int shop=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         Intent intent=getIntent();

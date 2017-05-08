@@ -150,6 +150,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 Intent intent=new Intent(v.getContext(),DetalleProductActivity.class);
                 Bundle b = new Bundle();
                 b.putSerializable("item",item);
+                b.putSerializable("id",iduser);
+                b.putSerializable("shop",idshop);
                 Intent start=intent.putExtra("bundle",b);
                 context.startActivity(start);
             }

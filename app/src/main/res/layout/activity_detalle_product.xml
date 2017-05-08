@@ -7,93 +7,103 @@
     android:layout_height="match_parent"
     tools:context="edu.eci.cosw.cheapestPrice.DetalleProductActivity">
 
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/labelname"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="@string/nombre"
-            android:ems="10"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/nombreItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:textSize="22sp" />
+            <TextView
+                android:id="@+id/labelname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="@string/nombre"
+                android:ems="10"/>
 
-        <TextView
-            android:id="@+id/labelmarca"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/marca"
-            android:ems="10"
-            android:textSize="22sp" />
+            <EditText
+                android:id="@+id/nombreItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="22sp" />
 
-        <EditText
-            android:id="@+id/marcaItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:textSize="22sp" />
+            <TextView
+                android:id="@+id/labelmarca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/marca"
+                android:ems="10"
+                android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/labelcategoria"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/categoria"
-            android:ems="10"
-            android:textSize="22sp" />
+            <EditText
+                android:id="@+id/marcaItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="22sp" />
 
-        <Spinner
-            android:id="@+id/categoria"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:textSize="22sp"/>
+            <TextView
+                android:id="@+id/labelcategoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/categoria"
+                android:ems="10"
+                android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/labelprecio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Precio:" />
+            <Spinner
+                android:id="@+id/categoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="22sp"/>
 
-        <EditText
-            android:id="@+id/precioItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal" />
+            <TextView
+                android:id="@+id/labelprecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/precio"
+                android:ems="10"
+                android:textSize="22sp"/>
 
-        <TextView
-            android:id="@+id/labelogo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/logo"
-            android:ems="10"
-            android:textSize="22sp" />
+            <EditText
+                android:id="@+id/precioItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:ems="20"
-            android:textSize="22sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <Button
-            android:id="@+id/save"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@mipmap/ic_save"
-            />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:ems="20"
+                    android:textSize="22sp" />
 
+                <Button
+                    android:id="@+id/file"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/ic_edit"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/ic_save"
+                />
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

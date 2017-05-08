@@ -35,6 +35,9 @@ public interface ItemService {
     @GET("api/items/{id}/items/category/{category}")
     Call<List<Item>> getItemsByCategory (@Path("id") int id, @Path("category") String category );
 
+    @GET("/api/items/{id}/categories")
+    Call<List<String>>getItemsCategories(@Path("id") int id);
+
     @GET("api/items/{id}/shop/{shop}/item/{idItem}")
     Call<Item> getItemByShop (@Path("id") int id ,@Path("shop") int shop,@Path("idItem") int idItem );
 

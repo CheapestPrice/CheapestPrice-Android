@@ -91,6 +91,19 @@ public class ItemRetrofitNetwork {
         }
     }
 
+    public void  getCategories( RequestCallback<List<String>> requestCallback, int id)
+    {
+        try {
+            Call<List<String>> call = itemService.getItemsCategories(id);
+            Response<List<String>> execute = call.execute();
+            requestCallback.onSuccess(execute.body());
+        }
+        catch ( IOException e )
+        {
+            requestCallback.onFailed( new NetworkException( 0, null, e ) );
+        }
+    }
+
     public void getItemByShop( RequestCallback<Item> requestCallback, int id, int shop, int idItem)
     {
         try {
