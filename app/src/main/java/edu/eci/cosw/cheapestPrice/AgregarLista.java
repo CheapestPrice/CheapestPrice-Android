@@ -16,6 +16,9 @@ import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by User on 07/05/17.
@@ -59,7 +62,25 @@ public class AgregarLista extends AppCompatActivity {
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.agregarNuevaListaMercado(u.getId(),listaDeMercado);
+                        listaDeMercado.setNombre(nombreListaNueva.getText().toString());
+                        Callback<Void> callb=new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println(response);
+                                System.out.println(call);
+                                Intent intent=new Intent(view.getContext(),ShoppingListActivity.class);
+                                Bundle b = new Bundle();
+                                b.putSerializable("id",u.getId());
+                                Intent start=intent.putExtra("bundle",b);
+                                startActivity(start);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println(t.getLocalizedMessage());
+                            }
+                        };
+                        network.agregarNuevaListaMercado(callb,u.getId(),listaDeMercado);
                     }
                 });
             }
@@ -68,7 +89,10 @@ public class AgregarLista extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(v.getContext(),ShoppingListActivity.class);
-                startActivity(intent);
+                Bundle b = new Bundle();
+                b.putSerializable("id",u.getId());
+                Intent start=intent.putExtra("bundle",b);
+                startActivity(start);
             }
         });
     }

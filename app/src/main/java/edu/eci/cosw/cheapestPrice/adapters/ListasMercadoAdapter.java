@@ -111,12 +111,30 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         //Eliminar lista de mercado
         holder.getEliminarLista().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 ExecutorService executorService = Executors.newFixedThreadPool(1);
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        network.eliminarListaMercado(usuario.getId(), usuario.getListas().get(position).getId());
+                        Callback<Void> callb=new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                System.out.println(response);
+                                System.out.println(call);
+                                Intent intent= new Intent(context,ShoppingListActivity.class);
+                                Bundle b = new Bundle();
+                                b.putSerializable("id",usuario.getId());
+                                Intent start=intent.putExtra("bundle",b);
+                                context.startActivity(start);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.out.println(t.getLocalizedMessage());
+                            }
+                        };
+                        network.eliminarListaMercado(callb,usuario.getId(), usuario.getListas().get(position).getId());
+
                     }
                 });
             }});
