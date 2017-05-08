@@ -2,6 +2,7 @@ package edu.eci.cosw.cheapestPrice;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -28,27 +30,31 @@ import edu.eci.cosw.cheapestPrice.network.RequestCallback;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private GestureDetector gesture;
+
 
     private RecyclerView mRecyclerView;
     private List<Item> mArrayList;
     private SearchAdapter mAdapter;
     private ItemRetrofitNetwork network;
     private Usuario iduser;
+    private int idU;
     public Context context;
+    public FloatingActionButton boton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         context=this;
-        gesture = new GestureDetector(new SwipeGestureDetector());
+        boton= (FloatingActionButton) findViewById(R.id.redirect);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         initViews();
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         iduser=((Usuario) b.getSerializable("user"));
+        idU=((int) b.getSerializable("id"));
         System.out.println("user "+iduser.toString());
         network = new ItemRetrofitNetwork();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -86,6 +92,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         }.init(iduser));
 
+        boton.bringToFront();
+
     }
 
     private void initViews(){
@@ -93,6 +101,14 @@ public class SearchActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    public void redirect(View v){
+        Intent intent = new Intent(this, ShoppingListActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("id",idU);
+        b.putSerializable("user",iduser);
+        Intent start = intent.putExtra("bundle", b);
     }
 
     @Override
@@ -127,63 +143,5 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
 
-        this.overridePendingTransition(R.anim.anim_slide_left_to_right,R.anim.anim_slide_right_to_left);
-        if (gesture.onTouchEvent(event))
-        {
-            return true;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    private void onLeft()
-    {
-        Intent myIntent = new Intent(SearchActivity.this, ShoppingListActivity.class);
-        startActivity(myIntent);
-    }
-
-    /*private void onRight()
-    {
-        Intent myIntent = new Intent(MainActivity.this, RightActivity.class);
-        startActivity(myIntent);
-    }*/
-
-    private class SwipeGestureDetector  extends GestureDetector.SimpleOnGestureListener
-    {
-        private static final int SWIPE_MIN_DISTANCE = 120;
-        private static final int SWIPE_MAX_OFF_PATH = 200;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY)
-        {
-            try
-            {
-                float diffAbs = Math.abs(e1.getY() - e2.getY());
-                float diff = e1.getX() - e2.getX();
-
-                if (diffAbs > SWIPE_MAX_OFF_PATH)
-                    return false;
-
-                // Left swipe
-                if (diff > SWIPE_MIN_DISTANCE&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
-                {
-                    SearchActivity.this.onLeft();
-                }
-                // Right swipe
-
-                /*else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
-                {
-                    SearchActivity.this.onRight();
-                }*/
-            }
-            catch (Exception e)
-            {
-                Log.e("MainActivity", "Error on gestures");
-            }
-            return false;
-        }
-    }
 }
