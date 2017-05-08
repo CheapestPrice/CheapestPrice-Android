@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Date;
 
+import edu.eci.cosw.cheapestPrice.entities.ItemLista;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import edu.eci.cosw.cheapestPrice.services.ShoppingListService;
@@ -138,6 +139,18 @@ public class ListaMercadoRetrofitNetwork {
      */
     public void agregarNuevaListaMercado(Callback<Void> callback,int id, ListaDeMercado listaDeMercado){
         Call<Void> call=getUserService().agregarListaMercado(id,listaDeMercado);
+        call.enqueue(callback);
+    }
+
+    /**
+     * Agrega un item a la lista de mercado
+     * @param callback
+     * @param id
+     * @param lId
+     * @param itemLista
+     */
+    public void agregarItemListaMercado(Callback<Void> callback, int id, int lId, ItemLista itemLista){
+        Call<Void> call=getUserService().agregarItemListaMercado(id,lId,itemLista);
         call.enqueue(callback);
     }
 

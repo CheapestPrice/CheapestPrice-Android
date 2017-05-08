@@ -50,7 +50,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, int position) {
-        Item item=itemsFiltred.get(position);
+        final Item item=itemsFiltred.get(position);
         holder.getName().setText(item.getProducto().getNombre());
         holder.getPrice().setText(Long.toString(item.getPrecio()));
         holder.getCategoria().setText(item.getProducto().getCategoria());
@@ -63,6 +63,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
                 Intent intent=new Intent(v.getContext(), AddItemToShoppingList.class);
                 Bundle b = new Bundle();
                 b.putSerializable("id",iduser);
+                b.putSerializable("item",item);
                 Intent start=intent.putExtra("bundle",b);
                 context.startActivity(start);
             }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import edu.eci.cosw.cheapestPrice.entities.Tienda;
 import edu.eci.cosw.cheapestPrice.services.ShopService;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -35,5 +36,10 @@ public class ShopRetrofitNetwork {
             requestCallback.onFailed( new NetworkException( 0, null, e ) );
         }
 
+    }
+
+    public void modifyShop(Callback<Void> callback, int id, int shopId, Tienda tienda){
+        Call<Void> call=shopService.modifyShop(id,shopId,tienda);
+        call.enqueue(callback);
     }
 }

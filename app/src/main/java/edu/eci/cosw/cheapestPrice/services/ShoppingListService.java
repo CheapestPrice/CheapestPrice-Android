@@ -2,6 +2,7 @@ package edu.eci.cosw.cheapestPrice.services;
 
 import java.util.List;
 
+import edu.eci.cosw.cheapestPrice.entities.ItemLista;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.entities.Usuario;
 import okhttp3.Callback;
@@ -46,4 +47,8 @@ public interface ShoppingListService {
     @DELETE("/api/usuarios/{id}/lista/{listaId}/item/{idItem}")
     Call<Void> borrarItemSeleccionado(@Path("id") int id,@Path("listaId") int listaId,
                                       @Path("idItem") int idItem);
+
+    //Agregar item a una lista de mercado
+    @POST("/api/usuarios/{id}/lista/{lId}")
+    Call<Void> agregarItemListaMercado(@Path("id") int id, @Path("lId") int lId, @Body ItemLista itemLista);
 }

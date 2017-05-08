@@ -11,6 +11,8 @@ public class ItemLista implements Serializable{
     private boolean favorito;
     private int id;
     private Item item;
+    private int listaId;
+    private int itemId;
     private ListaDeMercado lista;
 
     public ItemLista(){
@@ -69,5 +71,21 @@ public class ItemLista implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getListaId() {
+        return listaId;
+    }
+
+    public void setListaId(int listaId) {
+        this.listaId = listaId;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 }
