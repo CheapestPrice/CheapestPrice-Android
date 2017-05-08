@@ -62,6 +62,15 @@ public class RetrofitNetwork {
         Call<Void> call=loginService.doCreateCuenta(cuenta);
         call.enqueue(callback);
     }
+    public void getUsuario(RequestCallback<Usuario> requestCallback, int id){
+        try {
+            Call<Usuario> call = userService.getUsuario(id);
+            Response<Usuario> execute = call.execute();
+            requestCallback.onSuccess(execute.body());
+        }catch (IOException e){
+            requestCallback.onFailed( new NetworkException( 0, null, e ) );
+        }
+    }
 
 
     public void getTendero(RequestCallback<Tendero> requestCallback, int id){

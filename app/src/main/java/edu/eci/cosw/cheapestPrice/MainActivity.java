@@ -1,7 +1,9 @@
 package edu.eci.cosw.cheapestPrice;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
@@ -63,34 +65,57 @@ public class MainActivity extends AppCompatActivity {
                 network.doLogin(new RequestCallback<Account>() {
                     @Override
                     public void onSuccess(Account response) {
-                        final int uId=response.getId();
-                        System.out.println("success: "+response);
-                        if(response.getRol().equals(Account.TENDERO)){
-                            System.out.println("tendero "+response.getId());
-                            network.getTendero(new RequestCallback<Tendero>() {
+                        if(response==null){
+                            runOnUiThread(new Runnable() {
                                 @Override
-                                public void onSuccess(Tendero respuesta) {
-                                    Intent intent= new Intent(cont,MenuTenderoActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putSerializable("id",uId);
-                                    b.putSerializable("shopId",respuesta.getTienda().getId());
-                                    Intent start=intent.putExtra("bundle",b);
-                                    cont.startActivity(start);
+                                public void run() {
+                                    alertDialog("Datos Incorrectos");
                                 }
 
-                                @Override
-                                public void onFailed(NetworkException e) {
+                            });
+                        }else {
+                            final int uId = response.getId();
 
-                                }
-                            },response.getId());
+                            System.out.println("success: " + response);
+                            if (response.getRol().equals(Account.TENDERO)) {
+                                System.out.println("tendero " + response.getId());
+                                network.getTendero(new RequestCallback<Tendero>() {
+                                    @Override
+                                    public void onSuccess(Tendero respuesta) {
+                                        Intent intent = new Intent(cont, MenuTenderoActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putSerializable("id", uId);
+                                        b.putSerializable("shopId", respuesta.getTienda().getId());
+                                        Intent start = intent.putExtra("bundle", b);
+                                        cont.startActivity(start);
+                                    }
 
-                        }else{
-                            System.out.println("cliente "+response.getId());
-                            Intent intent= new Intent(cont,SearchActivity.class);
-                            Bundle b = new Bundle();
-                            b.putSerializable("id",response.getId());
-                            Intent start=intent.putExtra("bundle",b);
-                            cont.startActivity(start);
+                                    @Override
+                                    public void onFailed(NetworkException e) {
+
+                                    }
+                                }, response.getId());
+
+                            } else {
+                                System.out.println("cliente " + response.getId());
+                                network.getUsuario(new RequestCallback<Usuario>() {
+                                    @Override
+                                    public void onSuccess(Usuario response) {
+                                        Intent intent = new Intent(cont, ShoppingListActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putSerializable("id",uId);
+                                        b.putSerializable("user",response);
+                                        Intent start = intent.putExtra("bundle", b);
+                                        cont.startActivity(start);
+                                    }
+
+                                    @Override
+                                    public void onFailed(NetworkException e) {
+
+                                    }
+                                },uId);
+
+                            }
                         }
                     }
 
@@ -106,6 +131,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }.init(this));
 
+    }
+    public void alertDialog(String e) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(e)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
