@@ -32,7 +32,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/tienda"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
@@ -40,10 +40,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tienda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tienda"
+                android:layout_below="@id/name"
                 android:textColor="@color/colorVerde"
                 android:textSize="16sp"
                 android:textStyle="bold" />
