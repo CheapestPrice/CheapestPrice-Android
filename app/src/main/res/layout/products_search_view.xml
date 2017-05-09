@@ -52,7 +52,7 @@
                 android:id="@+id/marca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
+                android:layout_below="@id/tienda"
                 android:textColor="@color/colorAzul"
                 android:textSize="14sp"
                 android:textStyle="bold" />
