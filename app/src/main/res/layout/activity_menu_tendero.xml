@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.eci.cosw.cheapestPrice.MenuTenderoActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Información de tu Tienda"
@@ -31,9 +31,8 @@
 
             <TextView
                 android:id="@+id/textShopName"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Nombre: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -41,7 +40,7 @@
 
             <EditText
                 android:id="@+id/shopName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
@@ -54,9 +53,8 @@
 
             <TextView
                 android:id="@+id/textShopNit"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Nit: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -64,7 +62,7 @@
 
             <EditText
                 android:id="@+id/shopNit"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
@@ -77,9 +75,8 @@
 
             <TextView
                 android:id="@+id/textShopAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Dirección: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -87,7 +84,7 @@
 
             <EditText
                 android:id="@+id/shopAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
@@ -124,9 +121,8 @@
 
             <TextView
                 android:id="@+id/textShopPhone"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Teléfono: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -134,7 +130,7 @@
 
             <EditText
                 android:id="@+id/shopPhone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
@@ -143,8 +139,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/editShop"
@@ -157,8 +152,9 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
 
             <Button
                 android:id="@+id/productos"
@@ -173,7 +169,7 @@
 
             <Button
                 android:id="@+id/opiniones"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:textSize="20dp"
@@ -184,7 +180,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
