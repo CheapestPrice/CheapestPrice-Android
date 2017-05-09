@@ -109,6 +109,7 @@ public class SearchActivity extends AppCompatActivity {
         b.putSerializable("id",idU);
         b.putSerializable("user",iduser);
         Intent start = intent.putExtra("bundle", b);
+        startActivity(start);
     }
 
     @Override
