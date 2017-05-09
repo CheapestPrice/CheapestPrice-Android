@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/nombreItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Nombre del producto:" />
+
+    <EditText
+        android:id="@+id/precioItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Precio:" />
+
+    <EditText
+        android:id="@+id/marcaItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Marca:" />
+
+    <EditText
+        android:id="@+id/categoriaItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Categoria:" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imagenItem"
+            android:layout_width="match_parent"
+            android:layout_height="169dp"
+            app:srcCompat="@drawable/common_full_open_on_phone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.13"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/agregarImagenItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar Imagen" />
+            <Button
+                android:id="@+id/agregarProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar producto" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

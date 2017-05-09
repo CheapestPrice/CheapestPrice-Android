@@ -124,9 +124,8 @@ public class ItemRetrofitNetwork {
             call.enqueue(callback);
     }
 
-    public void postItem(Callback<Void> callback,int id, int shop,int idItem)
-    {
-        Call<Void> call=itemService.postItem(id,shop,idItem);
+    public void postItem(Callback<Void> callback,int id, int shop,Item item) {
+        Call<Void> call=itemService.postItem(id,shop,item);
         call.enqueue(callback);
     }
 
