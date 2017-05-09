@@ -56,7 +56,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         holder.getCategoria().setText(item.getProducto().getCategoria());
         holder.getMarca().setText(item.getProducto().getMarca());
         holder.getMarca().setText(item.getProducto().getMarca());
-        Picasso.with(context).load("https://cheapestprice.herokuapp.com/api/items/"+iduser+"/shop/"+item.getTienda().getId()+"/item/"+item.getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
+        Picasso.with(context).load("https://cheapestprice.herokuapp.com/api/items/"+item.getProducto().getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
         holder.getAddList().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
