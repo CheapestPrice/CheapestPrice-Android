@@ -1,11 +1,13 @@
 package edu.eci.cosw.cheapestPrice.entities;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
  * Created by Julian David Devia Serna on 2/19/17.
  */
-public class Item implements Serializable {
+public class Item implements Serializable,Comparable<Item> {
 
     private int id;
     private long precio;
@@ -66,5 +68,14 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         return "["+tienda.getNit()+ " "+ tienda.getX() + " " + tienda.getY() + " "+producto.getId() +" "+precio+"]";
+    }
+
+    @Override
+    public int compareTo(@NonNull Item item) {
+        if(getPrecio()<item.getPrecio()){
+            return -1;
+        }else{
+            return 1;
+        }
     }
 }

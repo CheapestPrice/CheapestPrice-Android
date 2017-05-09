@@ -15,8 +15,8 @@
         tools:layout_editor_absoluteX="8dp">
 
         <TextView
-            android:layout_width="310dp"
-            android:layout_height="39dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Información de tu Tienda"
             android:textSize="26dp"
@@ -33,7 +33,6 @@
                 android:id="@+id/textShopName"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Nombre: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -42,7 +41,7 @@
             <EditText
                 android:id="@+id/shopName"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
 
@@ -56,7 +55,6 @@
                 android:id="@+id/textShopNit"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Nit: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -65,7 +63,7 @@
             <EditText
                 android:id="@+id/shopNit"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
 
@@ -79,7 +77,6 @@
                 android:id="@+id/textShopAddress"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Dirección: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -87,15 +84,15 @@
 
             <EditText
                 android:id="@+id/shopAddress"
-                android:layout_width="170dp"
-                android:layout_height="50dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
 
             <Button
                 android:id="@+id/verMapa"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Verificar dirección"
                 android:onClick="verMapa"/>
 
@@ -126,7 +123,6 @@
                 android:id="@+id/textShopPhone"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:text="Teléfono: "
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -135,7 +131,7 @@
             <EditText
                 android:id="@+id/shopPhone"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text=" "/>
 
@@ -143,8 +139,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/editShop"
@@ -157,12 +152,13 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
 
             <Button
                 android:id="@+id/productos"
-                android:layout_width="180dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:text="Productos"
@@ -173,7 +169,7 @@
 
             <Button
                 android:id="@+id/opiniones"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:textSize="20dp"
