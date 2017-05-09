@@ -30,7 +30,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/categoria"
+                android:id="@+id/tienda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
