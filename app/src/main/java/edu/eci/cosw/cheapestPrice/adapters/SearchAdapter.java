@@ -91,7 +91,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
 
                     ArrayList<Item> filteredList = new ArrayList<>();
 
-                    for (Item item : filteredList) {
+                    for (Item item : items) {
 
                         if (item.getProducto().getNombre().toLowerCase().contains(charString) || item.getProducto().getMarca().toLowerCase().contains(charString) || item.getProducto().getCategoria().toLowerCase().contains(charString)) {
 
