@@ -39,7 +39,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         itemsFiltred=listItem;
         this.context=context;
         iduser=id;
-        System.out.println("22222222222222222222222222222222222222222222222222222222222222222222 "+iduser.getCorreo());
+        System.out.println("user: "+iduser.getCorreo());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         final Item item=itemsFiltred.get(position);
         holder.getName().setText(item.getProducto().getNombre());
         holder.getPrice().setText(Long.toString(item.getPrecio()));
-        holder.getCategoria().setText(item.getProducto().getCategoria());
+        holder.getTienda().setText(item.getTienda().getNombre());
         holder.getMarca().setText(item.getProducto().getMarca());
         holder.getMarca().setText(item.getProducto().getMarca());
         Picasso.with(context).load("https://cheapestprice.herokuapp.com/api/items/"+item.getProducto().getId()+"/imagen").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).fit().into(holder.getImage());
@@ -121,7 +121,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         private TextView price;
         private ImageView image;
         private TextView marca;
-        private TextView categoria;
+        private TextView tienda;
         private Button addList;
 
         public ViewHolder(View itemView) {
@@ -130,7 +130,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
             setPrice((TextView) itemView.findViewById(R.id.price));
             setImage((ImageView) itemView.findViewById(R.id.logo));
             setMarca((TextView) itemView.findViewById(R.id.marca));
-            setCategoria((TextView) itemView.findViewById(R.id.categoria));
+            setTienda((TextView) itemView.findViewById(R.id.tienda));
             setAddList((Button) itemView.findViewById(R.id.addList));
         }
 
@@ -166,12 +166,12 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
             this.marca = marca;
         }
 
-        public TextView getCategoria() {
-            return categoria;
+        public TextView getTienda() {
+            return tienda;
         }
 
-        public void setCategoria(TextView categoria) {
-            this.categoria = categoria;
+        public void setTienda(TextView tienda) {
+            this.tienda = tienda;
         }
 
         public Button getAddList(){ return addList; }

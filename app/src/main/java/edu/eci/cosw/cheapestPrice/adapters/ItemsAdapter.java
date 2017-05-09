@@ -65,7 +65,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         private TextView price;
         private ImageView image;
         private TextView marca;
-        private TextView tienda;
+        private TextView categoria;
         private Button updateProduct;
         private Button deleteProduct;
 
@@ -75,7 +75,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             setPrice((TextView) itemView.findViewById(R.id.price));
             setImage((ImageView) itemView.findViewById(R.id.logo));
             setMarca((TextView) itemView.findViewById(R.id.marca));
-            setTienda((TextView) itemView.findViewById(R.id.tienda));
+            setCategoria((TextView) itemView.findViewById(R.id.categoria));
             setDeleteProduct((Button) itemView.findViewById(R.id.deleteProduct));
             setUpdateProduct((Button) itemView.findViewById(R.id.updateProduct));
         }
@@ -112,12 +112,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             this.marca = marca;
         }
 
-        public TextView getTienda() {
-            return tienda;
+        public TextView getCategoria() {
+            return categoria;
         }
 
-        public void setTienda(TextView tienda) {
-            this.tienda = tienda;
+        public void setCategoria(TextView categoria) {
+            this.categoria = categoria;
         }
 
         public Button getUpdateProduct() { return updateProduct; }
@@ -147,7 +147,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         //Marca
         holder.getMarca().setText(item.getProducto().getMarca());
         //categoria
-        holder.getTienda().setText(item.getTienda().getNombre());
+        holder.getCategoria().setText(item.getProducto().getCategoria());
         ///update
         holder.getUpdateProduct().setOnClickListener(new View.OnClickListener() {
             @Override
