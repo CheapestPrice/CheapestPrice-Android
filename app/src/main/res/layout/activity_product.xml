@@ -31,6 +31,17 @@
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical" />
 
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/agregarItemNuevo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:clickable="true"
+                    android:src="@mipmap/ic_add"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="end|bottom"
+                    android:onClick="mas"/>
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -45,6 +45,7 @@
         <activity android:name=".AgregarLista"/>
         <activity android:name=".AddItemToShoppingList"/>
         <activity android:name=".OpinionActivity"/>
+        <activity android:name=".AgregarItemTendero"/>
         <activity android:name=".DetalleProductActivity">
         </activity>
     </application>

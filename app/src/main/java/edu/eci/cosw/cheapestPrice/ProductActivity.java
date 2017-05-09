@@ -1,10 +1,12 @@
 package edu.eci.cosw.cheapestPrice;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -24,20 +26,31 @@ public class ProductActivity extends AppCompatActivity {
     private ItemRetrofitNetwork network;
     private int id;
     private int shop;
+    private FloatingActionButton agregarItemTendero;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-
+        agregarItemTendero=(FloatingActionButton) findViewById(R.id.agregarItemNuevo);
         Intent intent=getIntent();
-        Bundle b = intent.getBundleExtra("bundle");
+        final Bundle b = intent.getBundleExtra("bundle");
         setId(((int) b.getSerializable("id")));
         setShop((int)b.getSerializable("shopId"));
-        System.out.println(id+" "+shop);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         configureRecyclerView();
+        agregarItemTendero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),AgregarItemTendero.class);
+                b.putSerializable("postShopId",shop);
+                b.putSerializable("postId",id);
+                Intent start= intent.putExtra("bundleLOL",b);
+                startActivity(start);
+            }
+        });
         network = new ItemRetrofitNetwork();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
 

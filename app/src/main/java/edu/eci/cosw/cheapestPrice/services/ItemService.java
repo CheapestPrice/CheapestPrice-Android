@@ -8,6 +8,7 @@ import edu.eci.cosw.cheapestPrice.entities.Producto;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -41,8 +42,8 @@ public interface ItemService {
     @GET("api/items/{id}/shop/{shop}/item/{idItem}")
     Call<Item> getItemByShop (@Path("id") int id ,@Path("shop") int shop,@Path("idItem") int idItem );
 
-    @POST("api/items/{id}/shop/{shop}/item/{idItem}")
-    Call<Void> postItem(@Path("id") int id , @Path("shop") int shop, @Path("idItem") int idItem);
+    @POST("api/items/{id}/shop/{shop}/item")
+    Call<Void> postItem(@Path("id") int id , @Path("shop") int shop, @Body Item item);
 
     @DELETE("api/items/{id}/shop/{shop}/item/{idItem}")
     Call<Void> deleteItem(@Path("id") int id,@Path("shop") int shop, @Path("idItem") int idItem);
