@@ -1,6 +1,7 @@
 package edu.eci.cosw.cheapestPrice.network;
 
 import java.io.IOException;
+import java.util.List;
 
 import edu.eci.cosw.cheapestPrice.entities.Tienda;
 import edu.eci.cosw.cheapestPrice.services.ShopService;
@@ -41,5 +42,19 @@ public class ShopRetrofitNetwork {
     public void modifyShop(Callback<Void> callback, int id, int shopId, Tienda tienda){
         Call<Void> call=shopService.modifyShop(id,shopId,tienda);
         call.enqueue(callback);
+    }
+
+    public void getOpinionesTienda(RequestCallback<List<Tienda>> requestCallback, int id, int shop){
+
+        try {
+            Call<List<Tienda>> call = shopService.getOpinionesTienda(id,shop);
+            Response<List<Tienda>> execute = call.execute();
+            requestCallback.onSuccess( execute.body() );
+        }
+        catch ( IOException e )
+        {
+            requestCallback.onFailed( new NetworkException( 0, null, e ) );
+        }
+
     }
 }
