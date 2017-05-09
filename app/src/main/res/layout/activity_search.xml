@@ -37,10 +37,20 @@
 
     </android.support.design.widget.AppBarLayout>
 
+<<<<<<< HEAD
     <android.support.v7.widget.RecyclerView android:id="@+id/card_view_search_products"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_marginTop="100dp" android:paddingTop="?attr/actionBarSize"
         android:scrollbars="vertical" tools:layout_editor_absoluteX="8dp"
+=======
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/card_view_search_products"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        tools:layout_editor_absoluteX="8dp"
+>>>>>>> d7fbc3700f29fca7f222e69cdb5989b6eaa07946
         tools:layout_editor_absoluteY="48dp" />
 
 </android.support.design.widget.CoordinatorLayout>
