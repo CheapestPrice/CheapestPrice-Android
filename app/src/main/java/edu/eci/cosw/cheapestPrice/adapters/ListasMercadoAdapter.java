@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -96,7 +100,8 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         //Nombre lista
         holder.getNombreLista().setText(lista.getNombre());
         //Fecha de creacion
-        holder.getFechaCreacion().setText(lista.getFechaCreacion().toString());
+        String fecha=DateFormat.getDateTimeInstance().format(lista.getFechaCreacion());
+        holder.getFechaCreacion().setText(fecha);
         //Ver
         holder.getVer().setOnClickListener(new View.OnClickListener() {
             @Override
