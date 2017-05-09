@@ -17,7 +17,7 @@
         android:src="@mipmap/ic_logo_round"
         app:backgroundTint="@color/colorPrimary"
         android:layout_gravity="end|bottom"
-        android:onClick=""
+        android:onClick="redirect"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp" />
 
