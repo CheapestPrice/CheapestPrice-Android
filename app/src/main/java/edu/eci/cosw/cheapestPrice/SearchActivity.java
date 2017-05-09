@@ -49,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
         boton= (FloatingActionButton) findViewById(R.id.redirect);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         initViews();
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");

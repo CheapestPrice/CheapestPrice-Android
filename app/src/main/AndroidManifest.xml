@@ -38,7 +38,7 @@
         <activity android:name=".ShoppingListActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ProductActivity" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".MenuTenderoActivity" />
         <activity android:name=".ShoppingListProductActivity"/>
         <activity android:name=".PopUpTiendaInfo"/>
