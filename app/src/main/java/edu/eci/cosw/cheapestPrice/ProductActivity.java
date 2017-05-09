@@ -22,8 +22,8 @@ public class ProductActivity extends AppCompatActivity {
     private List<Item> items;
     private RecyclerView recyclerView;
     private ItemRetrofitNetwork network;
-    private int id=3;
-    private int shop=1;
+    private int id;
+    private int shop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

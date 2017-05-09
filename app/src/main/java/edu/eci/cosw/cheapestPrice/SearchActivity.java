@@ -2,6 +2,7 @@ package edu.eci.cosw.cheapestPrice;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -196,14 +198,19 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
             return;
         }
         lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        org= new Item[mArrayList.size()];
-        mArrayList.toArray(org);
-        System.out.println(lastLocation);
-        System.out.println(org);
-        sort(org);
-        mArrayList= Arrays.asList(org);
-        mAdapter = new SearchAdapter(mArrayList, context, iduser);
-        mRecyclerView.setAdapter(mAdapter);
+        System.out.println("antes: "+lastLocation);
+        if(lastLocation!=null) {
+            org = new Item[mArrayList.size()];
+            mArrayList.toArray(org);
+            System.out.println(lastLocation);
+            System.out.println(org);
+            sort(org);
+            mArrayList = Arrays.asList(org);
+            mAdapter = new SearchAdapter(mArrayList, context, iduser);
+            mRecyclerView.setAdapter(mAdapter);
+        }else{
+            alertDialog("Por favor encienda la ubicación del dispositivo");
+        }
     }
 
     public void orderPrice(View view) {
@@ -314,5 +321,18 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
                         stopLocationUpdates();
                     }
                 } );
+    }
+
+    public void alertDialog(String e) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(e)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

@@ -241,11 +241,23 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println("Cuenta: response: "+response+" call: "+call);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        alertDialog("El cliente ha sido registrado exitosamente");
+                                    }
+                                });
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println("Cuenta: failure: "+t+" call: "+call);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        alertDialog("Ha ocurrido un error inesperado");
+                                    }
+                                });
                             }
                         });
                     }
@@ -253,6 +265,12 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         System.out.println("failure: "+t+" call: "+call);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                alertDialog("Ha ocurrido un error inesperado");
+                            }
+                        });
                     }
                 });
             }
@@ -303,11 +321,23 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {
                                                 System.out.println("tendero: response: "+response+" call: "+call);
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        alertDialog("El tendero se registró exitosamente");
+                                                    }
+                                                });
                                             }
 
                                             @Override
                                             public void onFailure(Call<Void> call, Throwable t) {
                                                 System.out.println("tendero: failure: "+t+" call: "+call);
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        alertDialog("Ha ocurrido un error inesperado");
+                                                    }
+                                                });
                                             }
                                         });
                                     }
@@ -315,6 +345,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                     @Override
                                     public void onFailure(Call<Void> call, Throwable t) {
                                         System.out.println("tienda: failure: "+t+" call: "+call);
+
                                     }
                                 });
 
@@ -323,6 +354,12 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println("Cuenta: failure: "+t+" call: "+call);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        alertDialog("Ha ocurrido un error inesperado");
+                                    }
+                                });
                             }
                         });
                     }
@@ -330,6 +367,12 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         System.out.println("failure: "+t+" call: "+call);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                alertDialog("Ha ocurrido un error inesperado");
+                            }
+                        });
                     }
                 });
             }
@@ -436,5 +479,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
             }
         } );
     }
+
+
 
 }
