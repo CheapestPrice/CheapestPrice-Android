@@ -154,6 +154,12 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
         startActivity(intent);
     }
 
+    public void opiniones(View view) {
+        Intent intent = new Intent(this, OpinionActivity.class);
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
+    }
+
     public void editShop(final View view) {
         if(validForm()){
 

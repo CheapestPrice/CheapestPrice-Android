@@ -44,7 +44,9 @@
         <activity android:name=".PopUpTiendaInfo"/>
         <activity android:name=".AgregarLista"/>
         <activity android:name=".AddItemToShoppingList"/>
-        <activity android:name=".DetalleProductActivity"></activity>
+        <activity android:name=".OpinionActivity"/>
+        <activity android:name=".DetalleProductActivity">
+        </activity>
     </application>
 
 </manifest>

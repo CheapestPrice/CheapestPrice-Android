@@ -15,7 +15,6 @@ public class Opinion implements Serializable {
     private boolean gusta;
     private Date fecha;
     private Usuario usuario;
-    private Tienda tienda;
 
     public Opinion(){}
 
@@ -72,11 +71,11 @@ public class Opinion implements Serializable {
         this.usuario = usuario;
     }
 
-    public Tienda getTienda() {
+  /*  public Tienda getTienda() {
         return tienda;
     }
 
     public void setTienda(Tienda tienda) {
         this.tienda = tienda;
-    }
+    }*/
 }

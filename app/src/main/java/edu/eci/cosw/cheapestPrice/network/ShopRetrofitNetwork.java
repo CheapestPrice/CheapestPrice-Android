@@ -1,8 +1,16 @@
 package edu.eci.cosw.cheapestPrice.network;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
+import edu.eci.cosw.cheapestPrice.entities.Opinion;
 import edu.eci.cosw.cheapestPrice.entities.Tienda;
 import edu.eci.cosw.cheapestPrice.services.ShopService;
 import retrofit2.Call;
@@ -20,9 +28,38 @@ public class ShopRetrofitNetwork {
     private static final String BASE_URL = "https://cheapestprice.herokuapp.com/";
     private ShopService shopService;
 
+    final class UnixEpochDateTypeAdapter
+            extends TypeAdapter<Date> {
+
+
+        private UnixEpochDateTypeAdapter() {
+        }
+
+
+
+        @Override
+        public Date read(final JsonReader in)
+                throws IOException {
+            // this is where the conversion is performed
+            return new Date(in.nextLong());
+        }
+
+        @Override
+        @SuppressWarnings("resource")
+        public void write(final JsonWriter out, final Date value)
+                throws IOException {
+            // write back if necessary or throw UnsupportedOperationException
+            out.value(value.getTime());
+        }
+
+    }
+
     public ShopRetrofitNetwork(){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl( BASE_URL ).addConverterFactory( GsonConverterFactory.create() ).build();
+        final Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new UnixEpochDateTypeAdapter()).create();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl( BASE_URL ).addConverterFactory( GsonConverterFactory.create(gson) ).build();
         shopService= retrofit.create(ShopService.class );
+        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create();
     }
 
     public void getShop(RequestCallback<Tienda> requestCallback, int id, int shopId){
@@ -44,11 +81,11 @@ public class ShopRetrofitNetwork {
         call.enqueue(callback);
     }
 
-    public void getOpinionesTienda(RequestCallback<List<Tienda>> requestCallback, int id, int shop){
+    public void getOpinionesTienda(RequestCallback<List<Opinion>> requestCallback, int id, int shop){
 
         try {
-            Call<List<Tienda>> call = shopService.getOpinionesTienda(id,shop);
-            Response<List<Tienda>> execute = call.execute();
+            Call<List<Opinion>> call = shopService.getOpinionesTienda(id,shop);
+            Response<List<Opinion>> execute = call.execute();
             requestCallback.onSuccess( execute.body() );
         }
         catch ( IOException e )
