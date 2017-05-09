@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     tools:context="edu.eci.cosw.cheapestPrice.MainActivity">
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,8 +27,6 @@
             android:id="@+id/iniciar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="@dimen/text_size_large"
             android:layout_below="@+id/logo"/>
 
         <EditText
