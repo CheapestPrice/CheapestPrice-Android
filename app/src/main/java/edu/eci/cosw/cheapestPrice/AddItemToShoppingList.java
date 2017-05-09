@@ -68,7 +68,7 @@ public class AddItemToShoppingList extends AppCompatActivity {
     public void enviarItem(){
         agregarItemALista.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 listaElegida=elegirLista.getSelectedItem().toString();
                 System.out.println("444444444444444444444444444444444444444444444444 "+listaElegida);
                 for(ListaDeMercado l:u.getListas()){
@@ -87,6 +87,12 @@ public class AddItemToShoppingList extends AppCompatActivity {
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(call);
                                 System.out.println(response);
+                                Intent intent = new Intent(v.getContext(), SearchActivity.class);
+                                Bundle b = new Bundle();
+                                b.putSerializable("id", u.getId());
+                                b.putSerializable("user", u);
+                                Intent start = intent.putExtra("bundle", b);
+                                v.getContext().startActivity(start);
                             }
 
                             @Override
