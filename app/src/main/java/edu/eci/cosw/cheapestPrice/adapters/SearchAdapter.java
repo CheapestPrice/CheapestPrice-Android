@@ -52,7 +52,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, int position) {
         final Item item=itemsFiltred.get(position);
         holder.getName().setText(item.getProducto().getNombre());
-        holder.getPrice().setText(Long.toString(item.getPrecio()));
+        holder.getPrice().setText("$"+Long.toString(item.getPrecio()));
         holder.getTienda().setText(item.getTienda().getNombre());
         holder.getMarca().setText(item.getProducto().getMarca());
         holder.getMarca().setText(item.getProducto().getMarca());

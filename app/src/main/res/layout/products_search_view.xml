@@ -43,7 +43,7 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/categoria"
+                android:layout_below="@id/tienda"
                 android:textColor="@color/colorVerde"
                 android:textSize="16sp"
                 android:textStyle="bold" />
