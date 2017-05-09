@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -61,6 +62,9 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
     EditText confirmPasswd;
 
     //Tendero:
+    public static final String tenderostr="¿Desea registrar su tienda?";
+    public static final String clientestr="¿Desea registrarse como cliente?";
+    Button tiendaR;
     boolean isTendero;
     EditText shopName;
     EditText shopAddress;
@@ -94,6 +98,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
         shopPhone= (EditText) findViewById(R.id.shopPhone);
         shopNit= (EditText) findViewById(R.id.shopNit);
         mapa=(LinearLayout) findViewById(R.id.mapReg);
+        tiendaR=(Button) findViewById(R.id.tiendaReg);
 
         //mas mapa
         googleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).
@@ -220,6 +225,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
     public void tend(View view){
         isTendero=!isTendero;
         tendero.setVisibility(isTendero ? View.VISIBLE:View.GONE);
+        tiendaR.setText(!isTendero ? tenderostr : clientestr);
     }
     public void registrarUsuario(){
         ExecutorService executorService = Executors.newFixedThreadPool(1);

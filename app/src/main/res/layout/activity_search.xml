@@ -10,8 +10,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/redirect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_margin="16dp"
         android:clickable="true"
         android:src="@mipmap/ic_logo_round"
@@ -21,12 +21,13 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/priceOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:clickable="true"
         android:src="@mipmap/ic_price"
         app:backgroundTint="@color/colorPrimary"
         android:layout_gravity="bottom"
+        app:fabSize="auto"
         app:layout_anchor="@id/redirect"
         app:layout_anchorGravity="top"
         android:layout_marginLeft="65dp"
@@ -34,15 +35,16 @@
         android:onClick="orderPrice" />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/locationOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:clickable="true"
         android:src="@mipmap/ic_location"
+        app:fabSize="auto"
         app:backgroundTint="@color/colorPrimary"
         android:layout_gravity="bottom"
         app:layout_anchor="@id/priceOrder"
         app:layout_anchorGravity="top"
-        android:layout_marginLeft="127dp"
+        android:layout_marginLeft="130dp"
         android:layout_marginTop="0dp"
         android:onClick="orderPos" />
 
