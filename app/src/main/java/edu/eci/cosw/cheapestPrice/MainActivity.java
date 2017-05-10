@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 
 import com.google.common.base.Charsets;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     Button register;
     RetrofitNetwork network;
+    ProgressDialog cargando;
 
 
     @Override
@@ -50,8 +53,13 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         network = new RetrofitNetwork();
+        cargando=new ProgressDialog(this);
     }
     public void logIn(View view){
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        cargando.setIndeterminate(true);
+        cargando.show();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(new Runnable() {
             Context cont;

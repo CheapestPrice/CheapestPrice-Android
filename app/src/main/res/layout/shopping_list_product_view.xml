@@ -79,16 +79,16 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/infoTienda"
-                android:layout_width="51dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ic_view"/>
-
-            <Button
                 android:id="@+id/eliminarProducto"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_delete"/>
+
+            <Button
+                android:id="@+id/infoTienda"
+                android:layout_width="51dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_view"/>
 
         </LinearLayout>
 
