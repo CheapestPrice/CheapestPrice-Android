@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Precio:" />
+        android:hint="Precio:"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/marcaItem"
@@ -64,7 +64,8 @@
                 android:id="@+id/agregarProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agregar producto" />
+                android:text="Agregar producto"
+                />
 
         </LinearLayout>
 

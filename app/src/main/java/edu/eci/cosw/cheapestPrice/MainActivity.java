@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                         Bundle b = new Bundle();
                                         b.putSerializable("id", uId);
                                         b.putSerializable("shopId", respuesta.getTienda().getId());
+                                        b.putSerializable("tienda",respuesta.getTienda());
                                         Intent start = intent.putExtra("bundle", b);
                                         cont.startActivity(start);
                                     }

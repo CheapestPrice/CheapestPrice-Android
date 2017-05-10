@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.entities.Item;
 import edu.eci.cosw.cheapestPrice.entities.Producto;
+import edu.eci.cosw.cheapestPrice.entities.Tienda;
 import edu.eci.cosw.cheapestPrice.network.ItemRetrofitNetwork;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +34,7 @@ public class AgregarItemTendero extends AppCompatActivity {
     Button agregarItemTendero;
     int tenderoId;
     int tiendaId;
+    Tienda tienda;
     Item item;
     Producto producto;
     ItemRetrofitNetwork network;
@@ -49,16 +51,19 @@ public class AgregarItemTendero extends AppCompatActivity {
         categoriaItemNuevo=(EditText) findViewById(R.id.categoriaItem);
         imagenItemNuevo=(ImageView) findViewById(R.id.imagenItem);
         buscarImagen=(Button) findViewById(R.id.agregarImagenItem);
-        agregarItemTendero=(Button) findViewById(R.id.agregarImagenItem);
+        agregarItemTendero=(Button) findViewById(R.id.agregarProducto);
         Intent intent=getIntent();
         Bundle b=intent.getBundleExtra("bundleLOL");
         tenderoId=(Integer) b.getSerializable("postId");
         tiendaId=(Integer) b.getSerializable("postShopId");
+        tienda=(Tienda) b.getSerializable("tienda");
+        setear();
     }
 
     public void setear(){
         item=new Item();
         producto=new Producto();
+        item.setTienda(tienda);
         agregarItemTendero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

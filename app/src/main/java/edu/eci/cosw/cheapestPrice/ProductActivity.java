@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.adapters.ItemsAdapter;
 import edu.eci.cosw.cheapestPrice.entities.Item;
+import edu.eci.cosw.cheapestPrice.entities.Tienda;
 import edu.eci.cosw.cheapestPrice.network.ItemRetrofitNetwork;
 import edu.eci.cosw.cheapestPrice.network.NetworkException;
 import edu.eci.cosw.cheapestPrice.network.RequestCallback;
@@ -26,6 +27,7 @@ public class ProductActivity extends AppCompatActivity {
     private ItemRetrofitNetwork network;
     private int id;
     private int shop;
+    private Tienda tienda;
     private FloatingActionButton agregarItemTendero;
 
 
@@ -39,6 +41,7 @@ public class ProductActivity extends AppCompatActivity {
         final Bundle b = intent.getBundleExtra("bundle");
         setId(((int) b.getSerializable("id")));
         setShop((int)b.getSerializable("shopId"));
+        tienda=(Tienda)b.getSerializable("tienda");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         configureRecyclerView();
         agregarItemTendero.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +50,7 @@ public class ProductActivity extends AppCompatActivity {
                 Intent intent=new Intent(v.getContext(),AgregarItemTendero.class);
                 b.putSerializable("postShopId",shop);
                 b.putSerializable("postId",id);
+                b.putSerializable("tienda",tienda);
                 Intent start= intent.putExtra("bundleLOL",b);
                 startActivity(start);
             }
