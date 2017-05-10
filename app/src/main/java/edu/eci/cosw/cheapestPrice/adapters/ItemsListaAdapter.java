@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import java.util.concurrent.Executors;
 
 import edu.eci.cosw.cheapestPrice.PopUpTiendaInfo;
 import edu.eci.cosw.cheapestPrice.R;
+import edu.eci.cosw.cheapestPrice.ShoppingListActivity;
+import edu.eci.cosw.cheapestPrice.ShoppingListProductActivity;
 import edu.eci.cosw.cheapestPrice.entities.ItemLista;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
@@ -33,12 +36,22 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
     private Context context;
     private ListaMercadoRetrofitNetwork network;
     private ExecutorService executorService;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     public ItemsListaAdapter(ListaDeMercado productos,Context mainActivity){
         this.productos=productos;
         context=mainActivity;
         network=new ListaMercadoRetrofitNetwork();
         executorService= Executors.newFixedThreadPool(1);
+        cargando= new ProgressDialog(context);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -50,6 +63,8 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         private Button eliminarProducto;
         private Button masInformacion;
         //Información de la tienda
+
+
 
         public ViewHolder(View v) {
             super(v);
@@ -124,6 +139,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         holder.getFavorito().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cargar();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -132,11 +148,23 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(response);
                                 System.out.println(call);
+                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println(t.getLocalizedMessage());
+                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
                         };
                         network.itemSeleccionadoFavorito(callb, productos.getIdUsuario(),
@@ -151,6 +179,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         holder.getComprado().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cargar();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -159,11 +188,23 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(response);
                                 System.out.println(call);
+                                ((ShoppingListProductActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println(t.getLocalizedMessage());
+                                ((ShoppingListProductActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
                         };
                         network.itemSeleccionadoComprado(callb,productos.getIdUsuario(),
@@ -188,6 +229,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
         holder.getEliminarProducto().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cargar();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -196,11 +238,23 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(response);
                                 System.out.println(call);
+                                ((ShoppingListProductActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println(t.getLocalizedMessage());
+                                ((ShoppingListProductActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
                         };
                         network.eliminarItemListaMercado(callb,productos.getIdUsuario(),productos.getId(),productos.getItems().get(position).getId());

@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -60,6 +61,15 @@ public class PopUpTiendaInfo extends AppCompatActivity implements OnMapReadyCall
     private Geocoder geocoder;
     private String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION};
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -71,6 +81,7 @@ public class PopUpTiendaInfo extends AppCompatActivity implements OnMapReadyCall
         nombreTienda=(TextView) findViewById(R.id.nombreTienda);
         telefonoTienda=(TextView) findViewById(R.id.telefonoTienda);
         direcionTienda=(TextView) findViewById(R.id.direccionTienda);
+        cargando=new ProgressDialog(this);
         configureRecyclerView();
         refresh();
 

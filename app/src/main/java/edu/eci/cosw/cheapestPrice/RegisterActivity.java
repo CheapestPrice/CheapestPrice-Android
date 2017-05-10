@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -54,6 +55,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
     LinearLayout basic;
     LinearLayout tendero;
     LinearLayout mapa;
+    ProgressDialog cargando;
 
     //Formulario básico
     EditText userName;
@@ -83,6 +85,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        cargando=new ProgressDialog(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         network = new RetrofitNetwork();
@@ -227,8 +230,16 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
         tendero.setVisibility(isTendero ? View.VISIBLE:View.GONE);
         tiendaR.setText(!isTendero ? tenderostr : clientestr);
     }
+    public void cargar(){
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
     public void registrarUsuario(){
         ExecutorService executorService = Executors.newFixedThreadPool(1);
+        cargar();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -250,6 +261,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        cargando.hide();
                                         alertDialog("El cliente ha sido registrado exitosamente");
                                     }
                                 });
@@ -261,6 +273,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        cargando.hide();
                                         alertDialog("Ha ocurrido un error inesperado");
                                     }
                                 });
@@ -274,6 +287,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 alertDialog("Ha ocurrido un error inesperado");
                             }
                         });
@@ -284,6 +298,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
     }
     public void registrarTendero(){
         ExecutorService executorService = Executors.newFixedThreadPool(1);
+        cargar();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -330,6 +345,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
+                                                        cargando.hide();
                                                         alertDialog("El tendero se registró exitosamente");
                                                     }
                                                 });
@@ -341,6 +357,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
+                                                        cargando.hide();
                                                         alertDialog("Ha ocurrido un error inesperado");
                                                     }
                                                 });
@@ -350,7 +367,15 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
 
                                     @Override
                                     public void onFailure(Call<Void> call, Throwable t) {
+
                                         System.out.println("tienda: failure: "+t+" call: "+call);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                cargando.hide();
+                                                alertDialog("Ha ocurrido un error inesperado");
+                                            }
+                                        });
 
                                     }
                                 });
@@ -363,6 +388,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        cargando.hide();
                                         alertDialog("Ha ocurrido un error inesperado");
                                     }
                                 });
@@ -376,6 +402,7 @@ public class RegisterActivity extends FragmentActivity implements OnMapReadyCall
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 alertDialog("Ha ocurrido un error inesperado");
                             }
                         });

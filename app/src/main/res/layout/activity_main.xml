@@ -8,73 +8,72 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="217dp"
-            app:srcCompat="@drawable/icono_cheapestprice"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/iniciar"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/logo"/>
-
-        <EditText
-            android:id="@+id/email"
-            style="@style/Widget.AppCompat.AutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/correo"
-            android:inputType="textEmailAddress"
+            android:orientation="vertical"
             android:gravity="center"
-            android:layout_below="@+id/iniciar"/>
+            >
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="217dp"
+                app:srcCompat="@drawable/icono_cheapestprice"
+                android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/password"
-            style="@style/Widget.AppCompat.AutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:layout_below="@+id/email"/>
-        <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:layout_centerInParent="true"
-            android:onClick="logIn"
-            android:layout_below="@id/password"/>
-        <TextView
-            android:id="@+id/registro_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Empieza a ahorrar!"
-            android:textSize="@dimen/text_size_large"
-            android:layout_below="@+id/login"/>
-        <Button
-            android:id="@+id/register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register_button"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/registro_text"
-            android:onClick="reg"/>
+            <TextView
+                android:id="@+id/iniciar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logo"/>
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/Widget.AppCompat.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/correo"
+                android:inputType="textEmailAddress"
+                android:gravity="center"
+                android:layout_below="@+id/iniciar"/>
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/Widget.AppCompat.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:layout_below="@+id/email"/>
+            <Button
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:layout_centerInParent="true"
+                android:onClick="logIn"
+                android:layout_below="@id/password"/>
+            <TextView
+                android:id="@+id/registro_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Empieza a ahorrar!"
+                android:textSize="@dimen/text_size_large"
+                android:layout_below="@+id/login"/>
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_button"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/registro_text"
+                android:onClick="reg"/>
 
 
-    </RelativeLayout>
+        </RelativeLayout>
     </ScrollView>
 
 

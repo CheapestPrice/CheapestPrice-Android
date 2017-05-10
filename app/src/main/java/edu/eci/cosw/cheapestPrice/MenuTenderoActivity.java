@@ -1,6 +1,7 @@
 package edu.eci.cosw.cheapestPrice;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -74,6 +75,16 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
     private String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +112,7 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
 
         shopNetwork = new ShopRetrofitNetwork();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
-
+        cargar();
         executorService.execute(new Runnable() {
             int shop;
             int id;
@@ -123,6 +134,7 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 nombreTienda = (EditText) findViewById(shopName);
                                 nombreTienda.setText(tienda.getNombre());
 
@@ -141,6 +153,12 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
                     @Override
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+                        });
                     }
                 }, id, shop);
 
@@ -164,7 +182,7 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
         if(validForm()){
 
             ExecutorService executorService = Executors.newFixedThreadPool(1);
-
+            cargar();
             executorService.execute(new Runnable() {
                 int shop;
                 int id;
@@ -201,6 +219,7 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    cargando.hide();
                                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                                     builder.setMessage("Actualizacion completa..")
                                             .setCancelable(false)
@@ -218,6 +237,12 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             System.out.println("Fail: "+t);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cargando.hide();
+                                }
+                            });
                         }
 
                     },id,shop,tiendaEdit);

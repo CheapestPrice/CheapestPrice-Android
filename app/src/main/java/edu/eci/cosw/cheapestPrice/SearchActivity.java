@@ -1,6 +1,7 @@
 package edu.eci.cosw.cheapestPrice;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +60,7 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
     public FloatingActionButton boton;
     public FloatingActionButton price;
     public FloatingActionButton location;
+    ProgressDialog cargando;
 
     //Para sacar ubicación
     public Item[] org;
@@ -85,6 +87,7 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
         idU = ((int) b.getSerializable("id"));
         System.out.println("user " + iduser.toString());
         network = new ItemRetrofitNetwork();
+        cargando=new ProgressDialog(this);
         ExecutorService executorService = Executors.newFixedThreadPool(1);
 
         googleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).
@@ -98,7 +101,7 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         }
 
-
+        cargar();
         executorService.execute(new Runnable() {
             Usuario id;
 
@@ -118,6 +121,7 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 mAdapter = new SearchAdapter(mArrayList, context, id);
                                 mRecyclerView.setAdapter(mAdapter);
                             }
@@ -126,6 +130,7 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
 
                     @Override
                     public void onFailed(NetworkException e) {
+
                         System.out.println(e);
                     }
                 }, id.getId());
@@ -138,7 +143,13 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
         location.bringToFront();
 
     }
-
+    public void cargar(){
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
     private void initViews() {
         mRecyclerView = (RecyclerView) findViewById(R.id.card_view_search_products);
         mRecyclerView.setHasFixedSize(true);

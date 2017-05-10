@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,17 @@ public class AgregarItemTendero extends AppCompatActivity {
     Producto producto;
     ItemRetrofitNetwork network;
     ExecutorService executorService;
+    ProgressDialog cargando;
 
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
+
+    @Override
     public void onCreate(Bundle savedIntance){
         super.onCreate(savedIntance);
         setContentView(R.layout.tendero_agregar_item);
@@ -57,6 +68,7 @@ public class AgregarItemTendero extends AppCompatActivity {
         tenderoId=(Integer) b.getSerializable("postId");
         tiendaId=(Integer) b.getSerializable("postShopId");
         tienda=(Tienda) b.getSerializable("tienda");
+        cargando=new ProgressDialog(this);
         setear();
     }
 
@@ -73,6 +85,7 @@ public class AgregarItemTendero extends AppCompatActivity {
                 producto.setMarca(marcaItemNuevo.getText().toString());
                 //producto.setImagen(imagenItemNuevo);
                 item.setProducto(producto);
+                cargar();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -81,11 +94,23 @@ public class AgregarItemTendero extends AppCompatActivity {
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(call);
                                 System.out.println(response);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println(t.getLocalizedMessage());
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
                         };
                         network.postItem(callb,tenderoId,tiendaId,item);

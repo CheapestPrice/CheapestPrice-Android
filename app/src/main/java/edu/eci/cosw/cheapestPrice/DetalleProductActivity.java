@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +46,15 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
     private Item item;
 
     ItemRetrofitNetwork network;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +75,8 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
         marca.setText(item.getProducto().getMarca());
         categoria=(Spinner) findViewById(R.id.categoria);
         categoria.setOnItemSelectedListener(this);
+        cargando= new ProgressDialog(this);
+        cargar();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -75,6 +87,7 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, categories);
                                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 categoria.setAdapter(dataAdapter);
@@ -86,6 +99,12 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
                     @Override
                     public void onFailed(NetworkException e) {
                         System.out.println("Error: "+e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+                        });
                     }
                 },id);
             }
@@ -115,6 +134,7 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        cargando.hide();
                                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                             builder.setMessage("Actualizacion completa..")
                                                     .setCancelable(false)
@@ -132,6 +152,12 @@ public class DetalleProductActivity extends AppCompatActivity implements Adapter
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println("Fail: "+t);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
 
                         },id,idshop,item.getId());

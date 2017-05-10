@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,15 @@ public class OpinionActivity extends AppCompatActivity {
     }
 
     private List<Opinion> opiniones;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +69,9 @@ public class OpinionActivity extends AppCompatActivity {
         setShop((int) bundle.getSerializable("shopId"));
         configureRecyclerView();
         setNetwork(new ShopRetrofitNetwork());
+        cargando= new ProgressDialog(this);
         ExecutorService executorService = Executors.newFixedThreadPool(1);
+        cargar();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -70,6 +82,7 @@ public class OpinionActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 refresh();
                             }
                         });
@@ -78,6 +91,12 @@ public class OpinionActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+                        });
                     }
                 }, id,shop);
 

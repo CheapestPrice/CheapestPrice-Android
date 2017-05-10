@@ -1,6 +1,7 @@
 package edu.eci.cosw.cheapestPrice.adapters;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +49,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     int idshop;
     ItemRetrofitNetwork network;
     ExecutorService executorService;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     public ItemsAdapter(List<Item> response,Context main, int id, int shop) {
         items=response;
@@ -57,6 +67,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         network=new ItemRetrofitNetwork();
         executorService= Executors.newFixedThreadPool(1);
         System.out.println("items: "+items);
+        cargando= new ProgressDialog(context);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -165,6 +176,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.getDeleteProduct().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                cargar();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -176,6 +188,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                         new Runnable() {
                                             @Override
                                             public void run() {
+                                                cargando.hide();
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                                 builder.setMessage("Actualizacion completa..")
                                                         .setCancelable(false)
@@ -199,6 +212,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println("Fail: "+t);
+                                ((ProductActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
 
                         },iduser,idshop,item.getId());

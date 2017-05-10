@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +30,18 @@ public class ProductActivity extends AppCompatActivity {
     private int shop;
     private Tienda tienda;
     private FloatingActionButton agregarItemTendero;
-
+    ProgressDialog cargando;
+    public void cargar(){
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        cargando=new ProgressDialog(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         agregarItemTendero=(FloatingActionButton) findViewById(R.id.agregarItemNuevo);
@@ -78,6 +86,7 @@ public class ProductActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                cargando.hide();
                                 refresh();
                             }
                         });
@@ -85,6 +94,12 @@ public class ProductActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+                        });
                     }
                 }, id, shop);
 

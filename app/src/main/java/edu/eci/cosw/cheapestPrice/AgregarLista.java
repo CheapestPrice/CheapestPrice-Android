@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,15 @@ public class AgregarLista extends AppCompatActivity {
     private Button volver;
     private ExecutorService executorService;
     private ListaMercadoRetrofitNetwork network;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,7 @@ public class AgregarLista extends AppCompatActivity {
         listaDeMercado = new ListaDeMercado(nombreLista);
         listaDeMercado.setUsuario(u);
         listaDeMercado.setIdUsuario(u.getId());
+        cargando= new ProgressDialog(this);
         mostrar();
     }
 
@@ -72,11 +83,23 @@ public class AgregarLista extends AppCompatActivity {
                                 Bundle b = new Bundle();
                                 b.putSerializable("id",u.getId());
                                 Intent start=intent.putExtra("bundle",b);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                                 startActivity(start);
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                                 System.out.println(t.getLocalizedMessage());
                             }
                         };

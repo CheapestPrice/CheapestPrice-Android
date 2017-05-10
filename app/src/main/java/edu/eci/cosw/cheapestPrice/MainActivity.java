@@ -55,11 +55,15 @@ public class MainActivity extends AppCompatActivity {
         network = new RetrofitNetwork();
         cargando=new ProgressDialog(this);
     }
-    public void logIn(View view){
+    public void cargar(){
         cargando.setMessage("Cargando...");
-        cargando.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
         cargando.show();
+    }
+    public void logIn(View view){
+        cargar();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(new Runnable() {
             Context cont;
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    cargando.hide();
                                     alertDialog("Datos Incorrectos");
                                 }
 
@@ -96,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                                         b.putSerializable("shopId", respuesta.getTienda().getId());
                                         b.putSerializable("tienda",respuesta.getTienda());
                                         Intent start = intent.putExtra("bundle", b);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                cargando.hide();
+                                            }
+                                        });
                                         cont.startActivity(start);
                                     }
 

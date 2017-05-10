@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -31,13 +32,22 @@ public class ShoppingListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ListaMercadoRetrofitNetwork network;
     private FloatingActionButton agregarLista;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+        cargando= new ProgressDialog(this);
         Intent intent=getIntent();
-
         Bundle b = intent.getBundleExtra("bundle");
         setIdUsuario(((int) b.getSerializable("id")));
         System.out.println(idUsuario);
@@ -68,6 +78,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 refresh();
+                                cargando.hide();
                             }
                         });
                     }
@@ -75,6 +86,12 @@ public class ShoppingListActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(NetworkException e) {
                         System.out.println(e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+                        });
                     }
                 }, getIdUsuario());
 

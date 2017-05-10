@@ -1,5 +1,6 @@
 package edu.eci.cosw.cheapestPrice.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,12 +41,22 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
     private Context context;
     public View.OnClickListener clickListener;
     private ListaMercadoRetrofitNetwork network;
+    ProgressDialog cargando;
+
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
+    }
 
     public ListasMercadoAdapter(Usuario usuario,Context mainActivity,View.OnClickListener clickListener) {
         this.usuario = usuario;
         context = mainActivity;
         this.clickListener = clickListener;
         network = new ListaMercadoRetrofitNetwork();
+        cargando= new ProgressDialog(context);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -117,6 +128,7 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
         holder.getEliminarLista().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                cargar();
                 ExecutorService executorService = Executors.newFixedThreadPool(1);
                 executorService.execute(new Runnable() {
                     @Override
@@ -130,12 +142,24 @@ public class ListasMercadoAdapter extends RecyclerView.Adapter<ListasMercadoAdap
                                 Bundle b = new Bundle();
                                 b.putSerializable("id",usuario.getId());
                                 Intent start=intent.putExtra("bundle",b);
+                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                                 context.startActivity(start);
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println(t.getLocalizedMessage());
+                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                             }
                         };
                         network.eliminarListaMercado(callb,usuario.getId(), usuario.getListas().get(position).getId());
