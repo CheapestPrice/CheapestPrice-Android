@@ -14,6 +14,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,9 +44,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import edu.eci.cosw.cheapestPrice.adapters.ItemsListaAdapter;
+import edu.eci.cosw.cheapestPrice.entities.ItemLista;
 import edu.eci.cosw.cheapestPrice.entities.ListaDeMercado;
 import edu.eci.cosw.cheapestPrice.extras.DataParser;
 import edu.eci.cosw.cheapestPrice.network.ListaMercadoRetrofitNetwork;
@@ -61,6 +66,7 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
     private RecyclerView recyclerView;
     private ListaDeMercado listaMercadoUsuario;
     private TextView nombreLista;
+    private LinearLayout layoutRuta;
 
     //Mapa
     private GoogleMap mMap;
@@ -78,18 +84,20 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         Intent intent=getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         setListaMercadoUsuario((ListaDeMercado) b.getSerializable("post"));
+        layoutRuta=(LinearLayout) findViewById(R.id.rutaLy);
         configureRecyclerView();
         refresh();
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+
         // Initializing
         MarkerPoints = new ArrayList<>();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.ruta);
         mapFragment.getMapAsync(this);
     }
 
@@ -122,9 +130,14 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         this.listaMercadoUsuario = listaMercadoUsuario;
     }
 
+    public void verRuta(View view){
+        layoutRuta.setVisibility(View.GONE==layoutRuta.getVisibility() ? View.VISIBLE : View.GONE);
+    }
+
     //aiudaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        System.out.println("on ready");
         mMap = googleMap;
 
         //Initialize Google Play Services
@@ -141,63 +154,68 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
             mMap.setMyLocationEnabled(true);
         }
 
-        // Setting onclick event listener for the map
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
-            @Override
-            public void onMapClick(LatLng point) {
-
-                // Already two locations
-                if (MarkerPoints.size() > 1) {
-                    MarkerPoints.clear();
-                    mMap.clear();
-                }
-
-                // Adding new item to the ArrayList
-                MarkerPoints.add(point);
-
-                // Creating MarkerOptions
-                MarkerOptions options = new MarkerOptions();
-
-                // Setting the position of the marker
-                options.position(point);
-
-                /**
-                 * For the start location, the color of marker is GREEN and
-                 * for the end location, the color of marker is RED.
-                 */
-                if (MarkerPoints.size() == 1) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                } else if (MarkerPoints.size() == 2) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                }
+        // Creating MarkerOptions
+        MarkerOptions options = new MarkerOptions();
 
 
-                // Add new marker to the Google Map Android API V2
-                mMap.addMarker(options);
+        //Agregar todos los marcadores de las tiendas
+        setMarkers(options);
 
-                // Checks, whether start and end locations are captured
-                if (MarkerPoints.size() >= 2) {
-                    LatLng origin = MarkerPoints.get(0);
-                    LatLng dest = MarkerPoints.get(1);
+        /**
+         * For the start location, the color of marker is GREEN and
+         * for the end location, the color of marker is RED.
+         */
+        /*if (MarkerPoints.size() == 1) {
+            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        } else if (MarkerPoints.size() == 2) {
+            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        }
 
-                    // Getting URL to the Google Directions API
-                    String url = getUrl(origin, dest);
-                    String fullRoute=getOtherUrl();
-                    Log.d("onMapClick", url.toString());
-                    FetchUrl FetchUrl = new FetchUrl();
 
-                    // Start downloading json data from Google Directions API
-                    //FetchUrl.execute(url);
-                    FetchUrl.execute(fullRoute);
-                    //move map camera
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-                }
+        // Add new marker to the Google Map Android API V2
+        mMap.addMarker(options);*/
 
-            }
-        });
+        // Checks, whether start and end locations are captured
+        /*if (MarkerPoints.size() >= 2) {
+            LatLng origin = MarkerPoints.get(0);
+            LatLng dest = MarkerPoints.get(1);
 
+            // Getting URL to the Google Directions API
+            String url = getUrl(origin, dest);
+            String fullRoute=getOtherUrl();
+            Log.d("onMapClick", url.toString());
+            FetchUrl FetchUrl = new FetchUrl();
+
+            // Start downloading json data from Google Directions API
+            //FetchUrl.execute(url);
+            FetchUrl.execute(fullRoute);
+            //move map camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        }*/
+
+    }
+
+    public void setMarkers(MarkerOptions options){
+        MarkerPoints.clear();
+        mMap.clear();
+        Set<LatLng> puntos= new HashSet<>();
+        for (ItemLista lm:listaMercadoUsuario.getItems()){
+            LatLng point= new LatLng(lm.getItem().getTienda().getY(),lm.getItem().getTienda().getX());
+            puntos.add(point);
+
+        }
+
+
+        MarkerPoints.addAll(puntos);
+
+        for (LatLng point:MarkerPoints){
+            options= new MarkerOptions();
+            options.position(point);
+            mMap.addMarker(options);
+        }
+        System.out.println("lista: "+listaMercadoUsuario);
+        System.out.println("puntos: "+puntos);
     }
 
     private String getUrl(LatLng origin, LatLng dest) {
@@ -411,11 +429,12 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+        System.out.println("aiudaaaaaaaaaaa");
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-
+        System.out.println("entró a onConnected");
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
@@ -430,12 +449,13 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
 
     @Override
     public void onConnectionSuspended(int i) {
+        System.out.println("entró a onLocationSuspended");
 
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
+        System.out.println("entró a onLocationChanged");
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -444,6 +464,7 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
+        setMarkers(markerOptions);
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
@@ -458,15 +479,18 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
+
+
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        System.out.println("entró a onConnectionFailed");
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public boolean checkLocationPermission(){
+        System.out.println("revisando permisos");
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -500,6 +524,7 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
+        System.out.println("entró a pedir permisos");
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.

@@ -93,6 +93,7 @@ public class MenuTenderoActivity extends AppCompatActivity implements GoogleApiC
         bundle = intent.getBundleExtra("bundle");
         setId(((int) bundle.getSerializable("id")));
         setShop((int) bundle.getSerializable("shopId"));
+        cargando= new ProgressDialog(this);
 
         mapa = (LinearLayout) findViewById(R.id.mapTienda);
 
