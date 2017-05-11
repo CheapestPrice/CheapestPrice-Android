@@ -26,5 +26,6 @@
     <string name="categoria">Categoria:</string>
     <string name="logo">Logo:</string>
     <string name="precio">Precio:</string>
+    <string name="informaci_n_de_tu_tienda">Información de tu Tienda</string>
 
 </resources>

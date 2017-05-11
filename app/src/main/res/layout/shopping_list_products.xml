@@ -19,11 +19,11 @@
 
         <Button
             android:id="@+id/verRuta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ver ruta" />
-
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@mipmap/ic_map"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:id="@+id/mapLinR"
