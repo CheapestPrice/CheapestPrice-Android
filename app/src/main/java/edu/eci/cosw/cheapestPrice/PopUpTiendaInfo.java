@@ -63,13 +63,7 @@ public class PopUpTiendaInfo extends AppCompatActivity implements OnMapReadyCall
             android.Manifest.permission.ACCESS_COARSE_LOCATION};
     ProgressDialog cargando;
 
-    public void cargar() {
-        cargando.setMessage("Cargando...");
-        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        cargando.setIndeterminate(true);
-        cargando.setCanceledOnTouchOutside(false);
-        cargando.show();
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -101,6 +95,13 @@ public class PopUpTiendaInfo extends AppCompatActivity implements OnMapReadyCall
                 .findFragmentById(R.id.mapShop);
         mapFragment.getMapAsync(this);
 
+    }
+    public void cargar() {
+        cargando.setMessage("Cargando...");
+        cargando.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        cargando.setIndeterminate(true);
+        cargando.setCanceledOnTouchOutside(false);
+        cargando.show();
     }
 
     private void configureRecyclerView() {

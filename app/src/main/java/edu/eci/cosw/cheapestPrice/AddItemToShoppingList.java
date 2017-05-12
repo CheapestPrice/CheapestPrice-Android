@@ -78,7 +78,7 @@ public class AddItemToShoppingList extends AppCompatActivity {
     }
 
     public void enviarItem() {
-        cargar();
+
         agregarItemALista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -92,6 +92,7 @@ public class AddItemToShoppingList extends AppCompatActivity {
                         itemLista.setItemId(item.getId());
                     }
                 }
+                cargar();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -99,6 +100,12 @@ public class AddItemToShoppingList extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(call);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cargando.hide();
+                                    }
+                                });
                                 System.out.println(response);
                                 Intent intent = new Intent(v.getContext(), SearchActivity.class);
                                 Bundle b = new Bundle();
@@ -106,12 +113,6 @@ public class AddItemToShoppingList extends AppCompatActivity {
                                 b.putSerializable("user", u);
                                 Intent start = intent.putExtra("bundle", b);
                                 v.getContext().startActivity(start);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        cargando.hide();
-                                    }
-                                });
                             }
 
                             @Override

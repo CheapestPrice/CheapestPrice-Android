@@ -60,6 +60,7 @@ public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolde
         holder.getAddList().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(v.getContext(), AddItemToShoppingList.class);
                 Bundle b = new Bundle();
                 b.putSerializable("id",iduser);

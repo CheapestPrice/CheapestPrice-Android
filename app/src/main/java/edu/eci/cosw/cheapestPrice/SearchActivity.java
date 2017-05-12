@@ -130,7 +130,12 @@ public class SearchActivity extends AppCompatActivity implements GoogleApiClient
 
                     @Override
                     public void onFailed(NetworkException e) {
-
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+                        });
                         System.out.println(e);
                     }
                 }, id.getId());
