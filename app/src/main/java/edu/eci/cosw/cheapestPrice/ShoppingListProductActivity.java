@@ -77,14 +77,14 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
     LocationRequest mLocationRequest;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_products);
-        nombreLista=(TextView) findViewById(R.id.nombreTitulo);
-        Intent intent=getIntent();
+        nombreLista = (TextView) findViewById(R.id.nombreTitulo);
+        Intent intent = getIntent();
         Bundle b = intent.getBundleExtra("bundle");
         setListaMercadoUsuario((ListaDeMercado) b.getSerializable("post"));
-        layoutRuta=(LinearLayout) findViewById(R.id.rutaLy);
+        layoutRuta = (LinearLayout) findViewById(R.id.rutaLy);
         configureRecyclerView();
         refresh();
 
@@ -102,15 +102,15 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
     }
 
     private void configureRecyclerView() {
-        setRecyclerView((RecyclerView) findViewById( R.id.recyclerViewShoppingListProduct));
-        getRecyclerView().setHasFixedSize( true );
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( this );
-        getRecyclerView().setLayoutManager( layoutManager );
+        setRecyclerView((RecyclerView) findViewById(R.id.recyclerViewShoppingListProduct));
+        getRecyclerView().setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        getRecyclerView().setLayoutManager(layoutManager);
     }
 
-    private void refresh(){
+    private void refresh() {
         nombreLista.setText(listaMercadoUsuario.getNombre());
-        getRecyclerView().setAdapter(new ItemsListaAdapter(getListaMercadoUsuario(),this));
+        getRecyclerView().setAdapter(new ItemsListaAdapter(getListaMercadoUsuario(), this));
     }
 
 
@@ -130,8 +130,8 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         this.listaMercadoUsuario = listaMercadoUsuario;
     }
 
-    public void verRuta(View view){
-        layoutRuta.setVisibility(View.GONE==layoutRuta.getVisibility() ? View.VISIBLE : View.GONE);
+    public void verRuta(View view) {
+        layoutRuta.setVisibility(View.GONE == layoutRuta.getVisibility() ? View.VISIBLE : View.GONE);
     }
 
     //aiudaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -148,74 +148,43 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
-        // Creating MarkerOptions
-        MarkerOptions options = new MarkerOptions();
-
-
         //Agregar todos los marcadores de las tiendas
-        setMarkers(options);
-
-        /**
-         * For the start location, the color of marker is GREEN and
-         * for the end location, the color of marker is RED.
-         */
-        /*if (MarkerPoints.size() == 1) {
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        } else if (MarkerPoints.size() == 2) {
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        }
-
-
-        // Add new marker to the Google Map Android API V2
-        mMap.addMarker(options);*/
+        //setMarkers();
 
         // Checks, whether start and end locations are captured
-        /*if (MarkerPoints.size() >= 2) {
-            LatLng origin = MarkerPoints.get(0);
-            LatLng dest = MarkerPoints.get(1);
 
-            // Getting URL to the Google Directions API
-            String url = getUrl(origin, dest);
-            String fullRoute=getOtherUrl();
-            Log.d("onMapClick", url.toString());
-            FetchUrl FetchUrl = new FetchUrl();
+        // Getting URL to the Google Directions API
 
-            // Start downloading json data from Google Directions API
-            //FetchUrl.execute(url);
-            FetchUrl.execute(fullRoute);
-            //move map camera
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        }*/
 
     }
 
-    public void setMarkers(MarkerOptions options){
+    public void clear() {
         MarkerPoints.clear();
         mMap.clear();
-        Set<LatLng> puntos= new HashSet<>();
-        for (ItemLista lm:listaMercadoUsuario.getItems()){
-            LatLng point= new LatLng(lm.getItem().getTienda().getY(),lm.getItem().getTienda().getX());
+    }
+
+    public void setMarkers() {
+        System.out.println("entró a set");
+        Set<LatLng> puntos = new HashSet<>();
+        for (ItemLista lm : listaMercadoUsuario.getItems()) {
+            LatLng point = new LatLng(lm.getItem().getTienda().getX(), lm.getItem().getTienda().getY());
             puntos.add(point);
-
+            System.out.println("punto: " + point);
         }
-
 
         MarkerPoints.addAll(puntos);
 
-        for (LatLng point:MarkerPoints){
-            options= new MarkerOptions();
-            options.position(point);
-            mMap.addMarker(options);
+        for (LatLng point : MarkerPoints) {
+
+            Marker mark = mMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).visible(true));
+            System.out.println("marker: " + mark);
         }
-        System.out.println("lista: "+listaMercadoUsuario);
-        System.out.println("puntos: "+puntos);
+        System.out.println("lista: " + listaMercadoUsuario);
+        System.out.println("puntos: " + puntos);
     }
 
     private String getUrl(LatLng origin, LatLng dest) {
@@ -244,22 +213,32 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
     }
 
     private String getOtherUrl() {
+        System.out.println("entro a crear la URL");
+        System.out.println(mCurrLocationMarker);
+        System.out.println(mCurrLocationMarker.getPosition());
+
+        //setting coords for start and finish point
+        String cords = mCurrLocationMarker.getPosition().latitude + "," + mCurrLocationMarker.getPosition().longitude;
 
         // Origin of route
-        String str_origin = "origin=" + 4.758431+","+ -74.028974;
+        String str_origin = "origin=" + cords;
 
         // Destination of route
-        String str_dest = "destination=" + 4.758431 + "," + -74.028974;
+        String str_dest = "destination=" + cords;
 
 
         // Optimize enabled
-        String optimize="waypoints=optimize:true";
+        String optimize = "waypoints=optimize:true";
 
         //Set waypoints
-        String waypoints="|"+4.7671254+","+-74.0462362+"|"+4.7582246+","+-74.0459475+"|"+4.7628179+","+-74.04518+"|"+ 4.758431 + "," + -74.028974;
-
+        //String waypoints="|"+4.7671254+","+-74.0462362+"|"+4.7582246+","+-74.0459475+"|"+4.7628179+","+-74.04518+"|"+ 4.758431 + "," + -74.028974;
+        String waypoints = "";
+        for (LatLng point : MarkerPoints) {
+            waypoints += "|" + point.latitude + "," + point.longitude;
+        }
+        System.out.println("waypoints: " + waypoints);
         // travel mode
-        String mode="mode=walking";
+        String mode = "mode=walking";
 
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + optimize + waypoints + "&" + mode;
@@ -271,7 +250,7 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
-        System.out.println("MMMMMAAAAAAAPPPP:"+url);
+        System.out.println("MMMMMAAAAAAAPPPP:" + url);
 
         return url;
     }
@@ -339,7 +318,7 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            System.out.println("resultado: "+result);
+            System.out.println("resultado: " + result);
             ParserTask parserTask = new ParserTask();
 
             // Invokes the thread for parsing the JSON data
@@ -362,17 +341,17 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask",jsonData[0].toString());
+                Log.d("ParserTask", jsonData[0].toString());
                 DataParser parser = new DataParser();
                 Log.d("ParserTask", parser.toString());
 
                 // Starts parsing data
                 routes = parser.parse(jObject);
-                Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
+                Log.d("ParserTask", "Executing routes");
+                Log.d("ParserTask", routes.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask",e.toString());
+                Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routes;
@@ -406,18 +385,17 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(10);
-                lineOptions.color(Color.RED);
+                lineOptions.color(R.color.colorPrimary);
 
-                Log.d("onPostExecute","onPostExecute lineoptions decoded");
+                Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
             }
 
             // Drawing polyline in the Google Map for the i-th route
-            if(lineOptions != null) {
+            if (lineOptions != null) {
                 mMap.addPolyline(lineOptions);
-            }
-            else {
-                Log.d("onPostExecute","without Polylines drawn");
+            } else {
+                Log.d("onPostExecute", "without Polylines drawn");
             }
         }
     }
@@ -460,16 +438,19 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
+        clear();
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
-        setMarkers(markerOptions);
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
+        System.out.println("current pos: "+mCurrLocationMarker);
+        setMarkers();
+        String fullRoute = getOtherUrl();
+        FetchUrl FetchUrl = new FetchUrl();
+        FetchUrl.execute(fullRoute);
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
@@ -480,7 +461,6 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
         }
 
 
-
     }
 
     @Override
@@ -489,7 +469,8 @@ public class ShoppingListProductActivity extends FragmentActivity implements OnM
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission(){
+
+    public boolean checkLocationPermission() {
         System.out.println("revisando permisos");
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)

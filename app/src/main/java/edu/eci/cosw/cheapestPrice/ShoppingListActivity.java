@@ -65,6 +65,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         });
         configureRecyclerView();
         setNetwork(new ListaMercadoRetrofitNetwork());
+        cargar();
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(new Runnable() {
             @Override

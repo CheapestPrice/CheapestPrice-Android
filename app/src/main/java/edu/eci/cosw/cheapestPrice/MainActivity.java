@@ -95,24 +95,31 @@ public class MainActivity extends AppCompatActivity {
                                 network.getTendero(new RequestCallback<Tendero>() {
                                     @Override
                                     public void onSuccess(Tendero respuesta) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                cargando.hide();
+                                            }
+
+                                        });
                                         Intent intent = new Intent(cont, MenuTenderoActivity.class);
                                         Bundle b = new Bundle();
                                         b.putSerializable("id", uId);
                                         b.putSerializable("shopId", respuesta.getTienda().getId());
                                         b.putSerializable("tienda",respuesta.getTienda());
                                         Intent start = intent.putExtra("bundle", b);
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                cargando.hide();
-                                            }
-                                        });
                                         cont.startActivity(start);
                                     }
 
                                     @Override
                                     public void onFailed(NetworkException e) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                cargando.hide();
+                                            }
 
+                                        });
                                     }
                                 }, response.getId());
 
@@ -121,6 +128,13 @@ public class MainActivity extends AppCompatActivity {
                                 network.getUsuario(new RequestCallback<Usuario>() {
                                     @Override
                                     public void onSuccess(Usuario response) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                cargando.hide();
+                                            }
+
+                                        });
                                         System.out.println("Que me llego: "+response);
                                         Intent intent = new Intent(cont, SearchActivity.class);
                                         Bundle b = new Bundle();
@@ -132,6 +146,13 @@ public class MainActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailed(NetworkException e) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                cargando.hide();
+                                            }
+
+                                        });
 
                                     }
                                 },uId);
@@ -142,6 +163,13 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailed(NetworkException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cargando.hide();
+                            }
+
+                        });
 
                     }
                 },acc);
