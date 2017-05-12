@@ -148,7 +148,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 System.out.println(response);
                                 System.out.println(call);
-                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                ((ShoppingListProductActivity) context).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         cargando.hide();
@@ -159,7 +159,7 @@ public class ItemsListaAdapter extends RecyclerView.Adapter<ItemsListaAdapter.Vi
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.out.println(t.getLocalizedMessage());
-                                ((ShoppingListActivity) context).runOnUiThread(new Runnable() {
+                                ((ShoppingListProductActivity) context).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         cargando.hide();
