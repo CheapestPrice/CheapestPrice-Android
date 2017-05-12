@@ -78,7 +78,7 @@ public class AgregarItemTendero extends AppCompatActivity {
         item.setTienda(tienda);
         agregarItemTendero.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 item.setPrecio(Long.parseLong(precioItemNuevo.getText().toString()));
                 producto.setNombre(nombreItemNuevo.getText().toString());
                 producto.setCategoria(categoriaItemNuevo.getText().toString());
@@ -100,6 +100,13 @@ public class AgregarItemTendero extends AppCompatActivity {
                                         cargando.hide();
                                     }
                                 });
+                                Intent intent = new Intent(v.getContext(), ProductActivity.class);
+                                Bundle bundle= new Bundle();
+                                bundle.putSerializable("id",tenderoId);
+                                bundle.putSerializable("shopId",tiendaId);
+                                bundle.putSerializable("tienda",tienda);
+                                intent.putExtra("bundle", bundle);
+                                startActivity(intent);
                             }
 
                             @Override
